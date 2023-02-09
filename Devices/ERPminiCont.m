@@ -96,7 +96,6 @@ classdef ERPminiCont < handle
                 end
             end
 
-
             obj.InputBufferSamples = obj.InputBufferDuration * obj.SampleRate;
             obj.Collecting = false;
             obj = obj.setPort(port);
@@ -130,11 +129,6 @@ classdef ERPminiCont < handle
             obj.SerialPort =  serialport(obj.PortName,57600);
             obj.LastInputBufferTime = clock; %initialize the time of the first input block
 
-
-            %configure the serialport to fire a callback when the expected
-            %number of bytes are placed in the buffer. This is three times
-            %the number of samples becaue each EEG sample is two bytes and
-            %the digital line is a third byte
             %turn the callback off
             configureCallback(obj.SerialPort,"off");
 

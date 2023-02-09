@@ -1,3 +1,8 @@
+%The description will be here.
+%
+% KJ Jantzen
+%January 2023
+
 function main_bci()
 %main function that loads the parameters
 %and builds the UI
@@ -43,7 +48,7 @@ function p = initializeParameters(p)
         msgbox('No valid handler file was identified');
         return;
     end
-    p.DataHandler = eval(sprintf('@%s', p.handlerName));
+    p.DataHandler = str2func(p.handlerName);
 
 
     %create the spiker box object here
@@ -254,7 +259,7 @@ function addPaths()
  
  newFolder{1}  = fullfile(thisPath, 'Extensions');
  newFolder{2}  = fullfile(thisPath, 'Handlers');
- newFolder{2}  = fullfile(thisPath, "Devices");
+ newFolder{3}  = fullfile(thisPath, "Devices");
  
  
  pathCell = strsplit(path, pathsep);
@@ -355,8 +360,6 @@ function callback_loadHandler(src,~)
         p.handlerName = hname;
     end
     fig.UserData = p;
-    
-    
 
 end
 
@@ -379,6 +382,7 @@ function handlerName = loadHandler(p)
     else
         [~, f, ~] = fileparts(handlerName);
         handlerName = f;
+      %  handlerName = fullfile(hpath, handlerName);
         p.handles.label_handler.Text = f;
     end
 end

@@ -81,15 +81,6 @@ classdef ERPminiTrial < handle
             else
                 warning('The InputBufferFilledCallback must be a function reference.  You passed a %s', class(varargin{2}));
             end
- %            end
-%             if nargin > 1
-%                 if isnumeric(varargin{1})
-%                     obj.InputBufferDuration = varargin{1};
-%                 else
-%                     warning('The Input Buffer Duration parameter must be numeric.  You passed a %s.', class(varargin{1}));
-%                 end
-%             end
-% 
 
             obj.InputBufferSamples = obj.InputBufferDuration * obj.SampleRate;
             obj.Collecting = false;
@@ -168,17 +159,18 @@ classdef ERPminiTrial < handle
             trial.preBytes = bitor(bitshift(uint16(bytes(15)), 8), uint16(bytes(16)));
             trial.postBytes = bitor(bitshift(uint16(bytes(17)), 8), uint16(bytes(18)));
             trial.numBytes = trial.preBytes + trial.postBytes;
-            trial.preTime = double(trial.preBytes/2)/512;
-            trial.posTime = double(trial.postBytes/2)/512;
+            trial.preTime = double(trial.preBytes/2)/trial.sampleRate;
+            trial.posTime = double(trial.postBytes/2)/trial.sampleRate;
 
             trial.timePnts = double(0:(trial.numBytes/2)-1)./ double(trial.sampleRate) - double(trial.preTime);
 
             sampleCount = 1;
             for jj = 1:2:trial.numBytes
-                temp = bitor(bitshift(uint16(bytes(jj+headerBytes)), 8), uint16(bytes(jj+headerBytes+1)));
+                %combine the two bytes into a 16 bit integer
+                temp = bitor(bitshift(int16(bytes(jj+headerBytes)), 8), int16(bytes(jj+headerBytes+1)));
                 %this is to convert from twos complement
                 temp = bin2dec(['0b', dec2bin(temp), 's16']);
-                trial.EEG(sampleCount) = temp * obj.ADC2MV; % convert to uV
+                trial.EEG(sampleCount) = double(temp) * obj.ADC2MV; % convert to uV
                 sampleCount = sampleCount + 1;
             end
             %preallocate the EEG array to the maximum size necessary
