@@ -1,46 +1,57 @@
-% ERPminTrial single trial device
+%DEVICE: ERPminTrial 
 %
-% The ERPmini object controls communication with and acquisition from the ERP mini
-% when in single trial mode.  This object will establish
+% A simple device driver for ineracting with the ERPmini in single trial
+% mode
+%
+% The ERPminiTrial device driver controls communication with and acquisition 
+% from the ERP mini% when in single trial mode.  This driver will establish
 % communication with the ERPmini over the serial port, acquire data,
-% return data frames to a user defined
-% handler for further processing.
+% return data frames to a user defined handler for further processing.
 %
-% The ERPmini extension is implemented in the SpikerBCI and it is not
-% expected you will use it unless you are creating your own BCI interface.
+% The ERPminiTask device is implemented in the Easy_BCI package and it is not
+% expected you will use it directly unless you are creating your own BCI interface.
 %
 %  USAGE:
 %
-%   ERPmini = ERPmini(port, inputbufferduration, handler)
+%  ERPminiTrial = ERPminiTrial(port, handler)
 %
 %  Input parameters
 %       port -  a string or character vector specifying the communications
 %               port to which the SpikerBox is connected. E.g. "COM3"
-%       inputbufferduration - a scalar specifying the length in seconds
-%               of the buffer that holds data from the SpikerBox.
-%       handler - the function to call when the input buffer is filled.
-%               The frequency of this call will be inversely proportional
-%               to the input buffer length.  The callback must accept at
-%               least three input parameters.  The first parameter is a MATLAB
-%               struct, the second is the data vector and the third is the
-%               event code vector (see creating your own handler for more
-%               information)
+%       handler - the callback function to invoke when a single trial
+%               is recieved from the ERPmini.
+%               The handler must accept at least two input parameters.  
+%               inStruct - a Matlab structure that contains handles to the 
+%                   processing extension, figures, axes, etc, defined by and 
+%                   accessed by the handler.
+%               Trial - a structure containin the single trail information.
+%                   The Trial structure has the following fields
+%                   evt         :(unit8) the trigger code for the trial
+%                   sampleRate  :(uint16) the sample rate
+%                   preSamp     :(uint16) The number of pre stimulus samples
+%                   postBytes   :(uint16) The number of post stimulus
+%                               samples
+%                   samples     :(unit16)  The total number of samples in the trial
+%                   preTime     :(uint16) the duration (seconds) of the pre stimulus
+%                               period
+%                   posTime     :(uint16) the duration (seconds) of the post timulus
+%                               period
+%                   timePnts    :(double) the  time of each sample in seconds.  
+%                               All times are in the range
+%                               [-preTime:1/sampleRate:postTime]
+%                   EEG:        :(double) a vector containing the EEG samples
+%   
 %
 %   Properties
 %       ADC2MV -  convert to mV based on the adc and gain
 %       Collecting – an internal flag indicating the current state of
 %               collection.  The Start and Stop methods operate on this flag.
-%       DownSample – Not impimented yet
-%       InputBufferDuration – The duration of the input the input buffer in
-%               seconds.  Set by inputbufferduration parameter during creation.
-%       InputBufferFilledCallback – The handler function to call when the
-%               buffer is full.  Passed by function reference as handler during creation.
-%       InputBufferSamples – The length of the input buffer in samples.
-%               Equals  SampleRate * InputBufferDuration.
+%       InputBufferFilledCallback – The handler function to call when a
+%               trial is recieved.  Passed by function reference from the handler during creation.
 %       PortName - The port for communicating with the spiker box passed
 %               during creation.
 %       SampleRate – The sample rate of data acquisition.  Set internally
-%               to 1000 Hz.
+%               to 512 Hz.
 %
 %   Methods
 %       Start – the Start methods starts collection
@@ -58,11 +69,8 @@ classdef ERPminiTrial < handle
     properties
         PortName   %the port for communicating with the spiker box
         InputBufferFilledCallback = [] %called when new data is recieved from the spiker box
-        InputBufferDuration = .25 %length of the input buffer in seconds
-        InputBufferSamples  %number of samples in the input buffer
         Collecting          %flag used to start and stop acquisition
         ProcessObjects      %a structure containing the objects used in analysing the data
-        DownSample = 1;
     end
     properties (Access = private)
         SerialPort
@@ -82,7 +90,6 @@ classdef ERPminiTrial < handle
                 warning('The InputBufferFilledCallback must be a function reference.  You passed a %s', class(varargin{2}));
             end
 
-            obj.InputBufferSamples = obj.InputBufferDuration * obj.SampleRate;
             obj.Collecting = false;
             obj = obj.setPort(port);
 
@@ -118,11 +125,6 @@ classdef ERPminiTrial < handle
             %put the device in single trial mode
             write(obj.SerialPort, 'cm1', "char");
 
-            %configure the serialport to fire a callback when the expected
-            %number of bytes are placed in the buffer. This is three times
-            %the number of samples becaue each EEG sample is two bytes and
-            %the digital line is a third byte
-            %turn the callback off
             configureCallback(obj.SerialPort,"off");
 
 
@@ -133,11 +135,10 @@ classdef ERPminiTrial < handle
        
             inputBytes = read(src, src.NumBytesAvailable, "uint8");
             Trial = obj.UnpackData(inputBytes);
-            Events = [];
 
             %send the data to the callback
             if isa(obj.InputBufferFilledCallback, 'function_handle')
-                obj.ProcessObjects = obj.InputBufferFilledCallback(obj.ProcessObjects, Trial, Events);
+                obj.ProcessObjects = obj.InputBufferFilledCallback(obj.ProcessObjects, Trial);
             end
 
         end
@@ -155,25 +156,24 @@ classdef ERPminiTrial < handle
             end
 
             trial.evt = bytes(12);
-            trial.sampleRate = bitor(bitshift(uint16(bytes(13)), 8), uint16(bytes(14)));
-            trial.preBytes = bitor(bitshift(uint16(bytes(15)), 8), uint16(bytes(16)));
-            trial.postBytes = bitor(bitshift(uint16(bytes(17)), 8), uint16(bytes(18)));
-            trial.numBytes = trial.preBytes + trial.postBytes;
-            trial.preTime = double(trial.preBytes/2)/trial.sampleRate;
-            trial.posTime = double(trial.postBytes/2)/trial.sampleRate;
+            trial.sampleRate = double(bitor(bitshift(uint16(bytes(13)), 8), uint16(bytes(14))));
+            trial.preSamp = double(bitor(bitshift(uint16(bytes(15)), 8), uint16(bytes(16)))/2);
+            trial.postSamp = double(bitor(bitshift(uint16(bytes(17)), 8), uint16(bytes(18)))/2);
+            trial.samples = trial.preSamp + trial.postSamp;
+            trial.preTime = trial.preSamp/trial.sampleRate;
+            trial.posTime = trial.postSamp/trial.sampleRate;
 
-            trial.timePnts = double(0:(trial.numBytes/2)-1)./ double(trial.sampleRate) - double(trial.preTime);
-
+            trial.timePnts = (0:(trial.samples)-1)./ trial.sampleRate - trial.preTime;
+            trial.EEG = zeros(1,trial.samples);
             sampleCount = 1;
-            for jj = 1:2:trial.numBytes
+            for jj = 1:2:trial.samples * 2
                 %combine the two bytes into a 16 bit integer
                 temp = bitor(bitshift(int16(bytes(jj+headerBytes)), 8), int16(bytes(jj+headerBytes+1)));
                 %this is to convert from twos complement
-                temp = bin2dec(['0b', dec2bin(temp), 's16']);
+               % temp = bin2dec(['0b', dec2bin(temp), 's16']);
                 trial.EEG(sampleCount) = double(temp) * obj.ADC2MV; % convert to uV
                 sampleCount = sampleCount + 1;
             end
-            %preallocate the EEG array to the maximum size necessary
       
         end
     end

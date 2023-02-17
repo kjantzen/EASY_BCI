@@ -37,25 +37,29 @@ classdef BCI_ERP
     end
     properties (Access=private)
         erpSum
+        lpfilt
     end
     methods
         function obj = BCI_ERP(plotAxis)
             obj.erp = [];
+            obj.lpfilt = BCI_Filter(512,[0,50],"low");
         end
         function obj = UpdateERP(obj, trial, plotRange)
             
             if isempty(obj.trialCount)
                 obj.trialCount = zeros(1,3);
-                obj.erpSum = zeros(3, length(trial.timePnts));  
+                obj.erpSum = zeros(3, trial.samples);  
                 obj.erp = obj.erpSum;
                 obj.timePnts = trial.timePnts;
                 obj.sRate = trial.sampleRate;
 
 
             end
-            
+            d = obj.lpfilt.filter(trial.EEG);
+            bline = mean(d(1:trial.preSamp));
+            d = d - bline;
             obj.trialCount(trial.evt) = obj.trialCount(trial.evt) + 1;
-            obj.erpSum(trial.evt,:) = obj.erpSum(trial.evt,:) + trial.EEG;
+            obj.erpSum(trial.evt,:) = obj.erpSum(trial.evt,:) + d;
             obj.erp(trial.evt,:) = obj.erpSum(trial.evt,:)./obj.trialCount(trial.evt);
                
         end

@@ -69,6 +69,7 @@ classdef BCI_Chart
             h1 = plot(plotAxis, obj.tAxis, zeros(1,obj.displayPoints));
            % h2 = line(plotAxis, obj.tAxis, zeros(1,obj.displayPoints));
             obj.plotHandle = [h1];
+            obj.plotHandle.LineWidth = 1.5;
          %   obj.plotHandle(2).Color = 'g';
             obj.ax = plotAxis;
                 

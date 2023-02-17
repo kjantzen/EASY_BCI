@@ -1,0 +1,154 @@
+1.0074 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+5.3402 	WARNING 	User requested fullscreen with size [1024  768], but screen is actually [2560, 1080]. Using actual size
+6.5606 	WARNING 	Couldn't measure a consistent frame rate!
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+6.5613 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fb2023278e0>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7fb1e71d2700>, multiSample=False, name='window1', numSamples=2, pos=[0.0, 0.0], screen=0, size=array([2560, 1080]), stencilBits=0, stereo=False, units='height', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+6.5616 	EXP 	window1: mouseVisible = True
+6.5627 	EXP 	window1: mouseVisible = False
+6.5630 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+6.5631 	EXP 	window1: recordFrameIntervals = False
+6.6429 	EXP 	window1: recordFrameIntervals = True
+7.4761 	WARNING 	Couldn't measure a consistent frame rate!
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+9.2106 	EXP 	Created stimulus = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, fillColor=array([1, 1, 1]), fillColorSpace='rgb', fillRGB=array([1, 1, 1]), interpolate=True, lineColor=array([1, 1, 1]), lineColorSpace='rgb', lineRGB=array([1, 1, 1]), lineWidth=1.0, name='stimulus', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+9.2168 	EXP 	Created blank = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, fillColor=array([0.00392157, 0.00392157, 0.00392157]), fillColorSpace='rgb', fillRGB=array([0.00392157, 0.00392157, 0.00392157]), interpolate=True, lineColor=array([0.00392157, 0.00392157, 0.00392157]), lineColorSpace='rgb', lineRGB=array([0.00392157, 0.00392157, 0.00392157]), lineWidth=1.0, name='blank', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+9.2225 	EXP 	Imported StimList.xlsx as conditions, 8 conditions, 2 params
+9.2232 	EXP 	Created sequence: random, trialTypes=8, nReps=5, seed=None
+9.2234 	EXP 	New trial (rep=0, index=0): {'color': 'gray', 'trigger': 2}
+9.2314 	WARNING 	t of last frame was 1755.52ms (=1/0)
+9.2314 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+9.2314 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+9.2314 	EXP 	stimulus: autoDraw = True
+9.4759 	EXP 	stimulus: autoDraw = False
+9.4759 	EXP 	blank: autoDraw = True
+10.9606 	EXP 	New trial (rep=0, index=1): {'color': 'gray', 'trigger': 2}
+10.9716 	EXP 	blank: autoDraw = False
+10.9716 	EXP 	blank: autoDraw = False
+10.9716 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+10.9716 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+10.9716 	EXP 	stimulus: autoDraw = True
+11.2098 	EXP 	stimulus: autoDraw = False
+11.2098 	EXP 	stimulus: autoDraw = False
+11.2098 	EXP 	blank: autoDraw = True
+12.6948 	EXP 	New trial (rep=0, index=2): {'color': 'white', 'trigger': 1}
+12.7049 	EXP 	blank: autoDraw = False
+12.7049 	EXP 	blank: autoDraw = False
+12.7049 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+12.7049 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+12.7093 	EXP 	stimulus: autoDraw = True
+12.9552 	EXP 	stimulus: autoDraw = False
+12.9552 	EXP 	stimulus: autoDraw = False
+12.9607 	EXP 	blank: autoDraw = True
+14.4453 	EXP 	New trial (rep=0, index=3): {'color': 'white', 'trigger': 1}
+14.4549 	EXP 	blank: autoDraw = False
+14.4549 	EXP 	blank: autoDraw = False
+14.4549 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+14.4549 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+14.4597 	EXP 	stimulus: autoDraw = True
+14.7050 	EXP 	stimulus: autoDraw = False
+14.7050 	EXP 	stimulus: autoDraw = False
+14.7094 	EXP 	blank: autoDraw = True
+16.1934 	EXP 	New trial (rep=0, index=4): {'color': 'white', 'trigger': 1}
+16.2050 	EXP 	blank: autoDraw = False
+16.2050 	EXP 	blank: autoDraw = False
+16.2050 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+16.2050 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+16.2095 	EXP 	stimulus: autoDraw = True
+16.4549 	EXP 	stimulus: autoDraw = False
+16.4549 	EXP 	stimulus: autoDraw = False
+16.4593 	EXP 	blank: autoDraw = True
+17.5434 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.5443 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.5598 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.5768 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.5936 	DATA 	Mouse: wheel shift=(1,0), pos=(955,617)
+17.6101 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.6273 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.6277 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.6438 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.6605 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.6768 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.6939 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.7104 	DATA 	Mouse: wheel shift=(1,0), pos=(955,617)
+17.7272 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.7399 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.7611 	DATA 	Mouse: wheel shift=(0,0), pos=(955,617)
+17.7778 	DATA 	Mouse: wheel shift=(1,0), pos=(955,618)
+17.7906 	DATA 	Mouse: wheel shift=(0,0), pos=(955,618)
+17.8071 	DATA 	Mouse: wheel shift=(0,0), pos=(954,619)
+17.8277 	DATA 	Mouse: wheel shift=(0,0), pos=(954,619)
+17.8441 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+17.8611 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+17.8773 	DATA 	Mouse: wheel shift=(1,0), pos=(953,619)
+17.8937 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+17.9065 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+17.9269 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+17.9401 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+17.9439 	EXP 	New trial (rep=0, index=5): {'color': 'gray', 'trigger': 2}
+17.9549 	EXP 	blank: autoDraw = False
+17.9549 	EXP 	blank: autoDraw = False
+17.9549 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+17.9549 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+17.9590 	EXP 	stimulus: autoDraw = True
+17.9606 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+17.9772 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+17.9938 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+18.0103 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+18.0437 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+18.0608 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+18.0772 	DATA 	Mouse: wheel shift=(0,0), pos=(953,619)
+18.2049 	EXP 	stimulus: autoDraw = False
+18.2049 	EXP 	stimulus: autoDraw = False
+18.2093 	EXP 	blank: autoDraw = True
+19.6933 	EXP 	New trial (rep=0, index=6): {'color': 'gray', 'trigger': 2}
+19.7049 	EXP 	blank: autoDraw = False
+19.7049 	EXP 	blank: autoDraw = False
+19.7049 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+19.7049 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+19.7094 	EXP 	stimulus: autoDraw = True
+19.9550 	EXP 	stimulus: autoDraw = False
+19.9550 	EXP 	stimulus: autoDraw = False
+19.9593 	EXP 	blank: autoDraw = True
+21.4450 	EXP 	New trial (rep=0, index=7): {'color': 'white', 'trigger': 1}
+21.4549 	EXP 	blank: autoDraw = False
+21.4549 	EXP 	blank: autoDraw = False
+21.4549 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+21.4549 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+21.4594 	EXP 	stimulus: autoDraw = True
+21.7052 	EXP 	stimulus: autoDraw = False
+21.7052 	EXP 	stimulus: autoDraw = False
+21.7108 	EXP 	blank: autoDraw = True
+23.2057 	EXP 	New trial (rep=1, index=0): {'color': 'gray', 'trigger': 2}
+23.2112 	EXP 	blank: autoDraw = False
+23.2112 	EXP 	blank: autoDraw = False
+23.2112 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+23.2112 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+23.2112 	EXP 	stimulus: autoDraw = True
+23.4611 	EXP 	stimulus: autoDraw = False
+23.4611 	EXP 	stimulus: autoDraw = False
+23.4611 	EXP 	blank: autoDraw = True
+24.9562 	EXP 	New trial (rep=1, index=1): {'color': 'gray', 'trigger': 2}
+24.9622 	EXP 	blank: autoDraw = False
+24.9622 	EXP 	blank: autoDraw = False
+24.9622 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+24.9622 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+24.9622 	EXP 	stimulus: autoDraw = True
+25.2110 	EXP 	stimulus: autoDraw = False
+25.2110 	EXP 	stimulus: autoDraw = False
+25.2110 	EXP 	blank: autoDraw = True
+26.7067 	EXP 	New trial (rep=1, index=2): {'color': 'white', 'trigger': 1}
+26.7128 	EXP 	blank: autoDraw = False
+26.7128 	EXP 	blank: autoDraw = False
+26.7128 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+26.7128 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+26.7128 	EXP 	stimulus: autoDraw = True
+26.9605 	EXP 	stimulus: autoDraw = False
+26.9605 	EXP 	stimulus: autoDraw = False
+26.9605 	EXP 	blank: autoDraw = True
+27.6653 	DATA 	Keypress: escape
+27.6694 	WARNING 	t of last frame was 64.37ms (=1/15)
+27.9055 	EXP 	window1: mouseVisible = True

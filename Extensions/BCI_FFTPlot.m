@@ -48,6 +48,7 @@ classdef BCI_FFTPlot
             obj = computeFFT(obj);
 
             obj.PlotHandle = plot(plotAxis, obj.FAxis, obj.FFTData);
+            ob.PlotHandle.LineWidth = 1.5;
             obj.Axis = plotAxis;
             obj.Axis.YLabel.String = 'amplitude';
             obj.Axis.XLabel.String = 'frequency (Hz)';
@@ -69,6 +70,7 @@ classdef BCI_FFTPlot
             obj.DataBuffer(obj.BufferPoints-ln+1:obj.BufferPoints) = dataChunk;
             obj = computeFFT(obj);
             obj.PlotHandle.YData = obj.FFTData;
+            
             
       
             obj.Axis.XLim = fRange/obj.Nyquist * length(obj.FFTData);

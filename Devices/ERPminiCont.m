@@ -1,5 +1,7 @@
-% ERPmini Continous device 
+% DEVICE: ERPmini Continuous Mode  🥴
 % 
+% A simple driver for interacting with the ERPmini when in continuous mode
+%
 % The ERPmini object controls communication with and acquisition from the ERP mini
 % whenin continuous mode.  This object will establish 
 % communication with the ERPmini over the serial port, acquire data, 
@@ -66,7 +68,7 @@ classdef ERPminiCont < handle
     end
     properties (Access = private)
         SerialPort
-        LastInputBufferTime = 0;
+        %LastInputBufferTime = 0;
     end
     properties (Constant = true)
         SampleRate = 512;
@@ -127,9 +129,15 @@ classdef ERPminiCont < handle
             delete(obj.SerialPort); %delete the old handle
             obj.PortName = portname;
             obj.SerialPort =  serialport(obj.PortName,57600);
-            obj.LastInputBufferTime = clock; %initialize the time of the first input block
 
-            %turn the callback off
+            %put the ERPmini in continuous collection mode
+            write(obj.SerialPort, 'cm0', "char");
+       
+            %not sure why this was here
+            %obj.LastInputBufferTime = clock; %initialize the time of the first input block
+
+            %turn the callback off until the user explicity starts
+            %the device
             configureCallback(obj.SerialPort,"off");
 
                    
@@ -176,8 +184,7 @@ classdef ERPminiCont < handle
                      %finally, subtract 2048
                      intout = int16(intout) - 2048;
                      count = count + 1;
-                     EEG(count) = intout;%[EEG intout];
-         
+                     EEG(count) = intout;
                  end
                  i = i+1;
              end

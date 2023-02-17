@@ -51,7 +51,7 @@ end
     %check to see if the figure already exists
     %the figure is recognized by its name but there are other ways to
     %recognize the figure
-    existingFigure = findobj('Name', 'BYB BCI Data Display');
+    existingFigure = findobj('Name', 'BCI Data Display');
     if ~isempty(existingFigure)
         o.handles.outputFigure = existingFigure(1);
         clf(o.handles.outputFigure);
@@ -59,7 +59,7 @@ end
        %create a new figure to hold all the plots etc
         o.handles.outputFigure = figure;
         %name it so we can recognize it later if the software is rerun
-        o.handles.outputFigure.Name  = 'BYB BCI Data Display';
+        o.handles.outputFigure.Name  = 'BCI Data Display';
     end
     
     %THIS IS LIKELY WHERE YOU WILL WANT TO START EDITING
@@ -76,37 +76,38 @@ end
     sp.YLabel.String = 'amplitude (ADC units)';
     %create a new chart object and pass in the data sample rate, the length
     %of the chart and the axis to plot to.
-    o.chartPlot1 = BYB_Chart(o.sampleRate, 3, sp);
+    o.chartPlot1 = BCI_Chart(o.sampleRate, 3, sp);
   
     %create an fft plotting object to plot the power spectrum of the
     %unfitlered data
     sp = subplot(3,3,3);
     sp.Title.String = 'Unfiltered power spectrum'; 
+    sp.XLim = [0, 20];
     %the filter object takes as parameters, the sample rate of the data
     %collection, the length of the window to transform (in seconds), and
     %the axis to plot the data in.
-    FFT_length = 1;
-    o.fftPlot1 = BYB_FFTPlot(o.sampleRate, FFT_length,sp);
+    FFT_length = 5;
+    o.fftPlot1 = BCI_FFTPlot(o.sampleRate, FFT_length,sp);
    
     %create a second plotting object for the filtered time data
     %**********************************************************
     sp = subplot(3,3,[4,5]);
     sp.Title.String = 'Band passed data';
     sp.XLabel.String  = 'Time (seconds)';
-    sp.YLabel.String = 'amplitude (ADC units)'
+    sp.YLabel.String = 'amplitude (ADC units)';
     %because it is an object, we can create a second chart object that is
     %independent of the one we created above.
-    o.chartPlot2 = BYB_Chart(o.sampleRate, 3,sp);
+    o.chartPlot2 = BCI_Chart(o.sampleRate, 3,sp);
   
     %create a filter object to filter each chunk as it comes in
     %i am unecessarily using alot of variables to hold the filter
     %parameters because it is more illustrative than just passing values to
     %the object
-    low_edge = 1;
-    high_edge = 50;
+    low_edge = 0;
+    high_edge = 30;
     filter_range = [low_edge  high_edge];
-    filter_type = 'bandpass'; %this must be one of 'low', 'high', 'bandpass' or 'stop'
-    o.filter = BYB_Filter(o.sampleRate, filter_range, filter_type);
+    filter_type = 'low'; %this must be one of 'low', 'high', 'bandpass' or 'stop'
+    o.filter = BCI_Filter(o.sampleRate, filter_range, filter_type);
     
     %create an fft plotting object to plot the power spectrum of the
     %filtered data
@@ -116,25 +117,25 @@ end
     %collection, the length of the window to transform (in seconds), and
     %the axis to plot the data in.
     FFT_length = 1;
-    o.fftPlot2 = BYB_FFTPlot(o.sampleRate, FFT_length,sp); 
+    o.fftPlot2 = BCI_FFTPlot(o.sampleRate, FFT_length,sp); 
    
     
      %create a third plotting object for the rectified time data
     %**********************************************************
-    o.lpfilt = BYB_Filter(o.sampleRate, [0,40], 'low');
+    o.lpfilt = BCI_Filter(o.sampleRate, [0,30], 'low');
     
     sp = subplot(3,3,[7,8]);
     sp.Title.String = 'Rectified ECG';
     sp.XLabel.String  = 'Time (seconds)';
-    sp.YLabel.String = 'amplitude (ADC units ^2)'
+    sp.YLabel.String = 'amplitude (ADC units ^2)';
     %because it is an object, we can create a second chart object that is
     %independent of the one we created above.
-    o.chartPlot3 = BYB_Chart(o.sampleRate, 3,sp);
+    o.chartPlot3 = BCI_Chart(o.sampleRate, 3,sp);
     
     sp = subplot(3,3,9);
     sp.Title.String = 'mean EMG';
-    o.barplot = BYB_BarPlot(sp);
-    o.barplot.Range = [0, 5*10e3];
+%    o.barplot = BCI_BarPlot(sp);
+%    o.barplot.Range = [0, 5*10e3];
    
     
 end

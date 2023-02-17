@@ -66,7 +66,7 @@ end
     %add a title to the axis
     sp.Title.String = 'Unfiltered raw data';
     sp.XLabel.String  = 'Time (seconds)';
-    sp.YLabel.String = 'amplitude (ADC units)';
+    sp.YLabel.String = 'amplitude (uV units)';
     %create a new chart object and pass in the data sample rate, the length
     %of the chart and the axis to plot to.
     o.chartPlot1 = BCI_Chart(o.sampleRate, 5, sp);
@@ -78,7 +78,7 @@ end
     %the filter object takes as parameters, the sample rate of the data
     %collection, the length of the window to transform (in seconds), and
     %the axis to plot the data in.
-    FFT_length = 1;
+    FFT_length = 5;
     o.fftPlot1 = BCI_FFTPlot(o.sampleRate, FFT_length,sp);
    
 

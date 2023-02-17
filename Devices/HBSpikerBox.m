@@ -71,7 +71,7 @@ classdef HBSpikerBox < handle
     end
     properties (Constant = true)
         SampleRate = 512;
-        ADC2MV = 1.27281e-3; %convert to mV based on the adc and gain 
+        ADC2MV = (5/1024)/1.27281e-3; %convert to mV based on the adc and gain 
     end
 
     methods

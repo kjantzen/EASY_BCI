@@ -36,7 +36,7 @@ function p = initializeParameters(p)
         end
     end
 
-    p.sampleRate = 512;
+    p.sampleRate = 500;
 
     %also hard code the two functions for initializing the data processing
     %and for handling the data stream.  These also could be selectable
@@ -58,8 +58,8 @@ function p = initializeParameters(p)
     end
     
     %select a device based on user input
-    %p.Device = ERPminiCont(p.serialPortName, p.bufferDuration, p.DataHandler);
-    p.Device = ERPminiTrial(p.serialPortName, p.DataHandler);
+    p.Device = HBSpiker_Cont(p.serialPortName, p.bufferDuration, p.DataHandler);
+    %p.Device = HBSpiker_ERP(p.serialPortName, p.DataHandler);
     
     %call the initialization version of the data handler, i.e. call it
     %without passing any data.

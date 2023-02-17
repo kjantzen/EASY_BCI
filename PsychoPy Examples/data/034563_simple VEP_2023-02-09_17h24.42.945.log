@@ -1,0 +1,741 @@
+1.2273 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+5.7773 	WARNING 	User requested fullscreen with size [1024  768], but screen is actually [1440, 900]. Using actual size
+7.1358 	WARNING 	Couldn't measure a consistent frame rate!
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+7.1379 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7faa846b79a0>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7faa458653d0>, multiSample=False, name='window1', numSamples=2, pos=[360.0, 225.0], screen=0, size=array([2880, 1800]), stencilBits=0, stereo=False, units='height', useFBO=True, useRetina=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+7.1383 	EXP 	window1: mouseVisible = True
+7.1395 	EXP 	window1: mouseVisible = False
+7.1395 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+7.1396 	EXP 	window1: recordFrameIntervals = False
+7.2187 	EXP 	window1: recordFrameIntervals = True
+8.0527 	WARNING 	Couldn't measure a consistent frame rate!
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+10.2316 	EXP 	Created stimulus = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, fillColor=array([1, 1, 1]), fillColorSpace='rgb', fillRGB=array([1, 1, 1]), interpolate=True, lineColor=array([1, 1, 1]), lineColorSpace='rgb', lineRGB=array([1, 1, 1]), lineWidth=1.0, name='stimulus', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+10.2346 	EXP 	Created blank = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, fillColor=array([0.00392157, 0.00392157, 0.00392157]), fillColorSpace='rgb', fillRGB=array([0.00392157, 0.00392157, 0.00392157]), interpolate=True, lineColor=array([0.00392157, 0.00392157, 0.00392157]), lineColorSpace='rgb', lineRGB=array([0.00392157, 0.00392157, 0.00392157]), lineWidth=1.0, name='blank', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+10.2410 	EXP 	Imported StimList.xlsx as conditions, 8 conditions, 2 params
+10.2431 	EXP 	Created sequence: random, trialTypes=8, nReps=10, seed=None
+10.2433 	EXP 	New trial (rep=0, index=0): {'color': 'gray', 'trigger': 2}
+10.2570 	WARNING 	t of last frame was 2204.57ms (=1/0)
+10.2570 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+10.2570 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+10.2570 	EXP 	stimulus: autoDraw = True
+10.4910 	EXP 	stimulus: autoDraw = False
+10.4910 	EXP 	blank: autoDraw = True
+11.4754 	EXP 	New trial (rep=0, index=1): {'color': 'white', 'trigger': 1}
+11.4848 	EXP 	blank: autoDraw = False
+11.4848 	EXP 	blank: autoDraw = False
+11.4848 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+11.4848 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+11.4848 	EXP 	stimulus: autoDraw = True
+11.7254 	EXP 	stimulus: autoDraw = False
+11.7254 	EXP 	stimulus: autoDraw = False
+11.7254 	EXP 	blank: autoDraw = True
+12.7202 	EXP 	New trial (rep=0, index=2): {'color': 'gray', 'trigger': 2}
+12.7276 	EXP 	blank: autoDraw = False
+12.7276 	EXP 	blank: autoDraw = False
+12.7276 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+12.7276 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+12.7276 	EXP 	stimulus: autoDraw = True
+12.9765 	EXP 	stimulus: autoDraw = False
+12.9765 	EXP 	stimulus: autoDraw = False
+12.9765 	EXP 	blank: autoDraw = True
+13.9600 	EXP 	New trial (rep=0, index=3): {'color': 'white', 'trigger': 1}
+13.9684 	EXP 	blank: autoDraw = False
+13.9684 	EXP 	blank: autoDraw = False
+13.9684 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+13.9684 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+13.9747 	EXP 	stimulus: autoDraw = True
+14.2189 	EXP 	stimulus: autoDraw = False
+14.2189 	EXP 	stimulus: autoDraw = False
+14.2246 	EXP 	blank: autoDraw = True
+15.2091 	EXP 	New trial (rep=0, index=4): {'color': 'white', 'trigger': 1}
+15.2177 	EXP 	blank: autoDraw = False
+15.2177 	EXP 	blank: autoDraw = False
+15.2177 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+15.2177 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+15.2238 	EXP 	stimulus: autoDraw = True
+15.4688 	EXP 	stimulus: autoDraw = False
+15.4688 	EXP 	stimulus: autoDraw = False
+15.4747 	EXP 	blank: autoDraw = True
+16.4590 	EXP 	New trial (rep=0, index=5): {'color': 'gray', 'trigger': 2}
+16.4682 	EXP 	blank: autoDraw = False
+16.4682 	EXP 	blank: autoDraw = False
+16.4682 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+16.4682 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+16.4742 	EXP 	stimulus: autoDraw = True
+16.7185 	EXP 	stimulus: autoDraw = False
+16.7185 	EXP 	stimulus: autoDraw = False
+16.7244 	EXP 	blank: autoDraw = True
+17.7090 	EXP 	New trial (rep=0, index=6): {'color': 'gray', 'trigger': 2}
+17.7185 	EXP 	blank: autoDraw = False
+17.7185 	EXP 	blank: autoDraw = False
+17.7185 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+17.7185 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+17.7249 	EXP 	stimulus: autoDraw = True
+17.9687 	EXP 	stimulus: autoDraw = False
+17.9687 	EXP 	stimulus: autoDraw = False
+17.9753 	EXP 	blank: autoDraw = True
+18.9586 	EXP 	New trial (rep=0, index=7): {'color': 'white', 'trigger': 1}
+18.9685 	EXP 	blank: autoDraw = False
+18.9685 	EXP 	blank: autoDraw = False
+18.9685 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+18.9685 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+18.9742 	EXP 	stimulus: autoDraw = True
+19.2186 	EXP 	stimulus: autoDraw = False
+19.2186 	EXP 	stimulus: autoDraw = False
+19.2242 	EXP 	blank: autoDraw = True
+20.2096 	EXP 	New trial (rep=1, index=0): {'color': 'white', 'trigger': 1}
+20.2179 	EXP 	blank: autoDraw = False
+20.2179 	EXP 	blank: autoDraw = False
+20.2179 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+20.2179 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+20.2236 	EXP 	stimulus: autoDraw = True
+20.4689 	EXP 	stimulus: autoDraw = False
+20.4689 	EXP 	stimulus: autoDraw = False
+20.4748 	EXP 	blank: autoDraw = True
+21.4588 	EXP 	New trial (rep=1, index=1): {'color': 'gray', 'trigger': 2}
+21.4685 	EXP 	blank: autoDraw = False
+21.4685 	EXP 	blank: autoDraw = False
+21.4685 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+21.4685 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+21.4746 	EXP 	stimulus: autoDraw = True
+21.7190 	EXP 	stimulus: autoDraw = False
+21.7190 	EXP 	stimulus: autoDraw = False
+21.7248 	EXP 	blank: autoDraw = True
+22.7088 	EXP 	New trial (rep=1, index=2): {'color': 'gray', 'trigger': 2}
+22.7184 	EXP 	blank: autoDraw = False
+22.7184 	EXP 	blank: autoDraw = False
+22.7184 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+22.7184 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+22.7247 	EXP 	stimulus: autoDraw = True
+22.9683 	EXP 	stimulus: autoDraw = False
+22.9683 	EXP 	stimulus: autoDraw = False
+22.9734 	EXP 	blank: autoDraw = True
+23.9603 	EXP 	New trial (rep=1, index=3): {'color': 'gray', 'trigger': 2}
+23.9684 	EXP 	blank: autoDraw = False
+23.9684 	EXP 	blank: autoDraw = False
+23.9684 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+23.9684 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+23.9746 	EXP 	stimulus: autoDraw = True
+24.2186 	EXP 	stimulus: autoDraw = False
+24.2186 	EXP 	stimulus: autoDraw = False
+24.2245 	EXP 	blank: autoDraw = True
+25.2092 	EXP 	New trial (rep=1, index=4): {'color': 'gray', 'trigger': 2}
+25.2186 	EXP 	blank: autoDraw = False
+25.2186 	EXP 	blank: autoDraw = False
+25.2186 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+25.2186 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+25.2244 	EXP 	stimulus: autoDraw = True
+25.4689 	EXP 	stimulus: autoDraw = False
+25.4689 	EXP 	stimulus: autoDraw = False
+25.4747 	EXP 	blank: autoDraw = True
+26.4605 	EXP 	New trial (rep=1, index=5): {'color': 'white', 'trigger': 1}
+26.4687 	EXP 	blank: autoDraw = False
+26.4687 	EXP 	blank: autoDraw = False
+26.4687 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+26.4687 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+26.4748 	EXP 	stimulus: autoDraw = True
+26.7192 	EXP 	stimulus: autoDraw = False
+26.7192 	EXP 	stimulus: autoDraw = False
+26.7264 	EXP 	blank: autoDraw = True
+27.7106 	EXP 	New trial (rep=1, index=6): {'color': 'white', 'trigger': 1}
+27.7189 	EXP 	blank: autoDraw = False
+27.7189 	EXP 	blank: autoDraw = False
+27.7189 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+27.7189 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+27.7251 	EXP 	stimulus: autoDraw = True
+27.9687 	EXP 	stimulus: autoDraw = False
+27.9687 	EXP 	stimulus: autoDraw = False
+27.9753 	EXP 	blank: autoDraw = True
+28.9607 	EXP 	New trial (rep=1, index=7): {'color': 'white', 'trigger': 1}
+28.9686 	EXP 	blank: autoDraw = False
+28.9686 	EXP 	blank: autoDraw = False
+28.9686 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+28.9686 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+28.9747 	EXP 	stimulus: autoDraw = True
+29.2189 	EXP 	stimulus: autoDraw = False
+29.2189 	EXP 	stimulus: autoDraw = False
+29.2259 	EXP 	blank: autoDraw = True
+30.2198 	EXP 	New trial (rep=2, index=0): {'color': 'gray', 'trigger': 2}
+30.2270 	EXP 	blank: autoDraw = False
+30.2270 	EXP 	blank: autoDraw = False
+30.2270 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+30.2270 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+30.2270 	EXP 	stimulus: autoDraw = True
+30.4760 	EXP 	stimulus: autoDraw = False
+30.4760 	EXP 	stimulus: autoDraw = False
+30.4760 	EXP 	blank: autoDraw = True
+31.4597 	EXP 	New trial (rep=2, index=1): {'color': 'white', 'trigger': 1}
+31.4684 	EXP 	blank: autoDraw = False
+31.4684 	EXP 	blank: autoDraw = False
+31.4684 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+31.4684 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+31.4741 	EXP 	stimulus: autoDraw = True
+31.7191 	EXP 	stimulus: autoDraw = False
+31.7191 	EXP 	stimulus: autoDraw = False
+31.7259 	EXP 	blank: autoDraw = True
+32.7202 	EXP 	New trial (rep=2, index=2): {'color': 'white', 'trigger': 1}
+32.7276 	EXP 	blank: autoDraw = False
+32.7276 	EXP 	blank: autoDraw = False
+32.7276 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+32.7276 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+32.7276 	EXP 	stimulus: autoDraw = True
+32.9761 	EXP 	stimulus: autoDraw = False
+32.9761 	EXP 	stimulus: autoDraw = False
+32.9761 	EXP 	blank: autoDraw = True
+33.9706 	EXP 	New trial (rep=2, index=3): {'color': 'white', 'trigger': 1}
+33.9783 	EXP 	blank: autoDraw = False
+33.9783 	EXP 	blank: autoDraw = False
+33.9783 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+33.9783 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+33.9783 	EXP 	stimulus: autoDraw = True
+34.2260 	EXP 	stimulus: autoDraw = False
+34.2260 	EXP 	stimulus: autoDraw = False
+34.2260 	EXP 	blank: autoDraw = True
+35.2104 	EXP 	New trial (rep=2, index=4): {'color': 'gray', 'trigger': 2}
+35.2180 	EXP 	blank: autoDraw = False
+35.2180 	EXP 	blank: autoDraw = False
+35.2180 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+35.2180 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+35.2239 	EXP 	stimulus: autoDraw = True
+35.4690 	EXP 	stimulus: autoDraw = False
+35.4690 	EXP 	stimulus: autoDraw = False
+35.4757 	EXP 	blank: autoDraw = True
+36.4598 	EXP 	New trial (rep=2, index=5): {'color': 'white', 'trigger': 1}
+36.4686 	EXP 	blank: autoDraw = False
+36.4686 	EXP 	blank: autoDraw = False
+36.4686 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+36.4686 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+36.4753 	EXP 	stimulus: autoDraw = True
+36.7189 	EXP 	stimulus: autoDraw = False
+36.7189 	EXP 	stimulus: autoDraw = False
+36.7250 	EXP 	blank: autoDraw = True
+37.7090 	EXP 	New trial (rep=2, index=6): {'color': 'gray', 'trigger': 2}
+37.7186 	EXP 	blank: autoDraw = False
+37.7186 	EXP 	blank: autoDraw = False
+37.7186 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+37.7186 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+37.7244 	EXP 	stimulus: autoDraw = True
+37.9687 	EXP 	stimulus: autoDraw = False
+37.9687 	EXP 	stimulus: autoDraw = False
+37.9746 	EXP 	blank: autoDraw = True
+38.9588 	EXP 	New trial (rep=2, index=7): {'color': 'gray', 'trigger': 2}
+38.9687 	EXP 	blank: autoDraw = False
+38.9687 	EXP 	blank: autoDraw = False
+38.9687 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+38.9687 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+38.9749 	EXP 	stimulus: autoDraw = True
+39.2185 	EXP 	stimulus: autoDraw = False
+39.2185 	EXP 	stimulus: autoDraw = False
+39.2245 	EXP 	blank: autoDraw = True
+40.2092 	EXP 	New trial (rep=3, index=0): {'color': 'gray', 'trigger': 2}
+40.2186 	EXP 	blank: autoDraw = False
+40.2186 	EXP 	blank: autoDraw = False
+40.2186 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+40.2186 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+40.2246 	EXP 	stimulus: autoDraw = True
+40.4687 	EXP 	stimulus: autoDraw = False
+40.4687 	EXP 	stimulus: autoDraw = False
+40.4746 	EXP 	blank: autoDraw = True
+41.4596 	EXP 	New trial (rep=3, index=1): {'color': 'white', 'trigger': 1}
+41.4684 	EXP 	blank: autoDraw = False
+41.4684 	EXP 	blank: autoDraw = False
+41.4684 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+41.4684 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+41.4740 	EXP 	stimulus: autoDraw = True
+41.7179 	EXP 	stimulus: autoDraw = False
+41.7179 	EXP 	stimulus: autoDraw = False
+41.7242 	EXP 	blank: autoDraw = True
+42.7085 	EXP 	New trial (rep=3, index=2): {'color': 'gray', 'trigger': 2}
+42.7187 	EXP 	blank: autoDraw = False
+42.7187 	EXP 	blank: autoDraw = False
+42.7187 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+42.7187 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+42.7247 	EXP 	stimulus: autoDraw = True
+42.9687 	EXP 	stimulus: autoDraw = False
+42.9687 	EXP 	stimulus: autoDraw = False
+42.9747 	EXP 	blank: autoDraw = True
+43.9603 	EXP 	New trial (rep=3, index=3): {'color': 'gray', 'trigger': 2}
+43.9684 	EXP 	blank: autoDraw = False
+43.9684 	EXP 	blank: autoDraw = False
+43.9684 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+43.9684 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+43.9744 	EXP 	stimulus: autoDraw = True
+44.2186 	EXP 	stimulus: autoDraw = False
+44.2186 	EXP 	stimulus: autoDraw = False
+44.2241 	EXP 	blank: autoDraw = True
+45.2107 	EXP 	New trial (rep=3, index=4): {'color': 'white', 'trigger': 1}
+45.2187 	EXP 	blank: autoDraw = False
+45.2187 	EXP 	blank: autoDraw = False
+45.2187 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+45.2187 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+45.2249 	EXP 	stimulus: autoDraw = True
+45.4688 	EXP 	stimulus: autoDraw = False
+45.4688 	EXP 	stimulus: autoDraw = False
+45.4748 	EXP 	blank: autoDraw = True
+46.4588 	EXP 	New trial (rep=3, index=5): {'color': 'white', 'trigger': 1}
+46.4687 	EXP 	blank: autoDraw = False
+46.4687 	EXP 	blank: autoDraw = False
+46.4687 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+46.4687 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+46.4751 	EXP 	stimulus: autoDraw = True
+46.7190 	EXP 	stimulus: autoDraw = False
+46.7190 	EXP 	stimulus: autoDraw = False
+46.7249 	EXP 	blank: autoDraw = True
+47.7104 	EXP 	New trial (rep=3, index=6): {'color': 'gray', 'trigger': 2}
+47.7186 	EXP 	blank: autoDraw = False
+47.7186 	EXP 	blank: autoDraw = False
+47.7186 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+47.7186 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+47.7248 	EXP 	stimulus: autoDraw = True
+47.9690 	EXP 	stimulus: autoDraw = False
+47.9690 	EXP 	stimulus: autoDraw = False
+47.9748 	EXP 	blank: autoDraw = True
+48.9590 	EXP 	New trial (rep=3, index=7): {'color': 'white', 'trigger': 1}
+48.9684 	EXP 	blank: autoDraw = False
+48.9684 	EXP 	blank: autoDraw = False
+48.9684 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+48.9684 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+48.9744 	EXP 	stimulus: autoDraw = True
+49.2188 	EXP 	stimulus: autoDraw = False
+49.2188 	EXP 	stimulus: autoDraw = False
+49.2254 	EXP 	blank: autoDraw = True
+50.2098 	EXP 	New trial (rep=4, index=0): {'color': 'gray', 'trigger': 2}
+50.2185 	EXP 	blank: autoDraw = False
+50.2185 	EXP 	blank: autoDraw = False
+50.2185 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+50.2185 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+50.2243 	EXP 	stimulus: autoDraw = True
+50.4693 	EXP 	stimulus: autoDraw = False
+50.4693 	EXP 	stimulus: autoDraw = False
+50.4758 	EXP 	blank: autoDraw = True
+51.4597 	EXP 	New trial (rep=4, index=1): {'color': 'gray', 'trigger': 2}
+51.4684 	EXP 	blank: autoDraw = False
+51.4684 	EXP 	blank: autoDraw = False
+51.4684 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+51.4684 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+51.4744 	EXP 	stimulus: autoDraw = True
+51.7191 	EXP 	stimulus: autoDraw = False
+51.7191 	EXP 	stimulus: autoDraw = False
+51.7263 	EXP 	blank: autoDraw = True
+52.7202 	EXP 	New trial (rep=4, index=2): {'color': 'white', 'trigger': 1}
+52.7276 	EXP 	blank: autoDraw = False
+52.7276 	EXP 	blank: autoDraw = False
+52.7276 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+52.7276 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+52.7276 	EXP 	stimulus: autoDraw = True
+52.9759 	EXP 	stimulus: autoDraw = False
+52.9759 	EXP 	stimulus: autoDraw = False
+52.9759 	EXP 	blank: autoDraw = True
+53.9702 	EXP 	New trial (rep=4, index=3): {'color': 'white', 'trigger': 1}
+53.9776 	EXP 	blank: autoDraw = False
+53.9776 	EXP 	blank: autoDraw = False
+53.9776 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+53.9776 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+53.9776 	EXP 	stimulus: autoDraw = True
+54.2261 	EXP 	stimulus: autoDraw = False
+54.2261 	EXP 	stimulus: autoDraw = False
+54.2261 	EXP 	blank: autoDraw = True
+55.2204 	EXP 	New trial (rep=4, index=4): {'color': 'white', 'trigger': 1}
+55.2281 	EXP 	blank: autoDraw = False
+55.2281 	EXP 	blank: autoDraw = False
+55.2281 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+55.2281 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+55.2281 	EXP 	stimulus: autoDraw = True
+55.4760 	EXP 	stimulus: autoDraw = False
+55.4760 	EXP 	stimulus: autoDraw = False
+55.4760 	EXP 	blank: autoDraw = True
+56.4598 	EXP 	New trial (rep=4, index=5): {'color': 'gray', 'trigger': 2}
+56.4684 	EXP 	blank: autoDraw = False
+56.4684 	EXP 	blank: autoDraw = False
+56.4684 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+56.4684 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+56.4752 	EXP 	stimulus: autoDraw = True
+56.7189 	EXP 	stimulus: autoDraw = False
+56.7189 	EXP 	stimulus: autoDraw = False
+56.7259 	EXP 	blank: autoDraw = True
+57.7096 	EXP 	New trial (rep=4, index=6): {'color': 'gray', 'trigger': 2}
+57.7184 	EXP 	blank: autoDraw = False
+57.7184 	EXP 	blank: autoDraw = False
+57.7184 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+57.7184 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+57.7240 	EXP 	stimulus: autoDraw = True
+57.9688 	EXP 	stimulus: autoDraw = False
+57.9688 	EXP 	stimulus: autoDraw = False
+57.9761 	EXP 	blank: autoDraw = True
+58.9601 	EXP 	New trial (rep=4, index=7): {'color': 'white', 'trigger': 1}
+58.9685 	EXP 	blank: autoDraw = False
+58.9685 	EXP 	blank: autoDraw = False
+58.9685 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+58.9685 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+58.9753 	EXP 	stimulus: autoDraw = True
+59.2188 	EXP 	stimulus: autoDraw = False
+59.2188 	EXP 	stimulus: autoDraw = False
+59.2254 	EXP 	blank: autoDraw = True
+60.2099 	EXP 	New trial (rep=5, index=0): {'color': 'white', 'trigger': 1}
+60.2185 	EXP 	blank: autoDraw = False
+60.2185 	EXP 	blank: autoDraw = False
+60.2185 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+60.2185 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+60.2245 	EXP 	stimulus: autoDraw = True
+60.4691 	EXP 	stimulus: autoDraw = False
+60.4691 	EXP 	stimulus: autoDraw = False
+60.4755 	EXP 	blank: autoDraw = True
+61.4594 	EXP 	New trial (rep=5, index=1): {'color': 'gray', 'trigger': 2}
+61.4686 	EXP 	blank: autoDraw = False
+61.4686 	EXP 	blank: autoDraw = False
+61.4686 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+61.4686 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+61.4747 	EXP 	stimulus: autoDraw = True
+61.7188 	EXP 	stimulus: autoDraw = False
+61.7188 	EXP 	stimulus: autoDraw = False
+61.7248 	EXP 	blank: autoDraw = True
+62.7095 	EXP 	New trial (rep=5, index=2): {'color': 'white', 'trigger': 1}
+62.7185 	EXP 	blank: autoDraw = False
+62.7185 	EXP 	blank: autoDraw = False
+62.7185 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+62.7185 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+62.7240 	EXP 	stimulus: autoDraw = True
+62.9691 	EXP 	stimulus: autoDraw = False
+62.9691 	EXP 	stimulus: autoDraw = False
+62.9750 	EXP 	blank: autoDraw = True
+64.2653 	WARNING 	t of last frame was 590.41ms (=1/1)
+64.2661 	EXP 	New trial (rep=5, index=3): {'color': 'gray', 'trigger': 2}
+64.2788 	EXP 	blank: autoDraw = False
+64.2788 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+64.2788 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+64.2788 	EXP 	stimulus: autoDraw = False
+64.2788 	EXP 	blank: autoDraw = True
+65.2361 	EXP 	New trial (rep=5, index=4): {'color': 'white', 'trigger': 1}
+65.2434 	EXP 	blank: autoDraw = False
+65.2434 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+65.2434 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+65.2434 	EXP 	stimulus: autoDraw = True
+65.4846 	EXP 	stimulus: autoDraw = False
+65.4846 	EXP 	stimulus: autoDraw = False
+65.4846 	EXP 	blank: autoDraw = True
+66.0521 	WARNING 	t of last frame was 26.98ms (=1/37)
+66.4700 	EXP 	New trial (rep=5, index=5): {'color': 'gray', 'trigger': 2}
+66.4774 	EXP 	blank: autoDraw = False
+66.4774 	EXP 	blank: autoDraw = False
+66.4774 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+66.4774 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+66.4774 	EXP 	stimulus: autoDraw = True
+66.7268 	EXP 	stimulus: autoDraw = False
+66.7268 	EXP 	stimulus: autoDraw = False
+66.7268 	EXP 	blank: autoDraw = True
+67.7201 	EXP 	New trial (rep=5, index=6): {'color': 'white', 'trigger': 1}
+67.7278 	EXP 	blank: autoDraw = False
+67.7278 	EXP 	blank: autoDraw = False
+67.7278 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+67.7278 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+67.7278 	EXP 	stimulus: autoDraw = True
+67.9757 	EXP 	stimulus: autoDraw = False
+67.9757 	EXP 	stimulus: autoDraw = False
+67.9757 	EXP 	blank: autoDraw = True
+68.9703 	EXP 	New trial (rep=5, index=7): {'color': 'gray', 'trigger': 2}
+68.9776 	EXP 	blank: autoDraw = False
+68.9776 	EXP 	blank: autoDraw = False
+68.9776 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+68.9776 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+68.9776 	EXP 	stimulus: autoDraw = True
+69.2259 	EXP 	stimulus: autoDraw = False
+69.2259 	EXP 	stimulus: autoDraw = False
+69.2259 	EXP 	blank: autoDraw = True
+70.2097 	EXP 	New trial (rep=6, index=0): {'color': 'white', 'trigger': 1}
+70.2185 	EXP 	blank: autoDraw = False
+70.2185 	EXP 	blank: autoDraw = False
+70.2185 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+70.2185 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+70.2240 	EXP 	stimulus: autoDraw = True
+70.4689 	EXP 	stimulus: autoDraw = False
+70.4689 	EXP 	stimulus: autoDraw = False
+70.4750 	EXP 	blank: autoDraw = True
+71.4594 	EXP 	New trial (rep=6, index=1): {'color': 'white', 'trigger': 1}
+71.4686 	EXP 	blank: autoDraw = False
+71.4686 	EXP 	blank: autoDraw = False
+71.4686 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+71.4686 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+71.4747 	EXP 	stimulus: autoDraw = True
+71.7189 	EXP 	stimulus: autoDraw = False
+71.7189 	EXP 	stimulus: autoDraw = False
+71.7247 	EXP 	blank: autoDraw = True
+72.7108 	EXP 	New trial (rep=6, index=2): {'color': 'gray', 'trigger': 2}
+72.7187 	EXP 	blank: autoDraw = False
+72.7187 	EXP 	blank: autoDraw = False
+72.7187 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+72.7187 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+72.7255 	EXP 	stimulus: autoDraw = True
+72.9758 	EXP 	stimulus: autoDraw = False
+72.9758 	EXP 	stimulus: autoDraw = False
+72.9758 	EXP 	blank: autoDraw = True
+73.9594 	EXP 	New trial (rep=6, index=3): {'color': 'gray', 'trigger': 2}
+73.9685 	EXP 	blank: autoDraw = False
+73.9685 	EXP 	blank: autoDraw = False
+73.9685 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+73.9685 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+73.9752 	EXP 	stimulus: autoDraw = True
+74.2191 	EXP 	stimulus: autoDraw = False
+74.2191 	EXP 	stimulus: autoDraw = False
+74.2267 	EXP 	blank: autoDraw = True
+75.2204 	EXP 	New trial (rep=6, index=4): {'color': 'gray', 'trigger': 2}
+75.2276 	EXP 	blank: autoDraw = False
+75.2276 	EXP 	blank: autoDraw = False
+75.2276 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+75.2276 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+75.2276 	EXP 	stimulus: autoDraw = True
+75.4754 	EXP 	stimulus: autoDraw = False
+75.4754 	EXP 	stimulus: autoDraw = False
+75.4754 	EXP 	blank: autoDraw = True
+76.4609 	EXP 	New trial (rep=6, index=5): {'color': 'gray', 'trigger': 2}
+76.4689 	EXP 	blank: autoDraw = False
+76.4689 	EXP 	blank: autoDraw = False
+76.4689 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+76.4689 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+76.4753 	EXP 	stimulus: autoDraw = True
+76.7189 	EXP 	stimulus: autoDraw = False
+76.7189 	EXP 	stimulus: autoDraw = False
+76.7248 	EXP 	blank: autoDraw = True
+77.7095 	EXP 	New trial (rep=6, index=6): {'color': 'white', 'trigger': 1}
+77.7185 	EXP 	blank: autoDraw = False
+77.7185 	EXP 	blank: autoDraw = False
+77.7185 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+77.7185 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+77.7243 	EXP 	stimulus: autoDraw = True
+77.9688 	EXP 	stimulus: autoDraw = False
+77.9688 	EXP 	stimulus: autoDraw = False
+77.9754 	EXP 	blank: autoDraw = True
+78.9604 	EXP 	New trial (rep=6, index=7): {'color': 'white', 'trigger': 1}
+78.9685 	EXP 	blank: autoDraw = False
+78.9685 	EXP 	blank: autoDraw = False
+78.9685 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+78.9685 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+78.9753 	EXP 	stimulus: autoDraw = True
+79.2192 	EXP 	stimulus: autoDraw = False
+79.2192 	EXP 	stimulus: autoDraw = False
+79.2251 	EXP 	blank: autoDraw = True
+80.2100 	EXP 	New trial (rep=7, index=0): {'color': 'gray', 'trigger': 2}
+80.2180 	EXP 	blank: autoDraw = False
+80.2180 	EXP 	blank: autoDraw = False
+80.2180 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+80.2180 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+80.2233 	EXP 	stimulus: autoDraw = True
+80.4689 	EXP 	stimulus: autoDraw = False
+80.4689 	EXP 	stimulus: autoDraw = False
+80.4748 	EXP 	blank: autoDraw = True
+80.7944 	WARNING 	t of last frame was 25.27ms (=1/39)
+81.4597 	EXP 	New trial (rep=7, index=1): {'color': 'white', 'trigger': 1}
+81.4685 	EXP 	blank: autoDraw = False
+81.4685 	EXP 	blank: autoDraw = False
+81.4685 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+81.4685 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+81.4746 	EXP 	stimulus: autoDraw = True
+81.7188 	EXP 	stimulus: autoDraw = False
+81.7188 	EXP 	stimulus: autoDraw = False
+81.7252 	EXP 	blank: autoDraw = True
+81.9518 	WARNING 	Multiple dropped frames have occurred - I'll stop bothering you about them!
+82.7108 	EXP 	New trial (rep=7, index=2): {'color': 'gray', 'trigger': 2}
+82.7187 	EXP 	blank: autoDraw = False
+82.7187 	EXP 	blank: autoDraw = False
+82.7187 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+82.7187 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+82.7250 	EXP 	stimulus: autoDraw = True
+82.9691 	EXP 	stimulus: autoDraw = False
+82.9691 	EXP 	stimulus: autoDraw = False
+82.9750 	EXP 	blank: autoDraw = True
+83.9606 	EXP 	New trial (rep=7, index=3): {'color': 'white', 'trigger': 1}
+83.9687 	EXP 	blank: autoDraw = False
+83.9687 	EXP 	blank: autoDraw = False
+83.9687 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+83.9687 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+83.9750 	EXP 	stimulus: autoDraw = True
+84.2190 	EXP 	stimulus: autoDraw = False
+84.2190 	EXP 	stimulus: autoDraw = False
+84.2249 	EXP 	blank: autoDraw = True
+85.2094 	EXP 	New trial (rep=7, index=4): {'color': 'gray', 'trigger': 2}
+85.2186 	EXP 	blank: autoDraw = False
+85.2186 	EXP 	blank: autoDraw = False
+85.2186 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+85.2186 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+85.2256 	EXP 	stimulus: autoDraw = True
+85.4692 	EXP 	stimulus: autoDraw = False
+85.4692 	EXP 	stimulus: autoDraw = False
+85.4758 	EXP 	blank: autoDraw = True
+86.4595 	EXP 	New trial (rep=7, index=5): {'color': 'white', 'trigger': 1}
+86.4681 	EXP 	blank: autoDraw = False
+86.4681 	EXP 	blank: autoDraw = False
+86.4681 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+86.4681 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+86.4736 	EXP 	stimulus: autoDraw = True
+86.7190 	EXP 	stimulus: autoDraw = False
+86.7190 	EXP 	stimulus: autoDraw = False
+86.7257 	EXP 	blank: autoDraw = True
+87.7096 	EXP 	New trial (rep=7, index=6): {'color': 'gray', 'trigger': 2}
+87.7186 	EXP 	blank: autoDraw = False
+87.7186 	EXP 	blank: autoDraw = False
+87.7186 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+87.7186 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+87.7246 	EXP 	stimulus: autoDraw = True
+87.9692 	EXP 	stimulus: autoDraw = False
+87.9692 	EXP 	stimulus: autoDraw = False
+87.9751 	EXP 	blank: autoDraw = True
+88.9608 	EXP 	New trial (rep=7, index=7): {'color': 'white', 'trigger': 1}
+88.9681 	EXP 	blank: autoDraw = False
+88.9681 	EXP 	blank: autoDraw = False
+88.9681 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+88.9681 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+88.9742 	EXP 	stimulus: autoDraw = True
+89.2193 	EXP 	stimulus: autoDraw = False
+89.2193 	EXP 	stimulus: autoDraw = False
+89.2264 	EXP 	blank: autoDraw = True
+90.2101 	EXP 	New trial (rep=8, index=0): {'color': 'gray', 'trigger': 2}
+90.2185 	EXP 	blank: autoDraw = False
+90.2185 	EXP 	blank: autoDraw = False
+90.2185 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+90.2185 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+90.2254 	EXP 	stimulus: autoDraw = True
+90.4686 	EXP 	stimulus: autoDraw = False
+90.4686 	EXP 	stimulus: autoDraw = False
+90.4747 	EXP 	blank: autoDraw = True
+91.4603 	EXP 	New trial (rep=8, index=1): {'color': 'gray', 'trigger': 2}
+91.4686 	EXP 	blank: autoDraw = False
+91.4686 	EXP 	blank: autoDraw = False
+91.4686 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+91.4686 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+91.4749 	EXP 	stimulus: autoDraw = True
+91.7193 	EXP 	stimulus: autoDraw = False
+91.7193 	EXP 	stimulus: autoDraw = False
+91.7258 	EXP 	blank: autoDraw = True
+92.7101 	EXP 	New trial (rep=8, index=2): {'color': 'white', 'trigger': 1}
+92.7188 	EXP 	blank: autoDraw = False
+92.7188 	EXP 	blank: autoDraw = False
+92.7188 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+92.7188 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+92.7256 	EXP 	stimulus: autoDraw = True
+92.9692 	EXP 	stimulus: autoDraw = False
+92.9692 	EXP 	stimulus: autoDraw = False
+92.9745 	EXP 	blank: autoDraw = True
+93.9599 	EXP 	New trial (rep=8, index=3): {'color': 'gray', 'trigger': 2}
+93.9686 	EXP 	blank: autoDraw = False
+93.9686 	EXP 	blank: autoDraw = False
+93.9686 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+93.9686 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+93.9748 	EXP 	stimulus: autoDraw = True
+94.2192 	EXP 	stimulus: autoDraw = False
+94.2192 	EXP 	stimulus: autoDraw = False
+94.2258 	EXP 	blank: autoDraw = True
+95.2103 	EXP 	New trial (rep=8, index=4): {'color': 'white', 'trigger': 1}
+95.2187 	EXP 	blank: autoDraw = False
+95.2187 	EXP 	blank: autoDraw = False
+95.2187 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+95.2187 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+95.2245 	EXP 	stimulus: autoDraw = True
+95.4689 	EXP 	stimulus: autoDraw = False
+95.4689 	EXP 	stimulus: autoDraw = False
+95.4749 	EXP 	blank: autoDraw = True
+96.4602 	EXP 	New trial (rep=8, index=5): {'color': 'white', 'trigger': 1}
+96.4686 	EXP 	blank: autoDraw = False
+96.4686 	EXP 	blank: autoDraw = False
+96.4686 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+96.4686 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+96.4750 	EXP 	stimulus: autoDraw = True
+96.7192 	EXP 	stimulus: autoDraw = False
+96.7192 	EXP 	stimulus: autoDraw = False
+96.7253 	EXP 	blank: autoDraw = True
+97.7099 	EXP 	New trial (rep=8, index=6): {'color': 'gray', 'trigger': 2}
+97.7186 	EXP 	blank: autoDraw = False
+97.7186 	EXP 	blank: autoDraw = False
+97.7186 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+97.7186 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+97.7247 	EXP 	stimulus: autoDraw = True
+97.9689 	EXP 	stimulus: autoDraw = False
+97.9689 	EXP 	stimulus: autoDraw = False
+97.9749 	EXP 	blank: autoDraw = True
+98.9591 	EXP 	New trial (rep=8, index=7): {'color': 'white', 'trigger': 1}
+98.9686 	EXP 	blank: autoDraw = False
+98.9686 	EXP 	blank: autoDraw = False
+98.9686 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+98.9686 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+98.9746 	EXP 	stimulus: autoDraw = True
+99.2189 	EXP 	stimulus: autoDraw = False
+99.2189 	EXP 	stimulus: autoDraw = False
+99.2256 	EXP 	blank: autoDraw = True
+100.2100 	EXP 	New trial (rep=9, index=0): {'color': 'white', 'trigger': 1}
+100.2186 	EXP 	blank: autoDraw = False
+100.2186 	EXP 	blank: autoDraw = False
+100.2186 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+100.2186 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+100.2245 	EXP 	stimulus: autoDraw = True
+100.4693 	EXP 	stimulus: autoDraw = False
+100.4693 	EXP 	stimulus: autoDraw = False
+100.4753 	EXP 	blank: autoDraw = True
+101.4604 	EXP 	New trial (rep=9, index=1): {'color': 'gray', 'trigger': 2}
+101.4686 	EXP 	blank: autoDraw = False
+101.4686 	EXP 	blank: autoDraw = False
+101.4686 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+101.4686 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+101.4747 	EXP 	stimulus: autoDraw = True
+101.7192 	EXP 	stimulus: autoDraw = False
+101.7192 	EXP 	stimulus: autoDraw = False
+101.7257 	EXP 	blank: autoDraw = True
+102.7096 	EXP 	New trial (rep=9, index=2): {'color': 'gray', 'trigger': 2}
+102.7181 	EXP 	blank: autoDraw = False
+102.7181 	EXP 	blank: autoDraw = False
+102.7181 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+102.7181 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+102.7250 	EXP 	stimulus: autoDraw = True
+102.9689 	EXP 	stimulus: autoDraw = False
+102.9689 	EXP 	stimulus: autoDraw = False
+102.9748 	EXP 	blank: autoDraw = True
+103.9600 	EXP 	New trial (rep=9, index=3): {'color': 'white', 'trigger': 1}
+103.9686 	EXP 	blank: autoDraw = False
+103.9686 	EXP 	blank: autoDraw = False
+103.9686 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+103.9686 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+103.9741 	EXP 	stimulus: autoDraw = True
+104.2189 	EXP 	stimulus: autoDraw = False
+104.2189 	EXP 	stimulus: autoDraw = False
+104.2248 	EXP 	blank: autoDraw = True
+105.2097 	EXP 	New trial (rep=9, index=4): {'color': 'gray', 'trigger': 2}
+105.2197 	EXP 	blank: autoDraw = False
+105.2197 	EXP 	blank: autoDraw = False
+105.2197 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+105.2197 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+105.2255 	EXP 	stimulus: autoDraw = True
+105.4693 	EXP 	stimulus: autoDraw = False
+105.4693 	EXP 	stimulus: autoDraw = False
+105.4756 	EXP 	blank: autoDraw = True
+106.4600 	EXP 	New trial (rep=9, index=5): {'color': 'white', 'trigger': 1}
+106.4686 	EXP 	blank: autoDraw = False
+106.4686 	EXP 	blank: autoDraw = False
+106.4686 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+106.4686 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+106.4749 	EXP 	stimulus: autoDraw = True
+106.7192 	EXP 	stimulus: autoDraw = False
+106.7192 	EXP 	stimulus: autoDraw = False
+106.7257 	EXP 	blank: autoDraw = True
+107.7110 	EXP 	New trial (rep=9, index=6): {'color': 'white', 'trigger': 1}
+107.7190 	EXP 	blank: autoDraw = False
+107.7190 	EXP 	blank: autoDraw = False
+107.7190 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+107.7190 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+107.7252 	EXP 	stimulus: autoDraw = True
+107.9692 	EXP 	stimulus: autoDraw = False
+107.9692 	EXP 	stimulus: autoDraw = False
+107.9771 	EXP 	blank: autoDraw = True
+108.9705 	EXP 	New trial (rep=9, index=7): {'color': 'gray', 'trigger': 2}
+108.9789 	EXP 	blank: autoDraw = False
+108.9789 	EXP 	blank: autoDraw = False
+108.9789 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+108.9789 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+108.9789 	EXP 	stimulus: autoDraw = True
+109.2255 	EXP 	stimulus: autoDraw = False
+109.2255 	EXP 	stimulus: autoDraw = False
+109.2255 	EXP 	blank: autoDraw = True
+110.2193 	EXP 	blank: autoDraw = False
+110.2193 	EXP 	blank: autoDraw = False
+110.2919 	EXP 	window1: mouseVisible = True

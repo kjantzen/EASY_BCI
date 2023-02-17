@@ -35,6 +35,8 @@ function p = initialize(p)
     p.ax.XLabel.String = "Time (s)";
     p.ax.XLabel.FontSize = 16;
 
+    %initialize the plotting object by calling it and passing the axis in
+    %which to plot
     p.ERP = BCI_ERPplot(p.ax);
 
 end

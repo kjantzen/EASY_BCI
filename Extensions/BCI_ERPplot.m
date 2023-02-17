@@ -29,8 +29,8 @@
             %
 classdef BCI_ERPplot
     properties 
-        plotHandle     %the handle to the actual plot
-        ax
+        plotHandle      %the handle to the actual plot
+        ax              %the axis to plot in
         erp             %handle to an BCI_ERP object
     end
     properties (Constant)
@@ -76,12 +76,13 @@ classdef BCI_ERPplot
                 obj.plotHandle(ii).Color = obj.plotColors{ii};
                 obj.plotHandle(ii).LineWidth = 1.5;
              end
-             
-                
+             %plot the single trial
+           %   obj.plotHandle(4) = line(obj.ax, trial.timePnts, trial.EEG);  
             end                
           
-            obj.plotHandle(trial.evt).XData = obj.erp.timePnts;
+            %obj.plotHandle(trial.evt).XData = obj.erp.timePnts;
             obj.plotHandle(trial.evt).YData = obj.erp.erp(trial.evt,:);
+           % obj.plotHandle(4).YData = trial.EEG;
                     
             axis(obj.ax,'tight');
             if ~autoScale
