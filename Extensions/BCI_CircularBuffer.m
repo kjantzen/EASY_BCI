@@ -1,4 +1,4 @@
-classdef BYB_CircularBuffer
+classdef BCI_CircularBuffer
     properties
         EEGBuffer   %the main circular buffer
         BufferLength     %the length of the buffer in samples
@@ -17,7 +17,7 @@ classdef BYB_CircularBuffer
         %                       be added.
     end
     methods
-        function obj = BYB_CircularBuffer(ChunkLength, varargin)
+        function obj = BCI_CircularBuffer(ChunkLength, varargin)
         %constructor method for creating an instance of the circular buffer class
         %
         %buffer = CircularBuffer(ChunkLength) will create a circular buffer

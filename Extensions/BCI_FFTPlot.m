@@ -73,7 +73,7 @@ classdef BCI_FFTPlot
             
             
       
-            obj.Axis.XLim = fRange/obj.Nyquist * length(obj.FFTData);
+            obj.Axis.XLim = fRange; %fRange/obj.Nyquist * length(obj.FFTData);
             drawnow();
           
         end

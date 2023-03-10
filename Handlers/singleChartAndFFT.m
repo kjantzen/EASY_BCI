@@ -16,13 +16,12 @@ function outStruct = singleChartAndFFT(inStruct, varargin)
 end
 
 %this function gets called when data is passed to the handler
-function p = analyze(p,data, event)
+function p = analyze(obj,p, dStruct)
 
-    event = zeros(size(data));
-
+    data = dStruct.EEG;
     data = data - mean(data);
     p.chartPlot1 = p.chartPlot1.UpdateChart(data);  
-    p.fftPlot1 = p.fftPlot1.updateChart(data, [0,100]);
+    p.fftPlot1 = p.fftPlot1.updateChart(data, [0, 100]);
 
 
 
@@ -31,14 +30,14 @@ end
 %% this is the funciton that initializes the display and the analysis stream
 % this is where you would add new objects that you want to use to plot or
 % analyze your data chunks as they are being collected
-    function o = initialize(o)
-%p = initializeProcessesing(p) 
-%initializes the BCI analysis and plotting stream prior to the onset of
-%data collection.  It accepts a structure containing the programs
-%parameters and returns an updated and saved version of the parameters.
-%Use this function to initialize any analysis functions you want to add to
-%your BCI
-%
+    function p = initialize(p)
+    %p = initializeProcessesing(p) 
+    %initializes the BCI analysis and plotting stream prior to the onset of
+    %data collection.  It accepts a structure containing the programs
+    %parameters and returns an updated and saved version of the parameters.
+    %Use this function to initialize any analysis functions you want to add to
+    %your BCI
+    %
 
     %THIS SECTION INITIALIZES THE DISPLAY
     %check to see if the figure already exists
@@ -46,13 +45,13 @@ end
     %recognize the figure
     existingFigure = findobj('Name', 'BYB BCI Data Display');
     if ~isempty(existingFigure)
-        o.handles.outputFigure = existingFigure(1);
-        clf(o.handles.outputFigure);
+        p.handles.outputFigure = existingFigure(1);
+        clf(p.handles.outputFigure);
     else
        %create a new figure to hold all the plots etc
-        o.handles.outputFigure = figure;
+        p.handles.outputFigure = figure;
         %name it so we can recognize it later if the software is rerun
-        o.handles.outputFigure.Name  = 'BYB BCI Data Display';
+        p.handles.outputFigure.Name  = 'BYB BCI Data Display';
     end
     
     %THIS IS LIKELY WHERE YOU WILL WANT TO START EDITING
@@ -69,7 +68,7 @@ end
     sp.YLabel.String = 'amplitude (uV units)';
     %create a new chart object and pass in the data sample rate, the length
     %of the chart and the axis to plot to.
-    o.chartPlot1 = BCI_Chart(o.sampleRate, 5, sp);
+    p.chartPlot1 = BCI_Chart(p.sampleRate, 5, sp);
   
     %create an fft plotting object to plot the power spectrum of the
     %unfitlered data
@@ -79,7 +78,7 @@ end
     %collection, the length of the window to transform (in seconds), and
     %the axis to plot the data in.
     FFT_length = 5;
-    o.fftPlot1 = BCI_FFTPlot(o.sampleRate, FFT_length,sp);
+    p.fftPlot1 = BCI_FFTPlot(p.sampleRate, FFT_length, sp);
    
 
 end

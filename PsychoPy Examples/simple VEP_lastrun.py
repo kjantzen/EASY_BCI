@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2022.2.4),
-    on Thu Feb  9 17:24:36 2023
+    on Mon Feb 27 17:00:21 2023
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -95,34 +95,52 @@ eyetracker = None
 # create a default keyboard (e.g. to check for escape)
 defaultKeyboard = keyboard.Keyboard(backend='iohub')
 
-# --- Initialize components for Routine "trial" ---
-stimulus = visual.ShapeStim(
-    win=win, name='stimulus',
-    size=(0.5, 0.5), vertices='circle',
-    ori=0.0, pos=(0, 0), anchor='center',
-    lineWidth=1.0,     colorSpace='rgb',  lineColor='white', fillColor='white',
-    opacity=None, depth=0.0, interpolate=True)
+# --- Initialize components for Routine "phase1" ---
 # Run 'Begin Experiment' code from code
 import serial
-trigPort = serial.Serial('/dev/cu.usbmodem4');
+trigPort = serial.Serial('/dev/cu.usbmodem101');
 
-
-# --- Initialize components for Routine "delay" ---
-blank = visual.ShapeStim(
-    win=win, name='blank',
-    size=(0.5, 0.5), vertices='triangle',
+grating1 = visual.GratingStim(
+    win=win, name='grating1',
+    tex='sin', mask=None, anchor='center',
+    ori=0.0, pos=(0, 0), size=(1.5, 1), sf=10.0, phase=0.0,
+    color=[1,1,1], colorSpace='rgb',
+    opacity=None, contrast=1.0, blendmode='avg',
+    texRes=128.0, interpolate=True, depth=-1.0)
+fixation = visual.ShapeStim(
+    win=win, name='fixation',
+    size=(0.01, 0.01), vertices='circle',
     ori=0.0, pos=(0, 0), anchor='center',
-    lineWidth=1.0,     colorSpace='rgb',  lineColor='gray', fillColor='gray',
-    opacity=None, depth=0.0, interpolate=True)
+    lineWidth=1.0,     colorSpace='rgb',  lineColor='red', fillColor='red',
+    opacity=None, depth=-2.0, interpolate=True)
+
+# --- Initialize components for Routine "phase2" ---
+# Run 'Begin Experiment' code from code_2
+import serial
+trigPort = serial.Serial('/dev/cu.usbmodem101');
+trigger = 1;
+grating1_2 = visual.GratingStim(
+    win=win, name='grating1_2',
+    tex='sin', mask=None, anchor='center',
+    ori=0.0, pos=(0, 0), size=(1.5, 1), sf=10.0, phase=0.5,
+    color=[1,1,1], colorSpace='rgb',
+    opacity=None, contrast=1.0, blendmode='avg',
+    texRes=128.0, interpolate=True, depth=-1.0)
+fixation_2 = visual.ShapeStim(
+    win=win, name='fixation_2',
+    size=(0.01, 0.01), vertices='circle',
+    ori=0.0, pos=(0, 0), anchor='center',
+    lineWidth=1.0,     colorSpace='rgb',  lineColor='red', fillColor='red',
+    opacity=None, depth=-2.0, interpolate=True)
 
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.Clock()  # to track time remaining of each (possibly non-slip) routine 
 
 # set up handler to look after randomisation of conditions etc
-trials = data.TrialHandler(nReps=10.0, method='random', 
+trials = data.TrialHandler(nReps=75.0, method='random', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('StimList.xlsx'),
+    trialList=[None],
     seed=None, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -138,19 +156,17 @@ for thisTrial in trials:
         for paramName in thisTrial:
             exec('{} = thisTrial[paramName]'.format(paramName))
     
-    # --- Prepare to start Routine "trial" ---
+    # --- Prepare to start Routine "phase1" ---
     continueRoutine = True
     routineForceEnded = False
     # update component parameters for each repeat
-    stimulus.setFillColor(color)
-    stimulus.setLineColor(color)
     # Run 'Begin Routine' code from code
     t = trigger.to_bytes(1, 'little')
     trigPort.write(t)
     
     # keep track of which components have finished
-    trialComponents = [stimulus]
-    for thisComponent in trialComponents:
+    phase1Components = [grating1, fixation]
+    for thisComponent in phase1Components:
         thisComponent.tStart = None
         thisComponent.tStop = None
         thisComponent.tStartRefresh = None
@@ -162,8 +178,8 @@ for thisTrial in trials:
     _timeToFirstFrame = win.getFutureFlipTime(clock="now")
     frameN = -1
     
-    # --- Run Routine "trial" ---
-    while continueRoutine and routineTimer.getTime() < 0.25:
+    # --- Run Routine "phase1" ---
+    while continueRoutine and routineTimer.getTime() < 0.5:
         # get current time
         t = routineTimer.getTime()
         tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -171,25 +187,45 @@ for thisTrial in trials:
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
-        # *stimulus* updates
-        if stimulus.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # *grating1* updates
+        if grating1.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
             # keep track of start time/frame for later
-            stimulus.frameNStart = frameN  # exact frame index
-            stimulus.tStart = t  # local t and not account for scr refresh
-            stimulus.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(stimulus, 'tStartRefresh')  # time at next scr refresh
+            grating1.frameNStart = frameN  # exact frame index
+            grating1.tStart = t  # local t and not account for scr refresh
+            grating1.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(grating1, 'tStartRefresh')  # time at next scr refresh
             # add timestamp to datafile
-            thisExp.timestampOnFlip(win, 'stimulus.started')
-            stimulus.setAutoDraw(True)
-        if stimulus.status == STARTED:
+            thisExp.timestampOnFlip(win, 'grating1.started')
+            grating1.setAutoDraw(True)
+        if grating1.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > stimulus.tStartRefresh + .25-frameTolerance:
+            if tThisFlipGlobal > grating1.tStartRefresh + .5-frameTolerance:
                 # keep track of stop time/frame for later
-                stimulus.tStop = t  # not accounting for scr refresh
-                stimulus.frameNStop = frameN  # exact frame index
+                grating1.tStop = t  # not accounting for scr refresh
+                grating1.frameNStop = frameN  # exact frame index
                 # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'stimulus.stopped')
-                stimulus.setAutoDraw(False)
+                thisExp.timestampOnFlip(win, 'grating1.stopped')
+                grating1.setAutoDraw(False)
+        
+        # *fixation* updates
+        if fixation.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            fixation.frameNStart = frameN  # exact frame index
+            fixation.tStart = t  # local t and not account for scr refresh
+            fixation.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(fixation, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.timestampOnFlip(win, 'fixation.started')
+            fixation.setAutoDraw(True)
+        if fixation.status == STARTED:
+            # is it time to stop? (based on global clock, using actual start)
+            if tThisFlipGlobal > fixation.tStartRefresh + .5-frameTolerance:
+                # keep track of stop time/frame for later
+                fixation.tStop = t  # not accounting for scr refresh
+                fixation.frameNStop = frameN  # exact frame index
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'fixation.stopped')
+                fixation.setAutoDraw(False)
         
         # check for quit (typically the Esc key)
         if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
@@ -200,7 +236,7 @@ for thisTrial in trials:
             routineForceEnded = True
             break
         continueRoutine = False  # will revert to True if at least one component still running
-        for thisComponent in trialComponents:
+        for thisComponent in phase1Components:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
                 break  # at least one component has not yet finished
@@ -209,8 +245,8 @@ for thisTrial in trials:
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
     
-    # --- Ending Routine "trial" ---
-    for thisComponent in trialComponents:
+    # --- Ending Routine "phase1" ---
+    for thisComponent in phase1Components:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
     # Run 'End Routine' code from code
@@ -219,15 +255,19 @@ for thisTrial in trials:
     if routineForceEnded:
         routineTimer.reset()
     else:
-        routineTimer.addTime(-0.250000)
+        routineTimer.addTime(-0.500000)
     
-    # --- Prepare to start Routine "delay" ---
+    # --- Prepare to start Routine "phase2" ---
     continueRoutine = True
     routineForceEnded = False
     # update component parameters for each repeat
+    # Run 'Begin Routine' code from code_2
+    t = trigger.to_bytes(1, 'little')
+    trigPort.write(t)
+    
     # keep track of which components have finished
-    delayComponents = [blank]
-    for thisComponent in delayComponents:
+    phase2Components = [grating1_2, fixation_2]
+    for thisComponent in phase2Components:
         thisComponent.tStart = None
         thisComponent.tStop = None
         thisComponent.tStartRefresh = None
@@ -239,8 +279,8 @@ for thisTrial in trials:
     _timeToFirstFrame = win.getFutureFlipTime(clock="now")
     frameN = -1
     
-    # --- Run Routine "delay" ---
-    while continueRoutine and routineTimer.getTime() < 1.0:
+    # --- Run Routine "phase2" ---
+    while continueRoutine and routineTimer.getTime() < 0.5:
         # get current time
         t = routineTimer.getTime()
         tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -248,25 +288,45 @@ for thisTrial in trials:
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
-        # *blank* updates
-        if blank.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # *grating1_2* updates
+        if grating1_2.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
             # keep track of start time/frame for later
-            blank.frameNStart = frameN  # exact frame index
-            blank.tStart = t  # local t and not account for scr refresh
-            blank.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(blank, 'tStartRefresh')  # time at next scr refresh
+            grating1_2.frameNStart = frameN  # exact frame index
+            grating1_2.tStart = t  # local t and not account for scr refresh
+            grating1_2.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(grating1_2, 'tStartRefresh')  # time at next scr refresh
             # add timestamp to datafile
-            thisExp.timestampOnFlip(win, 'blank.started')
-            blank.setAutoDraw(True)
-        if blank.status == STARTED:
+            thisExp.timestampOnFlip(win, 'grating1_2.started')
+            grating1_2.setAutoDraw(True)
+        if grating1_2.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > blank.tStartRefresh + 1-frameTolerance:
+            if tThisFlipGlobal > grating1_2.tStartRefresh + .5-frameTolerance:
                 # keep track of stop time/frame for later
-                blank.tStop = t  # not accounting for scr refresh
-                blank.frameNStop = frameN  # exact frame index
+                grating1_2.tStop = t  # not accounting for scr refresh
+                grating1_2.frameNStop = frameN  # exact frame index
                 # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'blank.stopped')
-                blank.setAutoDraw(False)
+                thisExp.timestampOnFlip(win, 'grating1_2.stopped')
+                grating1_2.setAutoDraw(False)
+        
+        # *fixation_2* updates
+        if fixation_2.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            fixation_2.frameNStart = frameN  # exact frame index
+            fixation_2.tStart = t  # local t and not account for scr refresh
+            fixation_2.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(fixation_2, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.timestampOnFlip(win, 'fixation_2.started')
+            fixation_2.setAutoDraw(True)
+        if fixation_2.status == STARTED:
+            # is it time to stop? (based on global clock, using actual start)
+            if tThisFlipGlobal > fixation_2.tStartRefresh + .5-frameTolerance:
+                # keep track of stop time/frame for later
+                fixation_2.tStop = t  # not accounting for scr refresh
+                fixation_2.frameNStop = frameN  # exact frame index
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'fixation_2.stopped')
+                fixation_2.setAutoDraw(False)
         
         # check for quit (typically the Esc key)
         if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
@@ -277,7 +337,7 @@ for thisTrial in trials:
             routineForceEnded = True
             break
         continueRoutine = False  # will revert to True if at least one component still running
-        for thisComponent in delayComponents:
+        for thisComponent in phase2Components:
             if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                 continueRoutine = True
                 break  # at least one component has not yet finished
@@ -286,20 +346,24 @@ for thisTrial in trials:
         if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
             win.flip()
     
-    # --- Ending Routine "delay" ---
-    for thisComponent in delayComponents:
+    # --- Ending Routine "phase2" ---
+    for thisComponent in phase2Components:
         if hasattr(thisComponent, "setAutoDraw"):
             thisComponent.setAutoDraw(False)
+    # Run 'End Routine' code from code_2
+    trigPort.write(str.encode('0'))
     # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
     if routineForceEnded:
         routineTimer.reset()
     else:
-        routineTimer.addTime(-1.000000)
+        routineTimer.addTime(-0.500000)
     thisExp.nextEntry()
     
-# completed 10.0 repeats of 'trials'
+# completed 75.0 repeats of 'trials'
 
 # Run 'End Experiment' code from code
+trigPort.close
+# Run 'End Experiment' code from code_2
 trigPort.close
 
 # --- End experiment ---

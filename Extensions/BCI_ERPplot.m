@@ -27,7 +27,7 @@
 %   the data between min and max.  
 %
             %
-classdef BCI_ERPplot
+classdef BCI_ERPplot < handle
     properties 
         plotHandle      %the handle to the actual plot
         ax              %the axis to plot in
@@ -35,6 +35,10 @@ classdef BCI_ERPplot
     end
     properties (Constant)
         plotColors = {'#1B98E0', '#A62639', '#79B791'};
+    end
+    properties (Access = private)
+        legendText = []
+        leg       %legend handle
     end
     methods
         function obj = BCI_ERPplot(plotAxis)
@@ -48,29 +52,30 @@ classdef BCI_ERPplot
             obj.ax = plotAxis;
 
         end
-
-        function obj = UpdateERPPlot(obj, trial, plotRange)
-            %Adds data the the existing plot for this chart object
-            %
-            %obj = UpdateChart(d) - adds the timeseries data in d to the
-            %existing data chart.
-            %
-            %obj = UpdateChart(d, scaleRange) - adjust the vertical scale
-            %of the axis to the values in 1x2 double array scaleRange. Eg -
-            %to scale between -1 and 2 pass [-1,2] as the scaleRagen
-            %parameter
-            
+        function refreshPlot(obj)
+            obj.plotHandle = [];
+            cla(obj.ax);
+        end
+        function clearERP(obj)
+            obj.plotHandle = [];
+            obj.erp = BCI_ERP();
+        end
+        function UpdateERPPlot(obj, trial, plotRange)
+            %Adds data the the existing plot for this chart object         
             if nargin < 3
                 autoScale = true;
             else
                 autoScale = false;
             end
             obj.erp = obj.erp.UpdateERP(trial);
+            trialCount = obj.erp.TrialCount;
           
             %initialize the plot if it does not exist
             if isempty(obj.plotHandle)
-             line(obj.ax, trial.timePnts, zeros(size(trial.timePnts)), 'Color', 'k');
-             h = line(obj.ax, trial.timePnts, obj.erp.erp);
+             
+             l = line(obj.ax, trial.timePnts, zeros(size(trial.timePnts)), 'Color', 'k');
+             l.Annotation.LegendInformation.IconDisplayStyle = "off";
+             h = line(obj.ax, trial.timePnts, obj.erp.ERP);
              obj.plotHandle = h;
              for ii = 1:3
                 obj.plotHandle(ii).Color = obj.plotColors{ii};
@@ -80,15 +85,24 @@ classdef BCI_ERPplot
            %   obj.plotHandle(4) = line(obj.ax, trial.timePnts, trial.EEG);  
             end                
           
-            %obj.plotHandle(trial.evt).XData = obj.erp.timePnts;
-            obj.plotHandle(trial.evt).YData = obj.erp.erp(trial.evt,:);
-           % obj.plotHandle(4).YData = trial.EEG;
+            obj.plotHandle(trial.evt).YData = obj.erp.ERP(trial.evt,:);
                     
             axis(obj.ax,'tight');
             if ~autoScale
                 obj.ax.YLim = plotRange;
             end
+            for ii = 1:3
+                obj.legendText{ii} = sprintf('Event %i, (%i trials)',ii, trialCount(ii));
+            end
+            if isempty(obj.leg)
+                obj.leg = legend(obj.ax,obj.legendText);
+                obj.leg.AutoUpdate = true;
+                obj.leg.Box = false;
+                obj.leg.FontSize = 16;
+            else
+                obj.leg.String = obj.legendText;
           
+            end
             drawnow();
           
         end

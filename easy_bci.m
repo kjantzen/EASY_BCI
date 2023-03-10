@@ -3,16 +3,15 @@
 % KJ Jantzen
 %January 2023
 
-function main_bci()
+function easy_bci()
 %main function that loads the parameters
 %and builds the UI
 
-   % makeNewDataHandlerFromTemplate('test3')
     addPaths
     p.handles = buildUI;
     set(p.handles.fig, 'UserData', p);
-   
-    
+     
+
 end
 %
 function p = initializeParameters(p)
@@ -20,8 +19,7 @@ function p = initializeParameters(p)
 
     %hard code these for now, but give the option to select them from a
     %user interface later
-    
-    
+        
     for ii = 1:length(p.handles.port_option)
         if p.handles.port_option(ii).Checked
             p.serialPortName = p.handles.port_option(ii).Text;
@@ -50,7 +48,6 @@ function p = initializeParameters(p)
     end
     p.DataHandler = str2func(p.handlerName);
 
-
     %create the spiker box object here
     %first delete any existing one that may exist
     if isfield(p, 'Device')
@@ -58,7 +55,8 @@ function p = initializeParameters(p)
     end
     
     %select a device based on user input
-    p.Device = HBSpiker_Cont(p.serialPortName, p.bufferDuration, p.DataHandler);
+    p.Device = BNS_HBSpiker(p.serialPortName, p.bufferDuration);
+    p.Device.PacketReceivedCallback = p.DataHandler;
     %p.Device = HBSpiker_ERP(p.serialPortName, p.DataHandler);
     
     %call the initialization version of the data handler, i.e. call it
@@ -71,29 +69,174 @@ end
 %% function to create the simple user interface
 function h = buildUI()
     
+    colorScheme.BackColor = '#d5dbdb';
+    colorScheme.BtnColor = '#b4c8c8' ;
+    colorScheme.ddownbackcolor = colorScheme.BackColor;
+    colorScheme.TextColor = '#222222';
+    colorScheme.CaptionColor = '#333355';
+    colorScheme.StatusTxtColor = '#506e6e';
 
     sz = get(0, 'ScreenSize');
     ports = serialportlist;
-    buff_durations = [.0625, .125, .25, .5, .75, 1, 1.5, 2];
+    buff_durations = [.01, .2, .25, .5, .75, 1, 1.5, 2];
 
-  
     %see if the figure already exists
     %if it does not create it and if it does clear it and start over
-    existingFigureHandle = findall(0,'Tag', 'BNSBCIController');
+    existingFigureHandle = findall(0,'Tag', 'easyBCIController');
      
     if ~isempty(existingFigureHandle) 
         close(existingFigureHandle(1));
     end
     
     h.fig = uifigure;
-
-    h.fig.Position = [0,sz(4)-200,300,120];
-    h.fig.Name = 'Spiker BCI Controller';
-    h.fig.Tag = 'BNSBCIController';
+    h.fig.WindowStyle = 'alwaysontop';
     h.fig.Resize = false;
+    h.fig.Position = [0,50,200,sz(4)-70];
+    drawnow;
+    h.fig.Tag = 'easyBCIController';
+    h.fig.Color = colorScheme.BackColor;
+
+    panelHeight = 160;
+    ip = h.fig.InnerPosition;
+    btm_pos = ip(4) - panelHeight;
+    wdth = ip(3);
+
+    h.panel_config = uipanel('parent', h.fig,...
+        'Position', [5, btm_pos, wdth-10,panelHeight],...
+        'Title','CONFIGURE DEVICE', 'FontSize',12,...
+        'FontWeight','bold',...
+        'BackgroundColor',colorScheme.BackColor,...
+        'ForegroundColor',colorScheme.CaptionColor,...
+        'BorderType','none');
+    
+    btm_pos = panelHeight-40;
+    uilabel('Parent', h.panel_config,...
+        'Position', [10, btm_pos, wdth-20, 20],...
+        'Text', 'communications port',...
+        'FontSize', 12,...
+        'HorizontalAlignment','right');
+
+    btm_pos = btm_pos - 23;
+    h.dropdown_port = uidropdown('Parent',h.panel_config,...
+        'Position', [5, btm_pos,  wdth-15, 25],...
+        'BackgroundColor',colorScheme.ddownbackcolor,...
+        'FontColor',colorScheme.TextColor,...
+        'Placeholder','serial port',...
+        'Items',serialportlist);
+     
+    btm_pos = btm_pos - 25;
+    uilabel('Parent', h.panel_config,...
+        'Position', [10, btm_pos, wdth-20, 20],...
+        'Text', 'buffer duration',...
+        'FontSize', 12,...
+        'HorizontalAlignment','right');
+
+    btm_pos = btm_pos - 23;
+    h.dropdown_buffdur = uidropdown('Parent',h.panel_config,...
+        'Position', [5, btm_pos,  wdth-15, 25],...
+        'BackgroundColor',colorScheme.ddownbackcolor,...
+        'FontColor',colorScheme.TextColor,...
+        'Placeholder','serial port',...
+        'Items',{'10 ms','25 ms', '100 ms', '250 ms', '500 ms', '1 sec', '1.5 sec', '2 sec', '4 sec'});
+
+    btm_pos = btm_pos - 25;
+    uilabel('Parent', h.panel_config,...
+        'Position', [10, btm_pos, wdth-20, 20],...
+        'Text', 'collection mode',...
+        'FontSize', 12,...
+        'HorizontalAlignment','right');
+
+    btm_pos = btm_pos - 23;
+    h.dropdown_mode = uidropdown('Parent',h.panel_config,...
+        'Position', [5, btm_pos,  wdth-15, 25],...
+        'BackgroundColor',colorScheme.ddownbackcolor,...
+        'FontColor',colorScheme.TextColor,...
+        'Placeholder','serial port',...
+        'Items',{'continuous', 'single trial'},...
+        'ItemsData',[0,1]);
+  
+
+      % the handler panel
+    panelHeight = 60;
+    btm_pos = ip(4) - 240;
+
+    h.panel_handler = uipanel('parent', h.fig,...
+        'Position', [5, btm_pos, wdth-10,panelHeight],...
+        'Title','DATA HANDLER', 'FontSize',12,...
+        'FontWeight','bold',...
+        'BackgroundColor',colorScheme.BackColor,...
+        'ForegroundColor',colorScheme.CaptionColor,...
+        'BorderType','none')   ; 
+  
+    btm_pos = 5;
+    h.dropdown_handler = uidropdown('Parent',h.panel_handler,...
+        'Position', [5, btm_pos,  wdth-15, 25],...
+        'BackgroundColor',colorScheme.ddownbackcolor,...
+        'FontColor',colorScheme.TextColor,...
+        'Placeholder','serial port',...
+        'Items',getHandlerNames);
+  
+    %the control panel
+    panelHeight = 150;
+    btm_pos = ip(4) - 420;
+
+    h.panel_control = uipanel('parent', h.fig,...
+        'Position', [5, btm_pos, wdth-10,panelHeight],...
+        'Title','CONTROL', 'FontSize',12,...
+        'FontWeight','bold',...
+        'BackgroundColor',colorScheme.BackColor,...
+        'ForegroundColor',colorScheme.CaptionColor,...
+        'BorderType','none');
+    
+  
+    btm_pos = 10;
+    h.button_init = uibutton('Parent', h.panel_control,...
+        'Position', [10,85,wdth-25,35],...
+        'BackgroundColor',colorScheme.BtnColor,...
+        'FontColor', colorScheme.TextColor, ...
+        'Text','Initialize',...
+        'ButtonPushedFcn',@callback_initButton);
+
+    h.button_start = uibutton('Parent', h.panel_control,...
+        'Position', [10,45,wdth-25,35],...
+        'BackgroundColor',colorScheme.BtnColor,...
+        'FontColor', colorScheme.TextColor,...
+        'Text','Start',...
+        'Enable', 'off',...
+        'ButtonPushedFcn',@callback_startButton);
+    
+     h.button_stop = uibutton('Parent', h.panel_control,...
+        'Position', [10,5,wdth-25,35],...
+        'BackgroundColor',colorScheme.BtnColor,...
+        'FontColor', colorScheme.TextColor,...
+        'Text','Stop',...
+        'Enable', 'off',...
+        'ButtonPushedFcn',@callback_stopButton);
+
+      %the status panel
+    panelHeight = 60;
+    btm_pos = ip(4) - 510;
+
+    h.panel_status = uipanel('parent', h.fig,...
+        'Position', [5, btm_pos, wdth-10,panelHeight],...
+        'Title','STATUS', 'FontSize',12,...
+        'FontWeight','bold',...
+        'BackgroundColor',colorScheme.BackColor,...
+        'ForegroundColor',colorScheme.CaptionColor,...
+        'BorderType','none');
+    
+    h.collect_status = uilabel('Parent', h.panel_status,...
+        'Text', 'No Device Initialized',...
+        'FontColor', colorScheme.StatusTxtColor,...
+        'FontSize', 14,...
+        'Position', [10,0,wdth-25,20],...
+        'HorizontalAlignment', 'center',...
+        'VerticalAlignment', 'center');
+
+    return
 
     h.menu_config = uimenu('Parent',h.fig,'Text','Configure');
-    h.menu_port = uimenu('Parent', h.menu_config, 'Text', 'Port');
+    h.menu_port = uimenu('Parent', h.menu_config, 'Text', 'Port', 'Callback', @callback_fillPortMenu);
     for ii = 1:length(ports)
         h.port_option(ii) = uimenu('Parent', h.menu_port, ...
             'Text', ports(ii), ...
@@ -171,6 +314,63 @@ function h = buildUI()
 
 
 end
+function hlist = getHandlerNames()
+
+    [fpath, ~,~] = fileparts(mfilename);
+    handlerPath = fullfile(fpath, 'Handlers','*.m');
+    handlers = dir(handlerPath);
+    if isempty(handlers)
+        error('No handlers were found');
+    end
+
+    hlist{length(handlers)} = [];
+    for ii = 1:length(handlers)
+        hlist{ii} = handlers(ii).name(1:end-2);
+    end
+     
+end
+%rebuild the serial port menu each time to make sure it has a 
+%current list of the available ports
+function callback_fillPortMenu(src,~)
+
+    %get all the stored data from the figures user data storage
+    fig = ancestor(src, 'figure', 'toplevel');
+    p = fig.UserData;
+    cp = 1;
+    cport = "";
+    %erase all existing menu items
+    %p.handles.port_option = [];
+    for ii = 1:length(p.handles.port_option)
+        if p.handles.port_option(ii).Checked
+            cport = p.handles.port_option(ii).Text;
+            cp = ii;
+        end
+    end
+
+    delete(p.handles.port_option);
+    p.handles = rmfield(p.handles, 'port_option');
+
+    ports = serialportlist;
+    %get the index of the currentPort
+    if (cp>0)
+        cp = find(ismember(ports, cport));
+        if (cp == 0)
+            cp = 1;
+        end
+    end
+  
+    for ii = 1:length(ports)
+        p.handles.port_option(ii) = uimenu('Parent', p.handles.menu_port, ...
+            'Text', ports(ii), ...
+            'Callback', @callback_port_menu);
+        if ii == cp
+            p.handles.port_option(ii).Checked = 'on';
+        end
+    end
+
+    fig.UserData = p;
+
+end
 %************************************************************************
 function callback_initButton(src, ~)
     %get the handle to the figure
@@ -215,8 +415,8 @@ function callback_startButton(src,~)
     %update the display
     drawnow;
 
-    %turn on acquisition in the SpikerBox object
-    p.Device = p.Device.Start();
+    %turn on acquisition in the Device object
+    p.Device.Start();
 
     %save the data back to the figures user data
     fig.UserData = p;
@@ -241,7 +441,7 @@ function callback_stopButton(src,~)
     p.handles.collect_status.FontColor = 'r';
 
     %stop the data collection process
-    p.Device = p.Device.Stop();
+    p.Device.Stop();
 
     %update the display
     drawnow();
@@ -317,7 +517,7 @@ function  callback_port_menu(src, evt)
     end
     src.Checked = 'on';
 
-    if isfield(p, 'SpikerBox') && p.Device.Collecting
+    if isfield(p, 'Device') && p.Device.Collecting
         callback_stopButton(src, evt);
         p.handles.button_start.Enable = 'off';
     end
@@ -336,7 +536,7 @@ function  callback_buffer_menu(src, evt)
     end
     src.Checked = 'on';
 
-    if isfield(p, 'SpikerBox') && p.Device.Collecting
+    if isfield(p, 'Device') && p.Device.Collecting
         callback_stopButton(src, evt);
         p.handles.button_start.Enable = 'off';
     end

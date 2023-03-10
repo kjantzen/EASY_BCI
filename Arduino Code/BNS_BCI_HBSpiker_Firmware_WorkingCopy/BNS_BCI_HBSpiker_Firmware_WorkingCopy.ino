@@ -1,7 +1,14 @@
-// WWU BNS BCI firmware for HBSpikerBox
+// WWU BNS BCI firmware for BYB HBSpikerBox
 // KJ Jantzen
 // V0.1 - Feb - 2023
-//
+// ALlows for operation in two modes: Continuous mode streams data to the host
+// at 500 Hz.  Single trial mode collects data into an internal buffer and 
+// transmits a single trial of data on reciept of a TTL signal on the 
+// expansion pins D9 & D11.
+// In single trial mode, the maximum buffer size at 500 Hz is 1.5 seconds
+// The user defined pre and post stimulus portions of the trial must not 
+// exceed this maximum
+// 
 // Based on:
 // Heart & Brain based on ATMEGA 328 (UNO)
 // V1.0
@@ -14,11 +21,10 @@
 //the channels combined into 3 bytes
 
 #define CURRENT_SHIELD_TYPE "HWT:HBLEOSB;"
-
-#define BUFFER_SIZE 100
+#define FIRMEWARE_VERSION "BNS_HBSpikerV0.1"
+#define RAW_BUFFER_SIZE 100
 #define SIZE_OF_COMMAND_BUFFER 30  //command buffer max size
-#define PRESTIM_SAMPLES 50
-#define PSTSTIM_SAMPLES 300
+#define TRIAL_BUFFER_MAX_SAMPLES 600
 
 // defines for setting and clearing register bits
 #ifndef cbi
@@ -34,21 +40,32 @@
 
 #define ESCAPE_SEQUENCE_LENGTH 6
 #define MODE_LED 4
+#define TRIG_LED 7
+
+/// Interrupt number - very important in combination with bit rate to get accurate data
+//KJ  - the interrupt (confifgured below) will trigger an interrupt whenever the value in the timer reaches this number
+//KJ - It is clear that the base clock rate (16 * 10^6) is being divided by the sample rate to get the number of clock ticks between samples
+//KJ - I am guessing that the same rate is multiplied by 8 to account for the prescaling applied below?
+//KJ - I am not sure why the actual value used by BYB is 198 instead of 199
+// Output Compare Registers  value = (16*10^6) / (Fs*8) - 1  set to 1999 for 1000 Hz sampling, set to 3999 for 500 Hz sampling, set to 7999 for 250Hz sampling, 199 for 10000 Hz Sampling
+#define INTERRUPT_NUMBER 3999
+#define SAMPLE_RATE 500
 
 //buffer position variables
 int head = 0;  //head index for sampling circular buffer
 int tail = 0;  //tail index for sampling circular buffer
+int prestimSamples = 30;  //defualt pre stim sample #
+int pststimSamples = 300; //default post stim sample #
 int circBufferHead = 0;
-int trialBufferHead = 0;
+int trialBufferHead = prestimSamples;
 
-int erpTrialByteLength = (PRESTIM_SAMPLES + PSTSTIM_SAMPLES) * 2;
+int erpTrialSampleLength = prestimSamples + pststimSamples;
 
 char commandBuffer[SIZE_OF_COMMAND_BUFFER];  //receiving command buffer
-byte rawBuffer[2][BUFFER_SIZE];              //Sampling buffer
-byte circBuffer[2][PRESTIM_SAMPLES];
-byte trialBuffer[2][PSTSTIM_SAMPLES];
-//byte erpTrial[erpTrialByteLength];
-
+byte rawBuffer[2][RAW_BUFFER_SIZE];              //Sampling buffer
+//byte circBuffer[2][prestimSamples];
+//byte trialBuffer[2][pststimSamples];
+byte trialBuffer[2][TRIAL_BUFFER_MAX_SAMPLES];
 
 bool circBufferIsFull = false;
 bool trialBufferIsFull = false;
@@ -62,19 +79,6 @@ byte collectionMode = MODE_CONTINUOUS;
 //bytes for characters "trial onset" which identify erp packet
 byte trialHeader[11] = { 116, 114, 105, 97, 108, 32, 111, 110, 115, 101, 116 };
 
-/// Interrupt number - very important in combination with bit rate to get accurate data
-//KJ  - the interrupt (confifgured below) will trigger an interrupt whenever the value in the timer reaches this number
-//KJ - It is clear that the base clock rate (16 * 10^6) is being divided by the sameple rate to get the number of clock ticks between samples
-//KJ - I am guessing that the same rate is multiplied by 8 to account for the prescaling applied below?
-//KJ - I am not sure why the actual value used by BYB is 198 instead of 199
-//KJ - my plan is to adjust this to get a much lower sample rate since 10000 is close to the maximum for AD conversion using analogRead
-//KJ - according to https://www.arduino.cc/en/Reference/AnalogRead
-//KJ - 500 or 1000 Hz sampling is more than adequate for EEG and ECG
-// Output Compare Registers  value = (16*10^6) / (Fs*8) - 1  set to 1999 for 1000 Hz sampling, set to 3999 for 500 Hz sampling, set to 7999 for 250Hz sampling, 199 for 10000 Hz Sampling
-int interrupt_Number = 3999;
-int sampleRate = 500;
-
-int numberOfChannels = 1;  //current number of channels sampling <-(KJ) this variable is never used
 int digPin0 = 0;           //KJ - these will be used to store the digital inputs read on each sample
 int digPin1 = 0;
 int commandMode = 0;  //flag for command mode. Don't send data when in command mode
@@ -83,6 +87,8 @@ int commandMode = 0;  //flag for command mode. Don't send data when in command m
 void setup() {
   Serial.begin(115200);  //Serial communication baud rate (alt. 115200)
   while (!Serial)
+  delay(1);
+  Serial.println(FIRMEWARE_VERSION);
   Serial.setTimeout(2);
 
   //KJ-set the mode of the AM modulation and power LED pints to output
@@ -103,64 +109,61 @@ void setup() {
   pinMode(8, OUTPUT);
 
   signalMode();
-  configureTimers();
-  
+  configureTimers(); 
 }
 
 void loop() {
-
+  //check to see if there is any incoming commnands on the serial buffer
   checkForCommands();
-  while (head != tail && commandMode != 1)  //While there are data in sampling buffer waiting
+
+  //handle any data that is currently in the raw buffer
+  while (head != tail && commandMode != 1) 
   {
     if (collectionMode == MODE_CONTINUOUS) {
-
-      //initiate seperate conditions for continuous and single trial mode
       Serial.write(rawBuffer[0][tail]);
       Serial.write(rawBuffer[1][tail]);
-
-      //Move tail for one byte
-
+      tail++;
     } else if (collectionMode == MODE_TRIAL) {
-      //get this code from the other working version
+      
       if (trialBufferIsFull) {
-        //send the trial package
         compileAndSendTrial();
+        //digitalWrite(TRIG_LED, LOW);
         resetTrialBuffers();
+
       } else {
         if (haveTriggerSignal && circBufferIsFull) {
+          //digitalWrite(TRIG_LED, HIGH); //signal the onset of trial collection
           trialBuffer[0][trialBufferHead] = rawBuffer[0][tail];
           trialBuffer[1][trialBufferHead] = rawBuffer[1][tail];
           trialBufferHead++;
-          if (trialBufferHead == PSTSTIM_SAMPLES){
+          tail++;
+          if (trialBufferHead == erpTrialSampleLength){
             trialBufferIsFull = true;
           }
         } else {
-          circBuffer[0][circBufferHead] = rawBuffer[0][tail];
-          circBuffer[1][circBufferHead] = rawBuffer[1][tail];
-          
+          trialBuffer[0][circBufferHead] = rawBuffer[0][tail];
+          trialBuffer[1][circBufferHead] = rawBuffer[1][tail];  
+          tail++;        
           //check for an event marker
           if (circBufferIsFull) {
-            haveTriggerSignal = checkForEventMarker(circBuffer[0][circBufferHead]);
+            haveTriggerSignal = checkForEventMarker(trialBuffer[0][circBufferHead]);
           }
           circBufferHead++;
-          if (circBufferHead == PRESTIM_SAMPLES) {
+          if (circBufferHead == prestimSamples) {
             circBufferIsFull = true;
             circBufferHead = 0;
           }
-
-          //add to the circular buffer
         }
       }
     }
-    //advance the reading location for the raw data buffer
-    tail++;
-    if (tail >= BUFFER_SIZE) {
+    if (tail >= RAW_BUFFER_SIZE) {
       tail = 0;
     }
   }
 }
 
-//check to see if the current sample has an event marker
+//function to check if the passed sample byte contains
+//an event marker that is non zero
 bool checkForEventMarker(byte sample){
   bool returnVal = false;
   eventMarker = (sample & 96) >> 5;
@@ -172,15 +175,13 @@ bool checkForEventMarker(byte sample){
 
 //this is the callback function called when the interrupt fires
 ISR(TIMER1_COMPA_vect) {
+  //10bit ADC we will split every sample to 2 bytes
+  //First byte contains 3 most significant bits and second byte contains 7 least significat bits.
+  //First bit in high byte always be 1, marking begining of the 2 byte data frame
+  
 
-  //Put samples in sampling buffer "rawBuffer". Since Arduino UNO has 10bit ADC we will split every sample to 2 bytes
-  //First byte will contain 3 most significant bits and second byte will contain 7 least significat bits.
-  //First bit in all byte will not be used for data but for marking begining of the frame of data (array of samples from N channels)
-  //Only first byte in frame will have most significant bit set to 1
-
-  //Sample first channel and put it into buffer
   int tempSample = analogRead(A0);
-
+  //read digital input 
   digPin0 = digitalRead(TRIG_BIT0);
   digPin1 = digitalRead(TRIG_BIT1);
   int digEvent = (digPin1 << 1) + digPin0;
@@ -191,53 +192,59 @@ ISR(TIMER1_COMPA_vect) {
 
   //shift the upper byte to the right, set the MSB to high and add in the event marker
   rawBuffer[0][head] = (tempSample >> 7) | 0x80 | (digEvent << 5);
-  rawBuffer[1][head] = tempSample & 0x7F;  //KJ - using the decimal 127 here as a mask to include only the lower 7 bits
-  head += 1;
-  if (head == BUFFER_SIZE) {
+  rawBuffer[1][head] = tempSample & 0x7F;  //create a byte with the lower 7 bits
+  //advance the pointer
+  head++;
+  if (head == RAW_BUFFER_SIZE) {
     head = 0;
   }
 }
 
+//reset the flags and location pointers in the single trial storage buffers
 void resetTrialBuffers(){
-
   circBufferHead = 0;
-  trialBufferHead = 0;
+  trialBufferHead = prestimSamples;
   trialBufferIsFull = false;
   circBufferIsFull = false;
   haveTriggerSignal = false;
-  
+  head = 0;
+  tail = 0;
 }
+
 //read serial input from host computer and change parameters accordingly
 void checkForCommands() {
-
   if (Serial.available() > 0) {
+    int paramValue = -1;
+    int tl = pststimSamples;
+    int ptl = prestimSamples;
+
     commandMode = 1;  //flag that we are receiving commands through serial
-    //TIMSK1 &= ~(1 << OCIE1A);//disable timer for sampling
     String inString = Serial.readStringUntil('\n');
   
     //convert string to null terminate array of chars
     inString.toCharArray(commandBuffer, SIZE_OF_COMMAND_BUFFER);
     commandBuffer[inString.length()] = 0;
 
-    // breaks string str into a series of tokens using delimiter ";"
-    // Namely split strings into commands
+    // breaks string str into a series of commands using delimiter ";"
     char* command = strtok(commandBuffer, ";");
-
+  
     while (command != 0) {
-      // Split the command in 2 parts: name and value
+      // Split the command in name and value components
       char* separator = strchr(command, ':');
+   
       if (separator != 0) {
-        // Actually split the string in 2: replace ':' with 0
+
         *separator = 0;
         --separator;
 
-        int paramValue = -1;
         switch (*separator) {
-          case 'c':
+          /*case 'c':
+            //disable setting # of channels
             separator = separator + 2;
             numberOfChannels = 1;  //atoi(separator);//read number of channels
-            break;
+            break;*/
           case 's':
+            //disable setting sample rate
             //for changing the sample rate, which we will not actually ever do
             break;
           case 'm':
@@ -247,16 +254,24 @@ void checkForCommands() {
             if ((paramValue == MODE_CONTINUOUS) || (paramValue == MODE_TRIAL)) {
               collectionMode = paramValue;
               signalMode();
+              Serial.print("mode set: ");
+              Serial.println(paramValue);
             }
             break;
           case 't':
             separator = separator + 2;
             paramValue = atoi(separator);
-//            if (if paramValue > )
-            //set the tial length
+            if ((paramValue > 0) && (paramValue < (TRIAL_BUFFER_MAX_SAMPLES-1))) {
+              tl = paramValue;
+            }
             break;
           case 'p':
             //set the pre stim length
+            separator = separator + 2;
+            paramValue = atoi(separator);
+            if ((paramValue > 0) && (paramValue < (TRIAL_BUFFER_MAX_SAMPLES-1))) {
+              ptl = paramValue;
+            }
             break;
         }
       }
@@ -264,16 +279,21 @@ void checkForCommands() {
       // Find the next command in input string
       command = strtok(0, ";");
     }
+    //set up new buffers
+    if ((tl+ptl)<TRIAL_BUFFER_MAX_SAMPLES) {
+        prestimSamples = ptl;
+        pststimSamples = tl;
+        erpTrialSampleLength = prestimSamples + pststimSamples;
+        resetTrialBuffers();
+    }
     commandMode = 0;
   }
 }
 
 //signal a change in the current collection state using LEDs
 void signalMode() {
-
   digitalWrite(MODE_LED, LOW);
   digitalWrite(MODE_LED + 1, LOW);
-
   for (int i = 0; i < 3; i++) {
     digitalWrite(MODE_LED + collectionMode, LOW);
     delay(100);
@@ -281,11 +301,14 @@ void signalMode() {
     delay(100);
   }
 }
-/* TIMER SETUP- the timer interrupt allows precise timed measurements of the read switch
-for more info about configuration of arduino timers see http://arduino.cc/playground/Code/Timer1 
-I spent alot of time figure out what each of these calls does and know I will forget so I added
-an obnoxious number of comments*/
-void configureTimers() {
+
+//configure resgiters on ATMEGA to set correct timing and to fire an interrupt 
+//at the desired sample interval
+void configureTimers() {  
+  /* TIMER SETUP- the timer interrupt allows precise timed measurements of the read switch
+  for more info about configuration of arduino timers see http://arduino.cc/playground/Code/Timer1 
+  I spent alot of time figure out what each of these calls does and know I will forget so I added
+  an obnoxious number of comments*/
 
   cli();  //stop interrupts
 
@@ -298,7 +321,6 @@ void configureTimers() {
   cbi(ADCSRA, ADPS1);  //0
   cbi(ADCSRA, ADPS0);  //0
 
-  //set timer1 interrupt at 10kHz
   //KJ - this just initializes things
   TCCR1A = 0;  // set entire TCCR1A register to 0
   TCCR1B = 0;  // same for  TCCR1B
@@ -307,7 +329,7 @@ void configureTimers() {
   //KJ - assign our clock tick number to the output compare register
   //KJ - this register holds the value that will be compared against the clock count (TCNT1)
   //KJ - many things can happen when they match depending on the mode and flags that are set
-  OCR1A = interrupt_Number;  // Output Compare Registers
+  OCR1A = INTERRUPT_NUMBER;  // Output Compare Registers
 
   // turn on CTC mode
   //KJ - CTC is Clear Timer on Compare Match
@@ -326,18 +348,16 @@ void configureTimers() {
   //KJ - this indicates that an interrupt will fire when the value at OCR1A equals the nunber of ticks since the last interrupt
   TIMSK1 |= (1 << OCIE1A);
 
-  //KJ - this enables interrupts generally by setting the interrupt flag in the status register
+  //this enables interrupts generally by setting the interrupt flag in the status register
   sei();  //allow interrupts
 
   //END TIMER SETUP
   //KJ - this is the same as the line above and I have no idea what it is doing
-  TIMSK1 |= (1 << OCIE1A);
+  //TIMSK1 |= (1 << OCIE1A);
 }
 
 void compileAndSendTrial() {
-  //read the ring buffer
-  int readLoc = circBufferHead;  // oldest point in the ring buffer
-  int ii = 0;
+  int ii = 0, readLoc = 0;
 
   //transmit the entire packet one byte at a time
   for (ii = 0; ii < int(sizeof(trialHeader)); ii++) {
@@ -346,29 +366,31 @@ void compileAndSendTrial() {
 
   Serial.write(eventMarker);
   //send 16 bit values on byte at a time
-  Serial.write(((sampleRate) >> 8) & 0xFF);                 // Send the upper byte first
-  Serial.write((sampleRate * 2) & 0xFF);                    // Send the lower byte
-  Serial.write(((PRESTIM_SAMPLES * 2) >> 8) & 0xFF);  // Send the upper byte first
-  Serial.write((PRESTIM_SAMPLES * 2) & 0xFF);         // Send the lower byte
-  Serial.write(((PSTSTIM_SAMPLES * 2) >> 8) & 0xFF);   // Send the upper byte first
-  Serial.write((PSTSTIM_SAMPLES * 2) & 0xFF);          // Send the lower byte
+  Serial.write(((SAMPLE_RATE) >> 8) & 0xFF);         // Send the upper byte first
+  Serial.write((SAMPLE_RATE) & 0xFF);                // Send the lower byte
+  Serial.write(((prestimSamples * 2) >> 8) & 0xFF);  // Send the upper byte first
+  Serial.write((prestimSamples * 2) & 0xFF);         // Send the lower byte
+  Serial.write(((pststimSamples * 2) >> 8) & 0xFF);   // Send the upper byte first
+  Serial.write((pststimSamples * 2) & 0xFF);          // Send the lower byte
 
+  //read the ring buffer
+  readLoc = circBufferHead;  // oldest point in the ring buffer
+  ii = 0;
   //send the raw value payload
-  while (ii < PRESTIM_SAMPLES) {
-    Serial.write(circBuffer[0][readLoc]);
-    Serial.write(circBuffer[1][readLoc]);
-    
-    //erpTrial[ii * 2] = circBuffer[0][readLoc];
-    //erpTrial[ii * 2 + 1] = circBuffer[1][readLoc];
+  while (ii < prestimSamples) {
+    //Serial.write(circBuffer[0][readLoc]);
+    //Serial.write(circBuffer[1][readLoc]);
+    Serial.write(trialBuffer[0][readLoc]);
+    Serial.write(trialBuffer[1][readLoc]);
     readLoc++;
     ii++;
-    if (readLoc == PRESTIM_SAMPLES) {
+    if (readLoc == prestimSamples) {
       readLoc = 0;
     }
   }
   //add the post stimulus data
-  readLoc = 0;
-  while (ii < erpTrialByteLength / 2) {
+  readLoc = prestimSamples;
+  while (ii < erpTrialSampleLength) {
     Serial.write(trialBuffer[0][readLoc]);
     Serial.write(trialBuffer[1][readLoc]);
     //erpTrial[ii * 2] = trialBuffer[0][readLoc];

@@ -16,21 +16,23 @@ function outStruct = multipleChartAndFFT(inStruct, varargin)
 end
 
 %this function gets called when data is passed to the handler
-function p = analyze(p,data, event)
+function p = analyze(obj,p, data)
 
-    data = data - mean(data);
-    p.chartPlot1 = p.chartPlot1.UpdateChart(data);  
-    p.fftPlot1 = p.fftPlot1.updateChart(data, [0,100]);
+    eegdata = double(data.EEG);
 
-    data = p.filter.filter(data);
-    p.chartPlot2 = p.chartPlot2.UpdateChart(data);
-    p.fftPlot2 = p.fftPlot2.updateChart(data, [0,100]);
+    eegdata = eegdata - mean(eegdata);
+    p.chartPlot1 = p.chartPlot1.UpdateChart(deegdata);  
+    p.fftPlot1 = p.fftPlot1.updateChart(eegdata, [0,100]);
+
+    eegdata = p.filter.filter(eegdata);
+    p.chartPlot2 = p.chartPlot2.UpdateChart(eegdata);
+    p.fftPlot2 = p.fftPlot2.updateChart(eegdata, [0,100]);
     
 
-    data = data.^2;
-    data = p.lpfilt.filter(data);
-    p.chartPlot3 = p.chartPlot3.UpdateChart(data);
-    p.barplot.Value = (mean(data)); 
+    eegdata = eegdata;
+    eegdata = p.lpfilt.filter(eegdata);
+    p.chartPlot3 = p.chartPlot3.UpdateChart(eegdata);
+    p.barplot.Value = (mean(eegdata)); 
 
 
 end

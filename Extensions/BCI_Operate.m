@@ -1,8 +1,8 @@
-classdef BYB_Operate
+classdef BCI_Operate
     properties
     end
     methods
-        function obj = BYB_Operate()
+        function obj = BCI_Operate()
             %general purpose wrapper for holding several common processing
             %functions
             %to initialize the object use the sytax
@@ -162,7 +162,7 @@ classdef BYB_Operate
 
             x = data>=threshold;
             th_flag = any(x);
-            th_count = sum(x)
+            th_count = sum(x);
             th_first = find(x, 1);
             
         end

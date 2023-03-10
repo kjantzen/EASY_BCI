@@ -1,0 +1,188 @@
+1.2386 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+14.3871 	WARNING 	User requested fullscreen with size [1024  768], but screen is actually [1440, 900]. Using actual size
+15.7400 	WARNING 	Couldn't measure a consistent frame rate!
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+15.7421 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7f9cf45babe0>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7f9ca06d5820>, multiSample=False, name='window1', numSamples=2, pos=[360.0, 225.0], screen=0, size=array([2880, 1800]), stencilBits=0, stereo=False, units='height', useFBO=True, useRetina=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+15.7427 	EXP 	window1: mouseVisible = True
+15.7442 	EXP 	window1: mouseVisible = False
+15.7443 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+15.7443 	EXP 	window1: recordFrameIntervals = False
+15.8227 	EXP 	window1: recordFrameIntervals = True
+16.6964 	WARNING 	Couldn't measure a consistent frame rate!
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+18.6597 	EXP 	Created stimulus = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, fillColor=array([1, 1, 1]), fillColorSpace='rgb', fillRGB=array([1, 1, 1]), interpolate=True, lineColor=array([1, 1, 1]), lineColorSpace='rgb', lineRGB=array([1, 1, 1]), lineWidth=1.0, name='stimulus', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+18.6608 	EXP 	Created blank = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, fillColor=array([0.00392157, 0.00392157, 0.00392157]), fillColorSpace='rgb', fillRGB=array([0.00392157, 0.00392157, 0.00392157]), interpolate=True, lineColor=array([0.00392157, 0.00392157, 0.00392157]), lineColorSpace='rgb', lineRGB=array([0.00392157, 0.00392157, 0.00392157]), lineWidth=1.0, name='blank', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+18.6660 	EXP 	Created grating = GratingStim(__class__=<class 'psychopy.visual.grating.GratingStim'>, anchor='center', autoDraw=False, autoLog=True, blendmode='avg', color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=-1.0, interpolate=True, mask=None, maskParams=None, name='grating', opacity=1.0, ori=0.0, phase=array([0., 0.]), pos=array([0., 0.]), rgbPedestal=array([0., 0., 0.]), sf=array([10., 10.]), size=array([0.5, 0.5]), tex='sin', texRes=128.0, units='height', win=Window(...))
+18.6725 	EXP 	Imported StimList.xlsx as conditions, 8 conditions, 2 params
+18.6746 	EXP 	Created sequence: random, trialTypes=8, nReps=10, seed=None
+18.6748 	EXP 	New trial (rep=0, index=0): {'color': 'gray', 'trigger': 2}
+18.6855 	WARNING 	t of last frame was 1989.38ms (=1/0)
+18.6855 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+18.6855 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+18.6855 	EXP 	stimulus: autoDraw = True
+18.9372 	EXP 	stimulus: autoDraw = False
+18.9372 	EXP 	blank: autoDraw = True
+18.9372 	EXP 	grating: autoDraw = True
+18.9372 	EXP 	grating: tex = 'sin'
+19.9232 	EXP 	New trial (rep=0, index=1): {'color': 'white', 'trigger': 1}
+19.9317 	EXP 	blank: autoDraw = False
+19.9317 	EXP 	grating: autoDraw = False
+19.9317 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+19.9317 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+19.9317 	EXP 	stimulus: autoDraw = True
+20.1792 	EXP 	stimulus: autoDraw = False
+20.1792 	EXP 	blank: autoDraw = True
+20.1792 	EXP 	grating: autoDraw = True
+21.1631 	EXP 	New trial (rep=0, index=2): {'color': 'white', 'trigger': 1}
+21.1721 	EXP 	blank: autoDraw = False
+21.1721 	EXP 	grating: autoDraw = False
+21.1721 	EXP 	blank: autoDraw = False
+21.1721 	EXP 	grating: autoDraw = False
+21.1721 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+21.1721 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+21.1721 	EXP 	stimulus: autoDraw = True
+21.4133 	EXP 	stimulus: autoDraw = False
+21.4133 	EXP 	stimulus: autoDraw = False
+21.4133 	EXP 	blank: autoDraw = True
+21.4133 	EXP 	grating: autoDraw = True
+22.4072 	EXP 	New trial (rep=0, index=3): {'color': 'white', 'trigger': 1}
+22.4141 	EXP 	blank: autoDraw = False
+22.4141 	EXP 	grating: autoDraw = False
+22.4141 	EXP 	blank: autoDraw = False
+22.4141 	EXP 	grating: autoDraw = False
+22.4141 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+22.4141 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+22.4141 	EXP 	stimulus: autoDraw = True
+22.6638 	EXP 	stimulus: autoDraw = False
+22.6638 	EXP 	stimulus: autoDraw = False
+22.6638 	EXP 	blank: autoDraw = True
+22.6638 	EXP 	grating: autoDraw = True
+23.6573 	EXP 	New trial (rep=0, index=4): {'color': 'gray', 'trigger': 2}
+23.6647 	EXP 	blank: autoDraw = False
+23.6647 	EXP 	grating: autoDraw = False
+23.6647 	EXP 	blank: autoDraw = False
+23.6647 	EXP 	grating: autoDraw = False
+23.6647 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+23.6647 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+23.6647 	EXP 	stimulus: autoDraw = True
+23.9137 	EXP 	stimulus: autoDraw = False
+23.9137 	EXP 	stimulus: autoDraw = False
+23.9137 	EXP 	blank: autoDraw = True
+23.9137 	EXP 	grating: autoDraw = True
+24.9073 	EXP 	New trial (rep=0, index=5): {'color': 'gray', 'trigger': 2}
+24.9142 	EXP 	blank: autoDraw = False
+24.9142 	EXP 	grating: autoDraw = False
+24.9142 	EXP 	blank: autoDraw = False
+24.9142 	EXP 	grating: autoDraw = False
+24.9142 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+24.9142 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+24.9142 	EXP 	stimulus: autoDraw = True
+25.1630 	EXP 	stimulus: autoDraw = False
+25.1630 	EXP 	stimulus: autoDraw = False
+25.1630 	EXP 	blank: autoDraw = True
+25.1630 	EXP 	grating: autoDraw = True
+26.1474 	EXP 	New trial (rep=0, index=6): {'color': 'gray', 'trigger': 2}
+26.1555 	EXP 	blank: autoDraw = False
+26.1555 	EXP 	grating: autoDraw = False
+26.1555 	EXP 	blank: autoDraw = False
+26.1555 	EXP 	grating: autoDraw = False
+26.1555 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+26.1555 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+26.1613 	EXP 	stimulus: autoDraw = True
+26.4061 	EXP 	stimulus: autoDraw = False
+26.4061 	EXP 	stimulus: autoDraw = False
+26.4125 	EXP 	blank: autoDraw = True
+26.4125 	EXP 	grating: autoDraw = True
+27.3971 	EXP 	New trial (rep=0, index=7): {'color': 'white', 'trigger': 1}
+27.4056 	EXP 	blank: autoDraw = False
+27.4056 	EXP 	grating: autoDraw = False
+27.4056 	EXP 	blank: autoDraw = False
+27.4056 	EXP 	grating: autoDraw = False
+27.4056 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+27.4056 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+27.4114 	EXP 	stimulus: autoDraw = True
+27.6561 	EXP 	stimulus: autoDraw = False
+27.6561 	EXP 	stimulus: autoDraw = False
+27.6631 	EXP 	blank: autoDraw = True
+27.6631 	EXP 	grating: autoDraw = True
+28.6466 	EXP 	New trial (rep=1, index=0): {'color': 'gray', 'trigger': 2}
+28.6557 	EXP 	blank: autoDraw = False
+28.6557 	EXP 	grating: autoDraw = False
+28.6557 	EXP 	blank: autoDraw = False
+28.6557 	EXP 	grating: autoDraw = False
+28.6557 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+28.6557 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+28.6615 	EXP 	stimulus: autoDraw = True
+28.9062 	EXP 	stimulus: autoDraw = False
+28.9062 	EXP 	stimulus: autoDraw = False
+28.9133 	EXP 	blank: autoDraw = True
+28.9133 	EXP 	grating: autoDraw = True
+29.4389 	WARNING 	t of last frame was 21.42ms (=1/46)
+29.9079 	EXP 	New trial (rep=1, index=1): {'color': 'white', 'trigger': 1}
+29.9156 	EXP 	blank: autoDraw = False
+29.9156 	EXP 	grating: autoDraw = False
+29.9156 	EXP 	blank: autoDraw = False
+29.9156 	EXP 	grating: autoDraw = False
+29.9156 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+29.9156 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+29.9156 	EXP 	stimulus: autoDraw = True
+30.1631 	EXP 	stimulus: autoDraw = False
+30.1631 	EXP 	stimulus: autoDraw = False
+30.1631 	EXP 	blank: autoDraw = True
+30.1631 	EXP 	grating: autoDraw = True
+31.1468 	EXP 	New trial (rep=1, index=2): {'color': 'white', 'trigger': 1}
+31.1556 	EXP 	blank: autoDraw = False
+31.1556 	EXP 	grating: autoDraw = False
+31.1556 	EXP 	blank: autoDraw = False
+31.1556 	EXP 	grating: autoDraw = False
+31.1556 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+31.1556 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+31.1612 	EXP 	stimulus: autoDraw = True
+31.4065 	EXP 	stimulus: autoDraw = False
+31.4065 	EXP 	stimulus: autoDraw = False
+31.4131 	EXP 	blank: autoDraw = True
+31.4131 	EXP 	grating: autoDraw = True
+32.3977 	EXP 	New trial (rep=1, index=3): {'color': 'gray', 'trigger': 2}
+32.4057 	EXP 	blank: autoDraw = False
+32.4057 	EXP 	grating: autoDraw = False
+32.4057 	EXP 	blank: autoDraw = False
+32.4057 	EXP 	grating: autoDraw = False
+32.4057 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+32.4057 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+32.4118 	EXP 	stimulus: autoDraw = True
+32.6562 	EXP 	stimulus: autoDraw = False
+32.6562 	EXP 	stimulus: autoDraw = False
+32.6634 	EXP 	blank: autoDraw = True
+32.6634 	EXP 	grating: autoDraw = True
+32.9976 	DATA 	Keypress: quoteleft
+33.0047 	WARNING 	t of last frame was 75.53ms (=1/13)
+33.6575 	EXP 	New trial (rep=1, index=4): {'color': 'white', 'trigger': 1}
+33.6649 	EXP 	blank: autoDraw = False
+33.6649 	EXP 	grating: autoDraw = False
+33.6649 	EXP 	blank: autoDraw = False
+33.6649 	EXP 	grating: autoDraw = False
+33.6649 	EXP 	stimulus: fillColor = <psychopy.colors.Color: white, alpha=1.0>
+33.6649 	EXP 	stimulus: borderColor = <psychopy.colors.Color: white, alpha=1.0>
+33.6649 	EXP 	stimulus: autoDraw = True
+33.9138 	EXP 	stimulus: autoDraw = False
+33.9138 	EXP 	stimulus: autoDraw = False
+33.9138 	EXP 	blank: autoDraw = True
+33.9138 	EXP 	grating: autoDraw = True
+34.9077 	EXP 	New trial (rep=1, index=5): {'color': 'gray', 'trigger': 2}
+34.9148 	EXP 	blank: autoDraw = False
+34.9148 	EXP 	grating: autoDraw = False
+34.9148 	EXP 	blank: autoDraw = False
+34.9148 	EXP 	grating: autoDraw = False
+34.9148 	EXP 	stimulus: fillColor = <psychopy.colors.Color: gray, alpha=1.0>
+34.9148 	EXP 	stimulus: borderColor = <psychopy.colors.Color: gray, alpha=1.0>
+34.9148 	EXP 	stimulus: autoDraw = True
+35.1632 	EXP 	stimulus: autoDraw = False
+35.1632 	EXP 	stimulus: autoDraw = False
+35.1632 	EXP 	blank: autoDraw = True
+35.1632 	EXP 	grating: autoDraw = True
+35.5988 	DATA 	Keypress: escape
+35.9366 	EXP 	window1: mouseVisible = True

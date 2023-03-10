@@ -29,11 +29,10 @@
             %
 classdef BCI_ERP
     properties 
-        trialCount  %how many trial in each bin
-        erp         %the actual erp
-        timePnts    %the x axis time values
-        nPnts       %how many points are in the erp
-        sRate
+        TrialCount  %how many trial in each bin
+        ERP         %the actual erp
+        TimePnts    %the x axis time values
+        SRate
     end
     properties (Access=private)
         erpSum
@@ -41,26 +40,26 @@ classdef BCI_ERP
     end
     methods
         function obj = BCI_ERP(plotAxis)
-            obj.erp = [];
+            obj.ERP = [];
             obj.lpfilt = BCI_Filter(512,[0,50],"low");
         end
         function obj = UpdateERP(obj, trial, plotRange)
             
-            if isempty(obj.trialCount)
-                obj.trialCount = zeros(1,3);
+            if isempty(obj.TrialCount)
+                obj.TrialCount = zeros(1,3);
                 obj.erpSum = zeros(3, trial.samples);  
-                obj.erp = obj.erpSum;
-                obj.timePnts = trial.timePnts;
-                obj.sRate = trial.sampleRate;
+                obj.ERP = obj.erpSum;
+                obj.TimePnts = trial.timePnts;
+                obj.SRate = trial.sampleRate;
 
 
             end
             d = obj.lpfilt.filter(trial.EEG);
             bline = mean(d(1:trial.preSamp));
             d = d - bline;
-            obj.trialCount(trial.evt) = obj.trialCount(trial.evt) + 1;
+            obj.TrialCount(trial.evt) = obj.TrialCount(trial.evt) + 1;
             obj.erpSum(trial.evt,:) = obj.erpSum(trial.evt,:) + d;
-            obj.erp(trial.evt,:) = obj.erpSum(trial.evt,:)./obj.trialCount(trial.evt);
+            obj.ERP(trial.evt,:) = obj.erpSum(trial.evt,:)./obj.TrialCount(trial.evt);
                
         end
     end

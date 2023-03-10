@@ -27,7 +27,7 @@
 %   the data between min and max.  
 %
             %
-classdef BCI_Chart
+classdef BCI_Chart < handle
     properties 
         scrolling       %flag to know whether the plot is srolling yet
         insertPoint     %the current place that data is being inserted into the plot
@@ -67,14 +67,16 @@ classdef BCI_Chart
             obj.tempBuffer = zeros(1,obj.displayPoints);
             obj.tAxis = (1:obj.displayPoints)./SampleRate;
             h1 = plot(plotAxis, obj.tAxis, zeros(1,obj.displayPoints));
-           % h2 = line(plotAxis, obj.tAxis, zeros(1,obj.displayPoints));
-            obj.plotHandle = [h1];
-            obj.plotHandle.LineWidth = 1.5;
-         %   obj.plotHandle(2).Color = 'g';
+          %  h2 = line(plotAxis, obj.tAxis, zeros(1,obj.displayPoints));
+            obj.plotHandle =h1; %[h1, h2];
+            obj.plotHandle(1).LineWidth = 1;
+           % obj.plotHandle(2).Color = [.8,.3,.7];
+           % obj.plotHandle(2).LineWidth = 1.5;
+            
             obj.ax = plotAxis;
                 
         end
-        function obj = UpdateChart(obj, eegChunk, eventChunk, plotRange)
+        function obj = UpdateChart(obj, eegChunk, eventChunk,  plotRange)
             %Adds data the the existing plot for this chart object
             %
             %obj = UpdateChart(d) - adds the timeseries data in d to the
@@ -85,7 +87,7 @@ classdef BCI_Chart
             %to scale between -1 and 2 pass [-1,2] as the scaleRagen
             %parameter
             
-            if nargin < 3
+            if nargin < 4
                 autoScale = true;
             else
                 autoScale = false;
@@ -94,41 +96,87 @@ classdef BCI_Chart
             lt = ln ./ obj.sampleRate;
             d = (obj.insertPoint + ln-1) - obj.displayPoints;
             
-            dataChunk = eegChunk;%[eegChunk;double(eventChunk)];
-            %maybe try accessing the ydata only once to improve speed
-            
+            maxTP = obj.plotHandle(1).XData(end);
+
+
+            trigLocations = obj.findTriggerOnsets(double(eventChunk));
+            tr = zeros(size(eegChunk));
+        %    if ~isempty(trigLocations)
+        %        tr(trigLocations) = obj.ax.YLim(1);% ./ (4-(eventChunk(trigLocations + 1)));
+        %        tr(trigLocations+1) = obj.ax.YLim(2);% ./ (4-(eventChunk(trigLocations + 1)));
+        %    end
+            dataChunk = eegChunk;%[eegChunk;double(tr)];
             nchans = size(dataChunk,1);
 
             if obj.scrolling 
+                trLine = findobj(obj.ax.Children, 'Tag', 'trigger');
+                for ii = 1:length(trLine)
+                    dt = trLine(ii).XData(1) - (obj.plotHandle(1).XData(1)+lt);
+                    if (dt <= 0) 
+                        delete(trLine(ii));
+                    end
+                end
+                trLine = findobj(obj.ax.Children, 'Tag', 'trigtext');
+                for ii = 1:length(trLine)
+                    dt = trLine(ii).Position(1) - (obj.plotHandle(1).XData(1)+lt);
+                    if (dt <= 0) 
+                        delete(trLine(ii));
+                    end
+                end
+                            
                 for ii = 1:nchans    
                     obj.plotHandle(ii).YData(1:obj.displayPoints-ln) = obj.plotHandle(ii).YData(ln+1:end);
                     obj.plotHandle(ii).YData(obj.displayPoints-ln+1:obj.displayPoints) = dataChunk(ii,:);
                     obj.plotHandle(ii).XData = obj.plotHandle(ii).XData + lt;
-                end
-
+                end             
+                   
             elseif d<=0
                 for ii = 1:nchans
-                obj.plotHandle(ii).YData(obj.insertPoint: obj.insertPoint + ln-1) = dataChunk(ii,:);
-                obj.plotHandle(ii).YData(obj.insertPoint + ln: end) = mean(dataChunk(ii,:));
+                    obj.plotHandle(ii).YData(obj.insertPoint: obj.insertPoint + ln-1) = dataChunk(ii,:);
+                    obj.plotHandle(ii).YData(obj.insertPoint + ln: end) = mean(dataChunk(ii,:));
                 end
                 obj.insertPoint = obj.insertPoint + ln;
                 
             else 
                 for ii = 1:nchans
-                obj.plotHandle(ii).YData(1:obj.displayPoints-ln) = obj.plotHandle(ii).YData(d:obj.displayPoints-ln-1+d);
-                obj.plotHandle(ii).YData(obj.displayPoints-ln+1:obj.displayPoints) = dataChunk(ii,:);
-         
-                obj.plotHandle(ii).XData = obj.plotHandle(ii).XData + (d./obj.sampleRate);
+                    obj.plotHandle(ii).YData(1:obj.displayPoints-ln) = obj.plotHandle(ii).YData(d:obj.displayPoints-ln-1+d);
+                    obj.plotHandle(ii).YData(obj.displayPoints-ln+1:obj.displayPoints) = dataChunk(ii,:);
+                    obj.plotHandle(ii).XData = obj.plotHandle(ii).XData + (d./obj.sampleRate);
                 end
                 obj.scrolling = true;
             end
             
+            if ~isempty(trigLocations)
+                for ii = 1:length(trigLocations)
+                    xp = maxTP + (trigLocations(ii)/obj.sampleRate);
+                    text(obj.ax, xp, obj.ax.YLim(2), num2str(eventChunk(trigLocations(ii)+1)), 'VerticalAlignment','top', 'Tag', 'trigtext');
+                    line(obj.ax, [xp, xp], obj.ax.YLim, 'Color', 'r', 'Tag', 'trigger');
+                end
+            end
+
             axis(obj.ax,'tight');
             if ~autoScale
                 obj.ax.YLim = plotRange;
             end
             drawnow();
-          
+           
+            
+        end
+    end
+    methods (Access = private)
+        function onsetOffset = findTriggerOnsets(~, eventChunk)
+            
+            onsetOffset = find(diff(eventChunk));
+            if ~isempty(onsetOffset)
+                for ii = length(onsetOffset):-1:1
+                    if eventChunk(onsetOffset(ii)+1)== 0
+                        onsetOffset(ii) = [];
+                    end
+                end
+            end
+                        
+
+        
         end
     end
 end
