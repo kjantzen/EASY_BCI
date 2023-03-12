@@ -39,7 +39,6 @@
 #define TRIG_BIT1 11  //digital input pin 11
 
 #define ESCAPE_SEQUENCE_LENGTH 6
-#define MODE_LED 4
 #define TRIG_LED 7
 
 /// Interrupt number - very important in combination with bit rate to get accurate data
@@ -50,6 +49,8 @@
 // Output Compare Registers  value = (16*10^6) / (Fs*8) - 1  set to 1999 for 1000 Hz sampling, set to 3999 for 500 Hz sampling, set to 7999 for 250Hz sampling, 199 for 10000 Hz Sampling
 #define INTERRUPT_NUMBER 3999
 #define SAMPLE_RATE 500
+
+const byte MODE_LED[2] = {5, 7};
 
 //buffer position variables
 int head = 0;  //head index for sampling circular buffer
@@ -292,12 +293,13 @@ void checkForCommands() {
 
 //signal a change in the current collection state using LEDs
 void signalMode() {
-  digitalWrite(MODE_LED, LOW);
-  digitalWrite(MODE_LED + 1, LOW);
+
+  digitalWrite(MODE_LED[0], LOW);
+  digitalWrite(MODE_LED[1], LOW);
   for (int i = 0; i < 3; i++) {
-    digitalWrite(MODE_LED + collectionMode, LOW);
+    digitalWrite(MODE_LED[collectionMode], LOW);
     delay(100);
-    digitalWrite(MODE_LED + collectionMode, HIGH);
+    digitalWrite(MODE_LED[collectionMode], HIGH);
     delay(100);
   }
 }

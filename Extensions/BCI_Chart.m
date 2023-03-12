@@ -101,10 +101,6 @@ classdef BCI_Chart < handle
 
             trigLocations = obj.findTriggerOnsets(double(eventChunk));
             tr = zeros(size(eegChunk));
-        %    if ~isempty(trigLocations)
-        %        tr(trigLocations) = obj.ax.YLim(1);% ./ (4-(eventChunk(trigLocations + 1)));
-        %        tr(trigLocations+1) = obj.ax.YLim(2);% ./ (4-(eventChunk(trigLocations + 1)));
-        %    end
             dataChunk = eegChunk;%[eegChunk;double(tr)];
             nchans = size(dataChunk,1);
 
@@ -154,7 +150,7 @@ classdef BCI_Chart < handle
                 end
             end
 
-            axis(obj.ax,'tight');
+            %axis(obj.ax,'tight');
             if ~autoScale
                 obj.ax.YLim = plotRange;
             end
@@ -174,9 +170,7 @@ classdef BCI_Chart < handle
                     end
                 end
             end
-                        
 
-        
         end
     end
 end

@@ -11,7 +11,6 @@
 
 #define CURRENT_SHIELD_TYPE "HWT:HBLEOSB;"
 
-
 #define BUFFER_SIZE 256  //sampling buffer size
 #define SIZE_OF_COMMAND_BUFFER 30 //command buffer size
 

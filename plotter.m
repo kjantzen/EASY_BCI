@@ -124,6 +124,11 @@ function callback_stop(src, ~)
     if isfield(p, "Stream") && isvalid(p.Stream)
         p.Stream.Close;
     end
+    p.handles.edit_filename.Value = "";
+    p.handles.edit_bytessaved.Value = "";
+    p.handles.lamp_saving.Color = 'r';
+    p.handles.button_save.Enable = true;
+
     toggleEnabledStatus(p.handles, 0)
     fig.UserData = p;
 end
@@ -166,19 +171,29 @@ function callback_save(src, ~)
         saveFile = fullfile(sPath, sFile);
         po.Stream = BCI_Stream(saveFile, Overwrite = true);
         p.Device.ProcessObjects = po;
+        p.handles.edit_filename.Value = saveFile;
+        p.handles.lamp_saving.Color = 'g';
+        p.handles.button_save.Enable = false;
     end
     fig.Visible = true;
     fig.UserData = p;
 
 end
+%**************************************************************************
+function callback_displayPorts(src,~)
+    src.Items = serialportlist("all");
 
+end
 %**************************************************************************
 %% callback function for continuous collection
 function pStruct = packetReadyCallback(src, pStruct, packet)
+
+
  %   packet.EEG = pStruct.Filter.filter(double(packet.EEG));
     if hasActiveStream(pStruct)
+   
         pStruct.Stream.Save(packet);
-        fprintf('Saved %i packets\n', pStruct.Stream.BytesWritten);
+        pStruct.bytesSavedTarget.Value = formatBytes(pStruct.Stream.BytesWritten);
     end
     pStruct.Chart = pStruct.Chart.UpdateChart(packet.EEG, packet.Event, [-600, 600]);
 end
@@ -221,6 +236,20 @@ function errMsg(fig, errorInfo)
     uialert(fig, errorInfo.message, errorInfo.identifier);
 end
 %**************************************************************************
+function str = formatBytes(bytes)
+    unit = {'B', 'KB', 'MB', 'GB'};
+
+    bytes = double(bytes);
+    count = 1;
+    while bytes > 500 && count < 5
+        bytes = bytes/(1000);
+        count = count + 1;
+    end
+    str = sprintf('%5.1f %s', bytes, unit{count});
+
+
+end
+%**************************************************************************
 function s = hasActiveStream(p)
     if isfield(p, 'Stream') && isvalid(p.Stream) && p.Stream.IsStreaming
         s = true;
@@ -231,8 +260,9 @@ end
 %% function to create the  user interface
 %**************************************************************************
 function h = buildUI()
-    BUTTON_BG_COLOR = [.5,.4,1];
-    BUTTON_FG_COLOR = [1,1,1];
+    BUTTON_BG_COLOR = [.8,.8,.8];
+    BUTTON_FG_COLOR = [0,0,0];
+    BUTTON_TXT_SIZE = 16;
     
     sz = get(0, 'ScreenSize');
     ports = serialportlist;
@@ -252,20 +282,26 @@ function h = buildUI()
     h.fig.Tag = 'BNSPlotter';
     h.fig.Resize = true;
     
-    h.grid = uigridlayout(h.fig,[3,2]);
-    h.grid.RowHeight = {115,'1x', 150};
+    h.grid = uigridlayout(h.fig,[4,2]);
+    h.grid.RowHeight = {115,240,200,'1x'};
     h.grid.ColumnWidth  = {200, '1x'};
-    
+
+    drawnow;
+    progress = uiprogressdlg(h.fig, 'Title', 'BNS Plotter EEG Plotter', ...
+        'Message', 'Creating the Interface',...
+        'Indeterminate','on', ...
+        'Cancelable','off');
+    drawnow;
+
     %panel for the current acquisition status
     h.panel_controls = uipanel('Parent', h.grid);
     h.panel_controls.Layout.Row = 1;
     h.panel_control.Layout.Column = 1;
     
-    %create a drop down list for the devices
-    
+    %create a drop down list for the devices    
     uilabel('Parent', h.panel_controls,...
         'Position', [10, 85, 180, 25], ...
-        'Text', 'EEG Device:');
+        'Text', 'EEG Device');
     
     h.dropdown_devices = uidropdown('Parent', h.panel_controls,...
         'Items', {'BNS EEG Spikerbox', 'ERP Mini'},...
@@ -276,12 +312,13 @@ function h = buildUI()
     
     uilabel('Parent', h.panel_controls,...
         'Position', [10, 35, 180, 25], ...
-        'Text', 'Serial port:');
+        'Text', 'Serial Port');
     
     h.dropdown_ports = uidropdown('Parent', h.panel_controls,...
         'Position', [10, 10, 180, 25],...
         'Tooltip', 'Select the port for connecting to your device', ...
-        'Items', ports);
+        'Items', ports,...
+        'DropDownOpeningFcn',@callback_displayPorts);
     
     %add the mode tabs
     h.tab_mode = uitabgroup('Parent', h.grid,...
@@ -312,7 +349,9 @@ function h = buildUI()
         'Position',[20, btm, 160, 30],...
         'BackgroundColor',BUTTON_BG_COLOR,...
         'FontColor',BUTTON_FG_COLOR,...
-        'ButtonPushedFcn',@callback_cont_start);
+        'ButtonPushedFcn',@callback_cont_start,...
+        'FontSize', BUTTON_TXT_SIZE);
+
     
     %add the single trial controls
     btm = h.panel_trial.InnerPosition(4) - 35;
@@ -349,7 +388,8 @@ function h = buildUI()
         'Position',[20, btm, 160, 30],...
         'BackgroundColor',BUTTON_BG_COLOR,...
         'FontColor',BUTTON_FG_COLOR,...
-        'ButtonPushedFcn',@callback_trial_start);
+        'ButtonPushedFcn',@callback_trial_start,...
+        'FontSize', BUTTON_TXT_SIZE);
    
     btm = btm - 40;
     h.button_trial_reset = uibutton('Parent', h.panel_trial,...
@@ -357,37 +397,86 @@ function h = buildUI()
         'Position',[20, btm, 160, 30],...
         'BackgroundColor',BUTTON_BG_COLOR,...
         'FontColor',BUTTON_FG_COLOR,...
-        'ButtonPushedFcn',@callback_reset_erp);
+        'ButtonPushedFcn',@callback_reset_erp,...
+        'FontSize',BUTTON_TXT_SIZE);
+
+    %save button panel
+    h.panel_save = uipanel('Parent', h.grid,... 
+        'Units', 'pixels', 'BorderType','line', ...
+        'Enable', 'off');
+    h.panel_save.Layout.Column = 1;
+    h.panel_save.Layout.Row = 3;
     
-    h.panel_btns = uipanel('Parent', h.grid,... 
-        'Units', 'pixels', 'BorderType','none');
-    h.panel_btns.Layout.Column = 1;
-    h.panel_btns.Layout.Row = 3;
-    
-    h.button_save = uibutton('Parent', h.panel_btns,...
+    h.button_save = uibutton('Parent', h.panel_save,...
         'Text', 'Save',...
-        'Position',[0, 100, 200, 40],...
+        'Position',[10, 160, 140, 30],...
         'BackgroundColor',BUTTON_BG_COLOR,...
         'FontColor',BUTTON_FG_COLOR,...
-        'ButtonPushedFcn',@callback_save);
-    h.button_stop = uibutton('Parent', h.panel_btns,...
+        'ButtonPushedFcn',@callback_save,...
+        'FontSize', BUTTON_TXT_SIZE);
+    
+    h.lamp_saving = uilamp('Parent', h.panel_save,...
+        'Position', [160,160, 30, 30],...
+        'Color','r',...
+        'Enable','on');
+
+    uilabel('Parent', h.panel_save,...
+        'Text', 'Data File ', ...
+        'Position', [10,120,180,20]);
+
+    h.edit_filename = uieditfield('Parent', h.panel_save,...
+        'Value', '', ...
+        'Position', [10,90,180,30],...
+        'BackgroundColor','w',...
+        'Editable', 'off',...
+        'HorizontalAlignment','right');
+
+    h.label_bytessaved = uilabel('Parent', h.panel_save,...
+        'Text', 'Bytes Saved', ...
+        'Position', [10,60,180,20]);
+    
+    h.edit_bytessaved = uieditfield('Parent', h.panel_save,...
+        'Value', '', ...
+        'Position', [10,30,180,30],...
+        'BackgroundColor','w',...
+        'Editable', 'off');
+    
+    %stop button panel
+    h.panel_stop = uipanel('Parent', h.grid,... 
+        'Units', 'pixels', 'BorderType','none');
+    h.panel_stop.Layout.Column = 1;
+    h.panel_stop.Layout.Row = 4;
+   
+    btm = h.panel_stop.Position(4) - 50; 
+    h.button_stop = uibutton('Parent', h.panel_stop,...
         'Text', 'Stop',...
-        'Position',[0, 0, 200, 40],...
+        'Position',[10, btm, 180, 40],...
         'BackgroundColor',BUTTON_BG_COLOR,...
         'FontColor',BUTTON_FG_COLOR,...
-        'ButtonPushedFcn',@callback_stop);
-   
-   
+        'ButtonPushedFcn',@callback_stop,...
+        'FontSize', BUTTON_TXT_SIZE); 
 
     h.axis_plot = uiaxes('Parent', h.grid);
     h.axis_plot.Layout.Column = 2;
-    h.axis_plot.Layout.Row = [1 3];
+    h.axis_plot.Layout.Row = [1 4];
     h.axis_plot.XLabel.String = 'Time (seconds)';
     h.axis_plot.XLabel.FontSize = 16;
     h.axis_plot.YLabel.String = 'Amplitude (uV)';
     h.axis_plot.YLabel.FontSize = 16;
+    h.axis_plot.Toolbar.Visible = false;
+    %h.axis_plot.XLimMode = 'manual';
+    %h.axis_plot.YLimMode = 'manual';
+    h.axis_plot.XLimitMethod = 'tight';
+    h.axis_plot.Interactions = [];
+    h.axis_plot.PickableParts = 'none';
+    h.axis_plot.HitTest = 'off';
     
+    %disableDefaultInteractivity(h.axis_plot);
+    
+
     drawnow;
+    delete(progress);
+
 end
 %**************************************************************************
 %change the enabled function of the controls based on the current state
@@ -409,12 +498,15 @@ end
    
     h.dropdown_devices.Enable = ~bitor(isPaused, isRunning);
     h.dropdown_ports.Enable = ~bitor(isPaused, isRunning);
+
+    h.panel_save.Enable = isRunning;
      
 
 end
 %**************************************************************************
 function processObjects = initializeContinuousPlot(p, processObjects)
     processObjects.Chart = BCI_Chart(p.sampleRate, 5, p.handles.axis_plot);
+    processObjects.bytesSavedTarget = p.handles.edit_bytessaved;
    % processObjects.Filter = BCI_Filter(500, [58,62], 'stop');
 end
 %**************************************************************************
@@ -440,3 +532,4 @@ function addPaths()
         end
     end
 end
+%**************************************************************************
