@@ -66,7 +66,7 @@ classdef BCI_Chart < handle
             obj.displayPoints = obj.displaySeconds * SampleRate;
             obj.tempBuffer = zeros(1,obj.displayPoints);
             obj.tAxis = (1:obj.displayPoints)./SampleRate;
-            h1 = plot(plotAxis, obj.tAxis, zeros(1,obj.displayPoints));
+            h1 = line(plotAxis, obj.tAxis, zeros(1,obj.displayPoints));
           %  h2 = line(plotAxis, obj.tAxis, zeros(1,obj.displayPoints));
             obj.plotHandle =h1; %[h1, h2];
             obj.plotHandle(1).LineWidth = 1;

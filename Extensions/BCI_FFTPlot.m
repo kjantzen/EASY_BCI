@@ -1,4 +1,4 @@
-%BYB_FFTPlot - plots the the FFT power of input data packets.
+%BCI_FFTPlot - plots the the FFT power of input data packets.
 %
 %USAGE
 %
@@ -8,7 +8,7 @@
 %   Ax.
 %
 %
-classdef BCI_FFTPlot
+classdef BCI_FFTPlot < handle
     properties 
         FAxis           %the current time axis to display
         SampleRate
@@ -47,11 +47,12 @@ classdef BCI_FFTPlot
             obj.FAxis = obj.SampleRate * (0:(obj.BufferPoints/2))/obj.BufferPoints;
             obj = computeFFT(obj);
 
-            obj.PlotHandle = plot(plotAxis, obj.FAxis, obj.FFTData);
-            ob.PlotHandle.LineWidth = 1.5;
+            obj.PlotHandle = line(plotAxis, obj.FAxis, obj.FFTData);
+            obj.PlotHandle.LineWidth = 1.5;
             obj.Axis = plotAxis;
-            obj.Axis.YLabel.String = 'amplitude';
-            obj.Axis.XLabel.String = 'frequency (Hz)';
+ 
+%            obj.Axis.YLabel.String = 'amplitude (uV^2)';
+%            obj.Axis.XLabel.String = 'frequency (Hz)';
                 
         end
         function obj = computeFFT(obj)

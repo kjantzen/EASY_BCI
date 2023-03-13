@@ -33,10 +33,7 @@ classdef BCI_ERPplot < handle
         ax              %the axis to plot in
         erp             %handle to an BCI_ERP object
     end
-    properties (Constant)
-        plotColors = {'#1B98E0', '#A62639', '#79B791'};
-    end
-    properties (Access = private)
+properties (Access = private)
         legendText = []
         leg       %legend handle
     end
@@ -78,7 +75,6 @@ classdef BCI_ERPplot < handle
              h = line(obj.ax, trial.timePnts, obj.erp.ERP);
              obj.plotHandle = h;
              for ii = 1:3
-                obj.plotHandle(ii).Color = obj.plotColors{ii};
                 obj.plotHandle(ii).LineWidth = 1.5;
              end
              %plot the single trial

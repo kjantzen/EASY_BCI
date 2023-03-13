@@ -8,12 +8,8 @@ function outStruct = simpleERP(inStruct, varargin)
 end
 %this function gets called when data is passed to the handler
 function p = analyze(p,data)
-   p.ERP =  p.ERP.UpdateERPPlot(data);
-%plot(data);
-%   p.ERP.trialCount
-%   plot(p.ax, p.ERP(1).timePnts, p.ERP.erp');
+   p.ERP.UpdateERPPlot(data);
 end
-
 %this function gets called when the analyse process is initialized
 function p = initialize(p)
 
@@ -34,7 +30,11 @@ function p = initialize(p)
     p.ax.YLabel.FontSize = 16;
     p.ax.XLabel.String = "Time (s)";
     p.ax.XLabel.FontSize = 16;
-
+   
+    p.ax.ColorOrder(1,:) = [25/255, 130/255, 196/255];
+    p.ax.ColorOrder(2,:) = [255/255, 89/255, 94/255];
+    p.ax.ColorOrder(3,:) = [138/255, 201/255, 38/255];
+    
     %initialize the plotting object by calling it and passing the axis in
     %which to plot
     p.ERP = BCI_ERPplot(p.ax);

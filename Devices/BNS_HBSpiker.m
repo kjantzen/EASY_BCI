@@ -220,15 +220,17 @@ classdef BNS_HBSpiker < handle
          
             %needs time between configuring the port and writing
             pause(1);
+            haveHandShake = false;
+            handShakeTimeout = 2;
 
             %send the configuration command to the device
             write(obj.SerialPort, msg, "char");
+            
             %check for a hand shack from the device
             tic
-            haveHandShake = false;
             mcheck = sprintf('mode set: %i', mcheck);
-
-            while (~haveHandShake  && toc < 1)
+      
+            while (~haveHandShake  && toc < handShakeTimeout)
                 if obj.SerialPort.NumBytesAvailable >= 12
                     jnk = read(obj.SerialPort, obj.SerialPort.NumBytesAvailable, 'uint8');
                     if contains(char(jnk), mcheck)

@@ -20,10 +20,8 @@ function p = analyze(obj,p, dStruct)
 
     data = dStruct.EEG;
     data = data - mean(data);
-    p.chartPlot1 = p.chartPlot1.UpdateChart(data);  
-    p.fftPlot1 = p.fftPlot1.updateChart(data, [0, 100]);
-
-
+    p.chartPlot1.UpdateChart(data, dStruct.Event);  
+    p.fftPlot1.updateChart(data, [0, 100]);
 
 end
 
@@ -43,7 +41,7 @@ end
     %check to see if the figure already exists
     %the figure is recognized by its name but there are other ways to
     %recognize the figure
-    existingFigure = findobj('Name', 'BYB BCI Data Display');
+    existingFigure = findobj('Tag', 'chart and fft');
     if ~isempty(existingFigure)
         p.handles.outputFigure = existingFigure(1);
         clf(p.handles.outputFigure);
@@ -51,21 +49,34 @@ end
        %create a new figure to hold all the plots etc
         p.handles.outputFigure = figure;
         %name it so we can recognize it later if the software is rerun
-        p.handles.outputFigure.Name  = 'BYB BCI Data Display';
+        p.handles.outputFigure.Name  = 'easy bci chart and fft example';
+        p.handles.outputFigure.Tag = 'chart and fft';
     end
     
     %THIS IS LIKELY WHERE YOU WILL WANT TO START EDITING
     
+    p.handles.outputFigure.Position = [200,200,800,800];
+
     %create a plotting object to plot the raw time signal
     %*****************************************************
     %use subplot to create a plotting axis on the figure.  Subplot will
     %return a handle to a single plotting axis placed according to the row
     %column scheme provided.
     sp = subplot(1,3,[1,2]);
+
     %add a title to the axis
     sp.Title.String = 'Unfiltered raw data';
     sp.XLabel.String  = 'Time (seconds)';
     sp.YLabel.String = 'amplitude (uV units)';
+    sp.FontSize = 14;
+    sp.XLimitMethod = 'tight';
+    
+    %these settings are helpful because they keep the mouse from
+    %interfering wiht the plotting.
+    sp.Interactions = [];
+    sp.PickableParts = 'none';
+    sp.HitTest = 'off';
+
     %create a new chart object and pass in the data sample rate, the length
     %of the chart and the axis to plot to.
     p.chartPlot1 = BCI_Chart(p.sampleRate, 5, sp);
@@ -74,6 +85,17 @@ end
     %unfitlered data
     sp = subplot(1,3,3);
     sp.Title.String = 'Unfiltered power spectrum'; 
+    sp.FontSize = 14;
+    sp.XLabel.String = 'Frequency (Hz)';
+    sp.YLabel.String = 'Power (uV^2)';
+    sp.ColorOrder(1,:) = [1,0,0];
+
+    %these settings are helpful because they keep the mouse from
+    %interfering wiht the plotting.
+    sp.Interactions = [];
+    sp.PickableParts = 'none';
+    sp.HitTest = 'off';
+    
     %the filter object takes as parameters, the sample rate of the data
     %collection, the length of the window to transform (in seconds), and
     %the axis to plot the data in.

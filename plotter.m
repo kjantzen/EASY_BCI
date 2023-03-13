@@ -112,10 +112,16 @@ function callback_stop(src, ~)
 %force a reinitialization based on the current settings of the device and
 %port dropdowns.
 %
-
     fig = ancestor(src, 'figure', 'toplevel');
+    stopRecording(fig)
+end
+function callback_closeRequest(fig, varargin)
+    stopRecording(fig);
+    closereq;
+end
+function stopRecording(fig)
     p = fig.UserData;
-    
+
     if isfield(p, "Device")
         p.Device.Stop
         pause(1);
@@ -165,17 +171,25 @@ function callback_save(src, ~)
 
     po = p.Device.ProcessObjects;
     %get a filename from the user
-    fig.Visible = false;
+   % fig.Visible = false;
     [sFile, sPath] = uiputfile('*.dat', 'Save EEG data');
+    figure(fig)
+    % fig.Visible = true;
+
     if (sFile ~= 0)
         saveFile = fullfile(sPath, sFile);
-        po.Stream = BCI_Stream(saveFile, Overwrite = true);
+        try
+            po.Stream = BCI_Stream(saveFile, Overwrite = true);
+        catch ME
+            fig.Visiable = true;
+            uialert(fig, ME.message, ME.identifier);
+            return
+        end
         p.Device.ProcessObjects = po;
         p.handles.edit_filename.Value = saveFile;
         p.handles.lamp_saving.Color = 'g';
         p.handles.button_save.Enable = false;
     end
-    fig.Visible = true;
     fig.UserData = p;
 
 end
@@ -260,9 +274,9 @@ end
 %% function to create the  user interface
 %**************************************************************************
 function h = buildUI()
-    BUTTON_BG_COLOR = [.8,.8,.8];
-    BUTTON_FG_COLOR = [0,0,0];
-    BUTTON_TXT_SIZE = 16;
+    
+    %load the color scheme values
+    load 'Scheme.mat' guiScheme;
     
     sz = get(0, 'ScreenSize');
     ports = serialportlist;
@@ -277,10 +291,12 @@ function h = buildUI()
     
     h.fig = uifigure;
     
+    h.fig.Color = guiScheme.BackColor;
     h.fig.Position = [0,0,sz(3),sz(4)];
     h.fig.Name = 'BNS EEG Plotter';
     h.fig.Tag = 'BNSPlotter';
     h.fig.Resize = true;
+    h.fig.CloseRequestFcn = @callback_closeRequest;
     
     h.grid = uigridlayout(h.fig,[4,2]);
     h.grid.RowHeight = {115,240,200,'1x'};
@@ -306,7 +322,8 @@ function h = buildUI()
     h.dropdown_devices = uidropdown('Parent', h.panel_controls,...
         'Items', {'BNS EEG Spikerbox', 'ERP Mini'},...
         'Position', [10, 60, 180, 25],...
-        'Tooltip','Select a compatible EEG device');
+        'Tooltip','Select a compatible EEG device',...
+        'BackgroundColor',guiScheme.ddownbackcolor);
     h.dropdown_devices.ItemsData = {'BNS_HBSpiker', 'ERPminiCont'};
     h.dropdown_devices.ClickedFcn = @testing;
     
@@ -318,7 +335,8 @@ function h = buildUI()
         'Position', [10, 10, 180, 25],...
         'Tooltip', 'Select the port for connecting to your device', ...
         'Items', ports,...
-        'DropDownOpeningFcn',@callback_displayPorts);
+        'DropDownOpeningFcn',@callback_displayPorts,...
+        'BackgroundColor',guiScheme.ddownbackcolor);
     
     %add the mode tabs
     h.tab_mode = uitabgroup('Parent', h.grid,...
@@ -347,10 +365,9 @@ function h = buildUI()
     h.button_cont_start = uibutton('Parent', h.panel_cont,...
         'Text', 'Start',...
         'Position',[20, btm, 160, 30],...
-        'BackgroundColor',BUTTON_BG_COLOR,...
-        'FontColor',BUTTON_FG_COLOR,...
+        'BackgroundColor',guiScheme.BtnColor,...
         'ButtonPushedFcn',@callback_cont_start,...
-        'FontSize', BUTTON_TXT_SIZE);
+        'FontSize', guiScheme.BtnFontSize);
 
     
     %add the single trial controls
@@ -386,19 +403,17 @@ function h = buildUI()
     h.button_trial_start = uibutton('Parent', h.panel_trial,...
         'Text', 'Start',...
         'Position',[20, btm, 160, 30],...
-        'BackgroundColor',BUTTON_BG_COLOR,...
-        'FontColor',BUTTON_FG_COLOR,...
+        'BackgroundColor',guiScheme.BtnColor,...
         'ButtonPushedFcn',@callback_trial_start,...
-        'FontSize', BUTTON_TXT_SIZE);
+        'FontSize', guiScheme.BtnFontSize);
    
     btm = btm - 40;
     h.button_trial_reset = uibutton('Parent', h.panel_trial,...
         'Text', 'Reset ERP',...
         'Position',[20, btm, 160, 30],...
-        'BackgroundColor',BUTTON_BG_COLOR,...
-        'FontColor',BUTTON_FG_COLOR,...
+        'BackgroundColor',guiScheme.BtnColor,...
         'ButtonPushedFcn',@callback_reset_erp,...
-        'FontSize',BUTTON_TXT_SIZE);
+        'FontSize',guiScheme.BtnFontSize);
 
     %save button panel
     h.panel_save = uipanel('Parent', h.grid,... 
@@ -410,10 +425,9 @@ function h = buildUI()
     h.button_save = uibutton('Parent', h.panel_save,...
         'Text', 'Save',...
         'Position',[10, 160, 140, 30],...
-        'BackgroundColor',BUTTON_BG_COLOR,...
-        'FontColor',BUTTON_FG_COLOR,...
+        'BackgroundColor',guiScheme.BtnColor,...
         'ButtonPushedFcn',@callback_save,...
-        'FontSize', BUTTON_TXT_SIZE);
+        'FontSize', guiScheme.BtnFontSize);
     
     h.lamp_saving = uilamp('Parent', h.panel_save,...
         'Position', [160,160, 30, 30],...
@@ -451,10 +465,9 @@ function h = buildUI()
     h.button_stop = uibutton('Parent', h.panel_stop,...
         'Text', 'Stop',...
         'Position',[10, btm, 180, 40],...
-        'BackgroundColor',BUTTON_BG_COLOR,...
-        'FontColor',BUTTON_FG_COLOR,...
+        'BackgroundColor',guiScheme.BtnColor,...
         'ButtonPushedFcn',@callback_stop,...
-        'FontSize', BUTTON_TXT_SIZE); 
+        'FontSize', guiScheme.BtnFontSize); 
 
     h.axis_plot = uiaxes('Parent', h.grid);
     h.axis_plot.Layout.Column = 2;
@@ -464,8 +477,6 @@ function h = buildUI()
     h.axis_plot.YLabel.String = 'Amplitude (uV)';
     h.axis_plot.YLabel.FontSize = 16;
     h.axis_plot.Toolbar.Visible = false;
-    %h.axis_plot.XLimMode = 'manual';
-    %h.axis_plot.YLimMode = 'manual';
     h.axis_plot.XLimitMethod = 'tight';
     h.axis_plot.Interactions = [];
     h.axis_plot.PickableParts = 'none';
