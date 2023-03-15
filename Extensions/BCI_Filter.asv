@@ -1,11 +1,11 @@
-classdef BCI_Filter < handle
+classdef BCI_Filter
     properties
         Cuttoff
         b
         Hd
         s
         g
-        Window = true
+        Window = True
     end
     methods 
         function obj = BCI_Filter(SampleRate, Cuttoff, Type, Window)
@@ -38,15 +38,9 @@ classdef BCI_Filter < handle
         function dataOut = filter(obj, dataIn)
             %remove the mean, perform the filter and then add the mean back
             %again
-
+            
             m = mean(dataIn);
-            if obj.Window 
-                win = tukeywin(length(dataIn), .2);
-                dataIn = (dataIn - m).*win';
-            else
-                dataIn = dataIn - m;
-            end
-            dataOut = filtfilt(obj.s,obj.g,dataIn); 
+            dataOut = filtfilt(obj.s,obj.g,dataIn-m) + m; 
             
         end
     end

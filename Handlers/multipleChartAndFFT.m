@@ -16,22 +16,22 @@ function outStruct = multipleChartAndFFT(inStruct, varargin)
 end
 
 %this function gets called when data is passed to the handler
-function p = analyze(obj,p, data)
+function p = analyze(obj, p, data)
 
     eegdata = double(data.EEG);
 
     eegdata = eegdata - mean(eegdata);
-    p.chartPlot1 = p.chartPlot1.UpdateChart(deegdata);  
+    p.chartPlot1 = p.chartPlot1.UpdateChart(eegdata, data.Event);  
     p.fftPlot1 = p.fftPlot1.updateChart(eegdata, [0,100]);
 
     eegdata = p.filter.filter(eegdata);
-    p.chartPlot2 = p.chartPlot2.UpdateChart(eegdata);
+    p.chartPlot2 = p.chartPlot2.UpdateChart(eegdata, data.Event);
     p.fftPlot2 = p.fftPlot2.updateChart(eegdata, [0,100]);
     
-
-    eegdata = eegdata;
-    eegdata = p.lpfilt.filter(eegdata);
-    p.chartPlot3 = p.chartPlot3.UpdateChart(eegdata);
+    eegdata = abs(eegdata);
+    %eegdata = p.lpfilt.filter(eegdata);
+    eegdata = smoothdata(eegdata, 'movmean', 10);
+    p.chartPlot3 = p.chartPlot3.UpdateChart(eegdata, data.Event);
     p.barplot.Value = (mean(eegdata)); 
 
 
@@ -72,6 +72,7 @@ end
     %return a handle to a single plotting axis placed according to the row
     %column scheme provided.
     sp = subplot(3,3,[1,2]);
+    sp = setBasicAxisProperties(sp);
     %add a title to the axis
     sp.Title.String = 'Unfiltered raw data';
     sp.XLabel.String  = 'Time (seconds)';
@@ -83,6 +84,7 @@ end
     %create an fft plotting object to plot the power spectrum of the
     %unfitlered data
     sp = subplot(3,3,3);
+    sp = setBasicAxisProperties(sp);
     sp.Title.String = 'Unfiltered power spectrum'; 
     sp.XLim = [0, 20];
     %the filter object takes as parameters, the sample rate of the data
@@ -94,6 +96,7 @@ end
     %create a second plotting object for the filtered time data
     %**********************************************************
     sp = subplot(3,3,[4,5]);
+    sp = setBasicAxisProperties(sp);
     sp.Title.String = 'Band passed data';
     sp.XLabel.String  = 'Time (seconds)';
     sp.YLabel.String = 'amplitude (ADC units)';
@@ -114,6 +117,7 @@ end
     %create an fft plotting object to plot the power spectrum of the
     %filtered data
     sp = subplot(3,3,6);
+    sp = setBasicAxisProperties(sp);
     sp.Title.String = 'Unfiltered power spectrum'; 
     %the filter object takes as parameters, the sample rate of the data
     %collection, the length of the window to transform (in seconds), and
@@ -127,17 +131,29 @@ end
     o.lpfilt = BCI_Filter(o.sampleRate, [0,30], 'low');
     
     sp = subplot(3,3,[7,8]);
+    sp = setBasicAxisProperties(sp);
     sp.Title.String = 'Rectified ECG';
     sp.XLabel.String  = 'Time (seconds)';
     sp.YLabel.String = 'amplitude (ADC units ^2)';
+   
     %because it is an object, we can create a second chart object that is
     %independent of the one we created above.
     o.chartPlot3 = BCI_Chart(o.sampleRate, 3,sp);
     
     sp = subplot(3,3,9);
+    sp = setBasicAxisProperties(sp);
     sp.Title.String = 'mean EMG';
 %    o.barplot = BCI_BarPlot(sp);
 %    o.barplot.Range = [0, 5*10e3];
    
     
-end
+    end
+
+    function ax = setBasicAxisProperties(ax)
+    
+    ax.XLimitMethod = 'tight';
+    ax.HitTest = 'off';
+    ax.Interactions = [];
+    ax.PickableParts = 'none';
+
+    end

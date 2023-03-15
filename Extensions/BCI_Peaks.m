@@ -1,7 +1,7 @@
 classdef BCI_Peaks
     properties 
-        AmpThreshold = 0.8;
-        WidthThreshold = 10;    %default of +- 10 ms with a sample rate of 1000Hz
+        AmpThreshold = 100;
+        WidthThreshold = 10;    %default of +- 10 pnts
         SmoothPoints = 0;
         AdjustThreshold = false;
         SearchAcrossChunks = false;
@@ -20,7 +20,7 @@ classdef BCI_Peaks
             %BYB_Peaks - an object for performing peaks detection on real
             %time data collected with the BYB spiker box,
             %USAGE:
-            %   obj = BYB_Peaks() - creates an object using default
+            %   obj = BCI_Peaks() - creates an object using default
             %   parameters
             %
             %   obj = BYB_Peaks(AmpThreshold, WidthThreshold, SmoothPoints,
@@ -29,14 +29,14 @@ classdef BCI_Peaks
             %   Optional Inputs
             %
             %   AmpThreshold - when detecting positive peaks, only samples 
-            %   that exceed this threshold will be evaluated. Default = 0.8
+            %   that exceed this threshold will be evaluated. Default = 100
             %
             %   WidthThreshold - an integer value indicating the minimum width
             %   of peak in samples.  For WidthThreshold = n, a peak must be the maximum
             %   absolute value with +- n samples.  Thus the minimum peak width 
             %   is 2n + 1. Default = 10;
             %
-            %   SmoothPints - number of points to use in smoothing the data
+            %   SmoothPoints - number of points to use in smoothing the data
             %   before search for peaks. Set this value to 0 if no smoothing
             %   is desired.  Default = 0.  For more information see the
             %   Matlab smoothdata function.

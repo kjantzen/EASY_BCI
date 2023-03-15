@@ -96,34 +96,33 @@ classdef BCI_Chart < handle
             lt = ln ./ obj.sampleRate;
             d = (obj.insertPoint + ln-1) - obj.displayPoints;
             
-            maxTP = obj.plotHandle(1).XData(end);
-
-
             trigLocations = obj.findTriggerOnsets(double(eventChunk));
-            tr = zeros(size(eegChunk));
             dataChunk = eegChunk;%[eegChunk;double(tr)];
             nchans = size(dataChunk,1);
 
+
             if obj.scrolling 
+                %remove any trigger lines that are to the left of the
+                %current window.
                 trLine = findobj(obj.ax.Children, 'Tag', 'trigger');
                 for ii = 1:length(trLine)
                     dt = trLine(ii).XData(1) - (obj.plotHandle(1).XData(1)+lt);
-                    if (dt <= 0) 
-                        delete(trLine(ii));
-                    end
+                    if (dt <= 0); delete(trLine(ii)); end
                 end
+                %remove any trigger text that is to the left of the current
+                %window
                 trLine = findobj(obj.ax.Children, 'Tag', 'trigtext');
                 for ii = 1:length(trLine)
                     dt = trLine(ii).Position(1) - (obj.plotHandle(1).XData(1)+lt);
-                    if (dt <= 0) 
-                        delete(trLine(ii));
-                    end
+                    if (dt <= 0); delete(trLine(ii)); end
                 end
-                            
+
+                TrigMin = obj.plotHandle(1).XData(end);
                 for ii = 1:nchans    
                     obj.plotHandle(ii).YData(1:obj.displayPoints-ln) = obj.plotHandle(ii).YData(ln+1:end);
                     obj.plotHandle(ii).YData(obj.displayPoints-ln+1:obj.displayPoints) = dataChunk(ii,:);
                     obj.plotHandle(ii).XData = obj.plotHandle(ii).XData + lt;
+                    
                 end             
                    
             elseif d<=0
@@ -131,20 +130,24 @@ classdef BCI_Chart < handle
                     obj.plotHandle(ii).YData(obj.insertPoint: obj.insertPoint + ln-1) = dataChunk(ii,:);
                     obj.plotHandle(ii).YData(obj.insertPoint + ln: end) = mean(dataChunk(ii,:));
                 end
+                TrigMin = obj.plotHandle(1). XData(obj.insertPoint);
                 obj.insertPoint = obj.insertPoint + ln;
                 
             else 
+                
+                TrigMin = obj.plotHandle(1).XData(end);
                 for ii = 1:nchans
                     obj.plotHandle(ii).YData(1:obj.displayPoints-ln) = obj.plotHandle(ii).YData(d:obj.displayPoints-ln-1+d);
                     obj.plotHandle(ii).YData(obj.displayPoints-ln+1:obj.displayPoints) = dataChunk(ii,:);
                     obj.plotHandle(ii).XData = obj.plotHandle(ii).XData + (d./obj.sampleRate);
                 end
+
                 obj.scrolling = true;
             end
             
             if ~isempty(trigLocations)
                 for ii = 1:length(trigLocations)
-                    xp = maxTP + (trigLocations(ii)/obj.sampleRate);
+                    xp = TrigMin + (trigLocations(ii)/obj.sampleRate);
                     text(obj.ax, xp, obj.ax.YLim(2), num2str(eventChunk(trigLocations(ii)+1)), 'VerticalAlignment','top', 'Tag', 'trigtext');
                     line(obj.ax, [xp, xp], obj.ax.YLim, 'Color', 'r', 'Tag', 'trigger');
                 end
@@ -160,7 +163,7 @@ classdef BCI_Chart < handle
         end
     end
     methods (Access = private)
-        function onsetOffset = findTriggerOnsets(~, eventChunk)
+        function onsetOffset = findTriggerOnsets(obj, eventChunk)
             
             onsetOffset = find(diff(eventChunk));
             if ~isempty(onsetOffset)

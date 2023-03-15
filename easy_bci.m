@@ -51,7 +51,6 @@ function h = buildUI()
     load Scheme.mat guiScheme;
 
     sz = get(0, 'ScreenSize');
-    ports = serialportlist;
     buff_durations = [.01, .025, .1, .25, .5, 1, 1.5, 2,4];
     buff_dur_labels = {'10 ms','25 ms', '100 ms', '250 ms', '500 ms', '1 sec', '1.5 sec', '2 sec', '4 sec'};
 
@@ -97,7 +96,8 @@ function h = buildUI()
         'BackgroundColor',guiScheme.ddownbackcolor,...
         'FontColor',guiScheme.TextColor,...
         'Placeholder','serial port',...
-        'Items',serialportlist);
+        'Items',serialportlist,...
+         'DropDownOpeningFcn',@callback_fillPortMenu);
      
     btm_pos = btm_pos - 25;
     uilabel('Parent', h.panel_config,...
@@ -232,42 +232,7 @@ end
 %current list of the available ports
 function callback_fillPortMenu(src,~)
 
-    %get all the stored data from the figures user data storage
-    fig = ancestor(src, 'figure', 'toplevel');
-    p = fig.UserData;
-    cp = 1;
-    cport = "";
-    %erase all existing menu items
-    %p.handles.port_option = [];
-    for ii = 1:length(p.handles.port_option)
-        if p.handles.port_option(ii).Checked
-            cport = p.handles.port_option(ii).Text;
-            cp = ii;
-        end
-    end
-
-    delete(p.handles.port_option);
-    p.handles = rmfield(p.handles, 'port_option');
-
-    ports = serialportlist;
-    %get the index of the currentPort
-    if (cp>0)
-        cp = find(ismember(ports, cport));
-        if (cp == 0)
-            cp = 1;
-        end
-    end
-  
-    for ii = 1:length(ports)
-        p.handles.port_option(ii) = uimenu('Parent', p.handles.menu_port, ...
-            'Text', ports(ii), ...
-            'Callback', @callback_port_menu);
-        if ii == cp
-            p.handles.port_option(ii).Checked = 'on';
-        end
-    end
-
-    fig.UserData = p;
+    src.Items = serialportlist;
 
 end
 %************************************************************************

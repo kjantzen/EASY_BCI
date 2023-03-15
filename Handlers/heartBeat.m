@@ -1,5 +1,5 @@
 %Generic data handler template
-function outStruct = eyeBlink(inStruct, varargin)
+function outStruct = heartBeat(inStruct, varargin)
     if nargin == 1
         outStruct = initialize(inStruct);
     else
@@ -7,10 +7,10 @@ function outStruct = eyeBlink(inStruct, varargin)
     end
 end
 %this function gets called when data is passed to the handler
-function p = analyze(p,data, event)
+function p = analyze(~, p, dStruct)
 
-    peaks = zeros(size(data));
-    data = data - .65;
+    peaks = zeros(size(dStruct.EEG));
+    data = double(dStruct.EEG)-100;
     data = p.BPFilt.filter(data);
     p.PeakDetect = p.PeakDetect.Detect(data, 0);
     if ~isempty(p.PeakDetect.Peaks)
@@ -28,7 +28,7 @@ function p = analyze(p,data, event)
     end
     
     
-    p.Chart =  p.Chart.UpdateChart(data, peaks, [-450, 450]);
+    p.Chart =  p.Chart.UpdateChart(data, peaks, [-700, 700]);
  
     %calculate the RRInterval for the 60 samples
     RRInterval = diff(p.HBeatIndex)./p.sampleRate;
@@ -62,6 +62,11 @@ function p = initialize(p)
     ax.XLabel.String = 'Time (s)';
     ax.YLabel.String = 'Amplitude (mV)';
     ax.Title.String = 'Electrocardiogram';
+    ax.XLimitMethod = 'tight';
+    ax.Interactions = [];
+    ax.HitTest = false;
+    ax.PickableParts = 'none';
+
 
     uilabel('Parent', p.handles.outputFigure,...
         'Position', [750, 450, 200, 20],...
@@ -86,10 +91,11 @@ function p = initialize(p)
     p.Chart = BCI_Chart(p.sampleRate,5, ax);
     
     %create a peak detection object
-    p.PeakDetect = BCI_Peaks(200, 10, 0, false, true);
+    p.PeakDetect = BCI_Peaks(200, 5, 5, false, true);
     
     %create a lowpass filter
-    p.BPFilt = BCI_Filter(p.sampleRate, [0, 40], 'low');
+    p.BPFilt = BCI_Filter(p.sampleRate, [0, 30], 'low');
+    
     
     %initialize a variable to hold information about when a peak occured
     p.HBeatIndex = zeros(1,30);
