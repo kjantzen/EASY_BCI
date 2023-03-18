@@ -8,14 +8,14 @@ function outStruct = snakeGame(inStruct, varargin)
 end
 %%
 %this function gets called when data is passed to the handler
-function p = analyze(p,data, event)
+function p = analyze(obj, p, dStruct)
     
     %erase any digital triggers that may be in the event vector
-    event = double(event) * 0;
+    event = double(dStruct.Event) * 0;
     
     %smooth the data and remove the baseline
-    data = smoothdata(data, 2, 'movmean', 10);
-    data = data - .65;
+    data = smoothdata(dStruct.EEG, 2, 'movmean', 10);
+    data = data - 100;
     
     %assume looking to the middle
     p.BCI_State = 'Center';
@@ -77,6 +77,11 @@ function p = initialize(p)
     ax.XLabel.String = 'Time (s)';
     ax.YLabel.String = 'Amplitude (mV)';
     ax.Title.String = 'Electrooculogram';
+    ax.XLimitMethod = 'tight';
+    ax.Interactions = [];
+    ax.HitTest = "off";
+    ax.PickableParts = "none";
+
     p.Chart = BYB_Chart(p.sampleRate,5, ax);
     p.PeakDetect = BYB_Peaks(0.15, 10, 10, false, true);
    

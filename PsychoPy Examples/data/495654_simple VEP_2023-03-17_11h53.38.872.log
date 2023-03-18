@@ -1,0 +1,154 @@
+1.1365 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+7.1906 	WARNING 	User requested fullscreen with size [1024  768], but screen is actually [2560, 1080]. Using actual size
+8.4014 	WARNING 	Couldn't measure a consistent frame rate!
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+8.4021 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7f7a2971ebe0>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7f7a1ff0e760>, multiSample=False, name='window1', numSamples=2, pos=[0.0, 0.0], screen=0, size=array([2560, 1080]), stencilBits=0, stereo=False, units='height', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+8.4025 	EXP 	window1: mouseVisible = True
+8.4034 	EXP 	window1: mouseVisible = False
+8.4035 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+8.4035 	EXP 	window1: recordFrameIntervals = False
+8.4843 	EXP 	window1: recordFrameIntervals = True
+9.3178 	WARNING 	Couldn't measure a consistent frame rate!
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+11.6050 	EXP 	Created image = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=-1.0, flipHoriz=False, flipVert=False, image=str(...), interpolate=True, mask=None, maskParams=None, name='image', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), texRes=128.0, units='height', win=Window(...))
+11.6111 	EXP 	Created fixation = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-2.0, fillColor=array([ 1, -1, -1]), fillColorSpace='rgb', fillRGB=array([ 1, -1, -1]), interpolate=True, lineColor=array([ 1, -1, -1]), lineColorSpace='rgb', lineRGB=array([ 1, -1, -1]), lineWidth=1.0, name='fixation', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.01, 0.01]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+11.8515 	EXP 	Created image_2 = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=-1.0, flipHoriz=False, flipVert=False, image=str(...), interpolate=True, mask=None, maskParams=None, name='image_2', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), texRes=128.0, units='height', win=Window(...))
+11.8546 	EXP 	Created fixation_2 = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-2.0, fillColor=array([ 1, -1, -1]), fillColorSpace='rgb', fillRGB=array([ 1, -1, -1]), interpolate=True, lineColor=array([ 1, -1, -1]), lineColorSpace='rgb', lineRGB=array([ 1, -1, -1]), lineWidth=1.0, name='fixation_2', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.01, 0.01]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+11.8553 	EXP 	Created sequence: random, trialTypes=1, nReps=10, seed=None
+11.8555 	EXP 	New trial (rep=0, index=0): None
+11.9006 	WARNING 	t of last frame was 2583.23ms (=1/0)
+11.9006 	EXP 	image: autoDraw = True
+11.9006 	EXP 	fixation: autoDraw = True
+12.0733 	WARNING 	t of last frame was 23.15ms (=1/43)
+12.0733 	EXP 	image: autoDraw = False
+12.0733 	EXP 	fixation: autoDraw = False
+12.0733 	EXP 	image: autoDraw = False
+12.0733 	EXP 	fixation: autoDraw = False
+12.0733 	EXP 	image_2: autoDraw = True
+12.0733 	EXP 	fixation_2: autoDraw = True
+12.2345 	EXP 	New trial (rep=1, index=0): None
+12.2398 	EXP 	image_2: autoDraw = False
+12.2398 	EXP 	fixation_2: autoDraw = False
+12.2398 	EXP 	image_2: autoDraw = False
+12.2398 	EXP 	fixation_2: autoDraw = False
+12.2398 	EXP 	image: autoDraw = True
+12.2398 	EXP 	fixation: autoDraw = True
+12.4004 	EXP 	image: autoDraw = False
+12.4004 	EXP 	fixation: autoDraw = False
+12.4004 	EXP 	image: autoDraw = False
+12.4004 	EXP 	fixation: autoDraw = False
+12.4004 	EXP 	image_2: autoDraw = True
+12.4004 	EXP 	fixation_2: autoDraw = True
+12.5516 	EXP 	New trial (rep=2, index=0): None
+12.5566 	EXP 	image_2: autoDraw = False
+12.5566 	EXP 	fixation_2: autoDraw = False
+12.5566 	EXP 	image_2: autoDraw = False
+12.5566 	EXP 	fixation_2: autoDraw = False
+12.5566 	EXP 	image: autoDraw = True
+12.5566 	EXP 	fixation: autoDraw = True
+12.7170 	EXP 	image: autoDraw = False
+12.7170 	EXP 	fixation: autoDraw = False
+12.7170 	EXP 	image: autoDraw = False
+12.7170 	EXP 	fixation: autoDraw = False
+12.7170 	EXP 	image_2: autoDraw = True
+12.7170 	EXP 	fixation_2: autoDraw = True
+12.8683 	EXP 	New trial (rep=3, index=0): None
+12.8731 	EXP 	image_2: autoDraw = False
+12.8731 	EXP 	fixation_2: autoDraw = False
+12.8731 	EXP 	image_2: autoDraw = False
+12.8731 	EXP 	fixation_2: autoDraw = False
+12.8731 	EXP 	image: autoDraw = True
+12.8731 	EXP 	fixation: autoDraw = True
+13.0343 	EXP 	image: autoDraw = False
+13.0343 	EXP 	fixation: autoDraw = False
+13.0343 	EXP 	image: autoDraw = False
+13.0343 	EXP 	fixation: autoDraw = False
+13.0343 	EXP 	image_2: autoDraw = True
+13.0343 	EXP 	fixation_2: autoDraw = True
+13.1853 	EXP 	New trial (rep=4, index=0): None
+13.1912 	EXP 	image_2: autoDraw = False
+13.1912 	EXP 	fixation_2: autoDraw = False
+13.1912 	EXP 	image_2: autoDraw = False
+13.1912 	EXP 	fixation_2: autoDraw = False
+13.1912 	EXP 	image: autoDraw = True
+13.1912 	EXP 	fixation: autoDraw = True
+13.3503 	EXP 	image: autoDraw = False
+13.3503 	EXP 	fixation: autoDraw = False
+13.3503 	EXP 	image: autoDraw = False
+13.3503 	EXP 	fixation: autoDraw = False
+13.3503 	EXP 	image_2: autoDraw = True
+13.3503 	EXP 	fixation_2: autoDraw = True
+13.5017 	EXP 	New trial (rep=5, index=0): None
+13.5069 	EXP 	image_2: autoDraw = False
+13.5069 	EXP 	fixation_2: autoDraw = False
+13.5069 	EXP 	image_2: autoDraw = False
+13.5069 	EXP 	fixation_2: autoDraw = False
+13.5069 	EXP 	image: autoDraw = True
+13.5069 	EXP 	fixation: autoDraw = True
+13.6670 	EXP 	image: autoDraw = False
+13.6670 	EXP 	fixation: autoDraw = False
+13.6670 	EXP 	image: autoDraw = False
+13.6670 	EXP 	fixation: autoDraw = False
+13.6670 	EXP 	image_2: autoDraw = True
+13.6670 	EXP 	fixation_2: autoDraw = True
+13.8186 	EXP 	New trial (rep=6, index=0): None
+13.8242 	EXP 	image_2: autoDraw = False
+13.8242 	EXP 	fixation_2: autoDraw = False
+13.8242 	EXP 	image_2: autoDraw = False
+13.8242 	EXP 	fixation_2: autoDraw = False
+13.8242 	EXP 	image: autoDraw = True
+13.8242 	EXP 	fixation: autoDraw = True
+13.9902 	EXP 	image: autoDraw = False
+13.9902 	EXP 	fixation: autoDraw = False
+13.9902 	EXP 	image: autoDraw = False
+13.9902 	EXP 	fixation: autoDraw = False
+13.9902 	EXP 	image_2: autoDraw = True
+13.9902 	EXP 	fixation_2: autoDraw = True
+14.1402 	EXP 	New trial (rep=7, index=0): None
+14.1503 	EXP 	image_2: autoDraw = False
+14.1503 	EXP 	fixation_2: autoDraw = False
+14.1503 	EXP 	image_2: autoDraw = False
+14.1503 	EXP 	fixation_2: autoDraw = False
+14.1503 	EXP 	image: autoDraw = True
+14.1503 	EXP 	fixation: autoDraw = True
+14.3055 	EXP 	image: autoDraw = False
+14.3055 	EXP 	fixation: autoDraw = False
+14.3055 	EXP 	image: autoDraw = False
+14.3055 	EXP 	fixation: autoDraw = False
+14.3055 	EXP 	image_2: autoDraw = True
+14.3055 	EXP 	fixation_2: autoDraw = True
+14.4562 	EXP 	New trial (rep=8, index=0): None
+14.4669 	EXP 	image_2: autoDraw = False
+14.4669 	EXP 	fixation_2: autoDraw = False
+14.4669 	EXP 	image_2: autoDraw = False
+14.4669 	EXP 	fixation_2: autoDraw = False
+14.4669 	EXP 	image: autoDraw = True
+14.4669 	EXP 	fixation: autoDraw = True
+14.6236 	EXP 	image: autoDraw = False
+14.6236 	EXP 	fixation: autoDraw = False
+14.6236 	EXP 	image: autoDraw = False
+14.6236 	EXP 	fixation: autoDraw = False
+14.6236 	EXP 	image_2: autoDraw = True
+14.6236 	EXP 	fixation_2: autoDraw = True
+14.7739 	EXP 	New trial (rep=9, index=0): None
+14.7840 	EXP 	image_2: autoDraw = False
+14.7840 	EXP 	fixation_2: autoDraw = False
+14.7840 	EXP 	image_2: autoDraw = False
+14.7840 	EXP 	fixation_2: autoDraw = False
+14.7840 	EXP 	image: autoDraw = True
+14.7840 	EXP 	fixation: autoDraw = True
+14.9399 	EXP 	image: autoDraw = False
+14.9399 	EXP 	fixation: autoDraw = False
+14.9399 	EXP 	image: autoDraw = False
+14.9399 	EXP 	fixation: autoDraw = False
+14.9399 	EXP 	image_2: autoDraw = True
+14.9399 	EXP 	fixation_2: autoDraw = True
+15.1001 	EXP 	image_2: autoDraw = False
+15.1001 	EXP 	fixation_2: autoDraw = False
+15.1001 	EXP 	image_2: autoDraw = False
+15.1001 	EXP 	fixation_2: autoDraw = False
+15.1193 	EXP 	window1: mouseVisible = True

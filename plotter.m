@@ -50,47 +50,19 @@ function callback_trial_start(src, ~)
     drawnow
     
     try
-        %if ~isfield(p, "Device")
-            p = initializeDevice(p);
-        %end
+        p = initializeDevice(p);
         p.Device.ProcessObjects = initializeERPPlot(p, p.Device.ProcessObjects);
         pause(1);
-        
-        %get the trial duration informatation
-        [p, resetRequired] = getTrialLimits(p);
-        
-        %put the device into single trial collection mode
-        if resetRequired
-            p.Device.SetTrialLimits(p.TrialPreSamples, p.TrialPstSamples);
-            fig.UserData = p;
-            callback_reset_erp(src);
-        end
+
+        fig.UserData = p;       
+        callback_reset_erp(src);
         p.Device.SetMode("Trial");
         p.Device.Start
-        
         fig.UserData = p;
     catch ME
         errMsg(p.handles.fig, ME);
         toggleEnabledStatus(p.handles, 0);
     end
-end
-%**************************************************************************
-function [p, reset] = getTrialLimits(p)
-    
-    reset = false;
-    prestim = p.handles.edit_prestim.Value * p.sampleRate /1000;
-    pststim = p.handles.edit_pststim.Value * p.sampleRate /1000;
-
-    if ~isfield(p, "TrialPreSamples")
-        p.TrialPreSamples = prestim;
-        p.TrialPstSamples = pststim;
-        reset = true;
-        return
-    end        
-    if (prestim ~= p.TrialPreSamples) || (pststim ~= p.TrialPstSamples)
-        reset = true;
-    end
-
 end
 %**************************************************************************
 function callback_reset_erp(src, ~)
@@ -119,10 +91,11 @@ function callback_closeRequest(fig, varargin)
     stopRecording(fig);
     closereq;
 end
+%**************************************************************************
 function stopRecording(fig)
     p = fig.UserData;
 
-    if isfield(p, "Device")
+    if isfield(p, "Device") && isvalid(p.Device)
         p.Device.Stop
         pause(1);
         p.Device.Delete
@@ -171,10 +144,8 @@ function callback_save(src, ~)
 
     po = p.Device.ProcessObjects;
     %get a filename from the user
-   % fig.Visible = false;
     [sFile, sPath] = uiputfile('*.dat', 'Save EEG data');
     figure(fig)
-    % fig.Visible = true;
 
     if (sFile ~= 0)
         saveFile = fullfile(sPath, sFile);
@@ -203,13 +174,13 @@ end
 function pStruct = packetReadyCallback(src, pStruct, packet)
 
 
- %   packet.EEG = pStruct.Filter.filter(double(packet.EEG));
+    packet.EEG = pStruct.Filter.filter(double(packet.EEG));
     if hasActiveStream(pStruct)
    
         pStruct.Stream.Save(packet);
         pStruct.bytesSavedTarget.Value = formatBytes(pStruct.Stream.BytesWritten);
     end
-    pStruct.Chart = pStruct.Chart.UpdateChart(packet.EEG, packet.Event, [-600, 600]);
+    pStruct.Chart = pStruct.Chart.UpdateChart(packet.EEG, packet.Event, [-650, 650]);
 end
 %**************************************************************************
 %% callback function for single trial data
@@ -223,11 +194,15 @@ end
 %**************************************************************************
 % initalize the device
 function p = initializeDevice(p)
-    p.deviceName  =  p.handles.dropdown_devices.Value;
-    p.serialPortName = p.handles.dropdown_ports.Value;
-    
     p.bufferDuration = .1;
     p.sampleRate = 500;
+ 
+    p.deviceName  =  p.handles.dropdown_devices.Value;
+    p.serialPortName = p.handles.dropdown_ports.Value;
+    p.TrialPreSamples = p.handles.edit_prestim.Value * p.sampleRate /1000;
+    p.TrialPstSamples = p.handles.edit_pststim.Value * p.sampleRate /1000;
+   
+    
     
     %create the spiker box object here
     %first delete any existing one that may exist
@@ -241,6 +216,8 @@ function p = initializeDevice(p)
         p.Device = dfunc(p.serialPortName, p.bufferDuration);
         p.Device.PacketReceivedCallback = @packetReadyCallback;
         p.Device.TrialReceivedCallback = @trialReadyCallback;
+        p.Device.SetTrialLimits(p.TrialPreSamples, p.TrialPstSamples);
+        
     catch ME
         errMsg(p.handles.fig, ME);
     end
@@ -265,8 +242,12 @@ function str = formatBytes(bytes)
 end
 %**************************************************************************
 function s = hasActiveStream(p)
-    if isfield(p, 'Stream') && isvalid(p.Stream) && p.Stream.IsStreaming
-        s = true;
+    if isfield(p, 'Stream') && isvalid(p.Stream) 
+        if p.Stream.IsStreaming
+            s = true;
+        else 
+            error('that is fucked up');
+        end
     else 
         s = false;
     end
@@ -285,8 +266,8 @@ function h = buildUI()
     %if it does not create it and if it does clear it and start over
     existingFigureHandle = findall(0,'Tag', 'BNSPlotter');
     
-    if ~isempty(existingFigureHandle)
-        close(existingFigureHandle(1));
+    if ~isempty(existingFigureHandle) && isvalid(existingFigureHandle)
+        close(existingFigureHandle);
     end
     
     h.fig = uifigure;
@@ -481,9 +462,7 @@ function h = buildUI()
     h.axis_plot.Interactions = [];
     h.axis_plot.PickableParts = 'none';
     h.axis_plot.HitTest = 'off';
-    
-    %disableDefaultInteractivity(h.axis_plot);
-    
+        
 
     drawnow;
     delete(progress);
@@ -516,16 +495,25 @@ end
 end
 %**************************************************************************
 function processObjects = initializeContinuousPlot(p, processObjects)
+    cla(p.handles.axis_plot)
+    deleteLegend(p.handles.fig);
     processObjects.Chart = BCI_Chart(p.sampleRate, 5, p.handles.axis_plot);
     processObjects.bytesSavedTarget = p.handles.edit_bytessaved;
-   % processObjects.Filter = BCI_Filter(500, [58,62], 'stop');
+    processObjects.Filter = BCI_Filter(500, [0,50], 'low');
+end
+%**************************************************************************
+function deleteLegend(f)
+    hLegend = findobj(f, 'Type', 'Legend');
+    if ~isempty(hLegend)
+        delete(hLegend);
+    end
 end
 %**************************************************************************
 function processObjects = initializeERPPlot(p, processObjects)
-    if ~isfield(processObjects, "ERPChart")
+%    if ~isfield(processObjects, "ERPChart")
         processObjects.ERPChart = BCI_ERPplot(p.handles.axis_plot);
-    end
-    processObjects.ERPChart.refreshPlot;
+%    end
+%    processObjects.ERPChart.refreshPlot;
   % processObjects.Filter = BCI_Filter(500, [0,40], 'low');
 end
 %**************************************************************************

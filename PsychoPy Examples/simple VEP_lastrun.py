@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2022.2.4),
-    on Mon Feb 27 17:00:21 2023
+    on Fri Mar 17 12:32:57 2023
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -98,14 +98,16 @@ defaultKeyboard = keyboard.Keyboard(backend='iohub')
 # --- Initialize components for Routine "phase1" ---
 # Run 'Begin Experiment' code from code
 import serial
-trigPort = serial.Serial('/dev/cu.usbmodem101');
-
-grating1 = visual.GratingStim(
-    win=win, name='grating1',
-    tex='sin', mask=None, anchor='center',
-    ori=0.0, pos=(0, 0), size=(1.5, 1), sf=10.0, phase=0.0,
-    color=[1,1,1], colorSpace='rgb',
-    opacity=None, contrast=1.0, blendmode='avg',
+trigPort = serial.Serial('/dev/cu.usbmodem1123201');
+trigger = 1;
+stim_dur = 0.166
+image = visual.ImageStim(
+    win=win,
+    name='image', 
+    image='/Users/jantzek/Desktop/Checkerboard_pattern1.png', mask=None, anchor='center',
+    ori=0.0, pos=(0, 0), size=(1.5, 1.5),
+    color=[1,1,1], colorSpace='rgb', opacity=None,
+    flipHoriz=False, flipVert=False,
     texRes=128.0, interpolate=True, depth=-1.0)
 fixation = visual.ShapeStim(
     win=win, name='fixation',
@@ -115,16 +117,13 @@ fixation = visual.ShapeStim(
     opacity=None, depth=-2.0, interpolate=True)
 
 # --- Initialize components for Routine "phase2" ---
-# Run 'Begin Experiment' code from code_2
-import serial
-trigPort = serial.Serial('/dev/cu.usbmodem101');
-trigger = 1;
-grating1_2 = visual.GratingStim(
-    win=win, name='grating1_2',
-    tex='sin', mask=None, anchor='center',
-    ori=0.0, pos=(0, 0), size=(1.5, 1), sf=10.0, phase=0.5,
-    color=[1,1,1], colorSpace='rgb',
-    opacity=None, contrast=1.0, blendmode='avg',
+image_2 = visual.ImageStim(
+    win=win,
+    name='image_2', 
+    image='/Users/jantzek/Desktop/Checkerboard_pattern2.png', mask=None, anchor='center',
+    ori=0.0, pos=(0, 0), size=(1.5, 1.5),
+    color=[1,1,1], colorSpace='rgb', opacity=None,
+    flipHoriz=False, flipVert=False,
     texRes=128.0, interpolate=True, depth=-1.0)
 fixation_2 = visual.ShapeStim(
     win=win, name='fixation_2',
@@ -138,7 +137,7 @@ globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.Clock()  # to track time remaining of each (possibly non-slip) routine 
 
 # set up handler to look after randomisation of conditions etc
-trials = data.TrialHandler(nReps=75.0, method='random', 
+trials = data.TrialHandler(nReps=100.0, method='random', 
     extraInfo=expInfo, originPath=-1,
     trialList=[None],
     seed=None, name='trials')
@@ -165,7 +164,7 @@ for thisTrial in trials:
     trigPort.write(t)
     
     # keep track of which components have finished
-    phase1Components = [grating1, fixation]
+    phase1Components = [image, fixation]
     for thisComponent in phase1Components:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -179,7 +178,7 @@ for thisTrial in trials:
     frameN = -1
     
     # --- Run Routine "phase1" ---
-    while continueRoutine and routineTimer.getTime() < 0.5:
+    while continueRoutine:
         # get current time
         t = routineTimer.getTime()
         tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -187,25 +186,25 @@ for thisTrial in trials:
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
-        # *grating1* updates
-        if grating1.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # *image* updates
+        if image.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
             # keep track of start time/frame for later
-            grating1.frameNStart = frameN  # exact frame index
-            grating1.tStart = t  # local t and not account for scr refresh
-            grating1.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(grating1, 'tStartRefresh')  # time at next scr refresh
+            image.frameNStart = frameN  # exact frame index
+            image.tStart = t  # local t and not account for scr refresh
+            image.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(image, 'tStartRefresh')  # time at next scr refresh
             # add timestamp to datafile
-            thisExp.timestampOnFlip(win, 'grating1.started')
-            grating1.setAutoDraw(True)
-        if grating1.status == STARTED:
+            thisExp.timestampOnFlip(win, 'image.started')
+            image.setAutoDraw(True)
+        if image.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > grating1.tStartRefresh + .5-frameTolerance:
+            if tThisFlipGlobal > image.tStartRefresh + stim_dur-frameTolerance:
                 # keep track of stop time/frame for later
-                grating1.tStop = t  # not accounting for scr refresh
-                grating1.frameNStop = frameN  # exact frame index
+                image.tStop = t  # not accounting for scr refresh
+                image.frameNStop = frameN  # exact frame index
                 # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'grating1.stopped')
-                grating1.setAutoDraw(False)
+                thisExp.timestampOnFlip(win, 'image.stopped')
+                image.setAutoDraw(False)
         
         # *fixation* updates
         if fixation.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
@@ -219,7 +218,7 @@ for thisTrial in trials:
             fixation.setAutoDraw(True)
         if fixation.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > fixation.tStartRefresh + .5-frameTolerance:
+            if tThisFlipGlobal > fixation.tStartRefresh + stim_dur-frameTolerance:
                 # keep track of stop time/frame for later
                 fixation.tStop = t  # not accounting for scr refresh
                 fixation.frameNStop = frameN  # exact frame index
@@ -251,11 +250,8 @@ for thisTrial in trials:
             thisComponent.setAutoDraw(False)
     # Run 'End Routine' code from code
     trigPort.write(str.encode('0'))
-    # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-    if routineForceEnded:
-        routineTimer.reset()
-    else:
-        routineTimer.addTime(-0.500000)
+    # the Routine "phase1" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
     
     # --- Prepare to start Routine "phase2" ---
     continueRoutine = True
@@ -266,7 +262,7 @@ for thisTrial in trials:
     trigPort.write(t)
     
     # keep track of which components have finished
-    phase2Components = [grating1_2, fixation_2]
+    phase2Components = [image_2, fixation_2]
     for thisComponent in phase2Components:
         thisComponent.tStart = None
         thisComponent.tStop = None
@@ -280,7 +276,7 @@ for thisTrial in trials:
     frameN = -1
     
     # --- Run Routine "phase2" ---
-    while continueRoutine and routineTimer.getTime() < 0.5:
+    while continueRoutine:
         # get current time
         t = routineTimer.getTime()
         tThisFlip = win.getFutureFlipTime(clock=routineTimer)
@@ -288,25 +284,25 @@ for thisTrial in trials:
         frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
         # update/draw components on each frame
         
-        # *grating1_2* updates
-        if grating1_2.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # *image_2* updates
+        if image_2.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
             # keep track of start time/frame for later
-            grating1_2.frameNStart = frameN  # exact frame index
-            grating1_2.tStart = t  # local t and not account for scr refresh
-            grating1_2.tStartRefresh = tThisFlipGlobal  # on global time
-            win.timeOnFlip(grating1_2, 'tStartRefresh')  # time at next scr refresh
+            image_2.frameNStart = frameN  # exact frame index
+            image_2.tStart = t  # local t and not account for scr refresh
+            image_2.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(image_2, 'tStartRefresh')  # time at next scr refresh
             # add timestamp to datafile
-            thisExp.timestampOnFlip(win, 'grating1_2.started')
-            grating1_2.setAutoDraw(True)
-        if grating1_2.status == STARTED:
+            thisExp.timestampOnFlip(win, 'image_2.started')
+            image_2.setAutoDraw(True)
+        if image_2.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > grating1_2.tStartRefresh + .5-frameTolerance:
+            if tThisFlipGlobal > image_2.tStartRefresh + stim_dur-frameTolerance:
                 # keep track of stop time/frame for later
-                grating1_2.tStop = t  # not accounting for scr refresh
-                grating1_2.frameNStop = frameN  # exact frame index
+                image_2.tStop = t  # not accounting for scr refresh
+                image_2.frameNStop = frameN  # exact frame index
                 # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'grating1_2.stopped')
-                grating1_2.setAutoDraw(False)
+                thisExp.timestampOnFlip(win, 'image_2.stopped')
+                image_2.setAutoDraw(False)
         
         # *fixation_2* updates
         if fixation_2.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
@@ -320,7 +316,7 @@ for thisTrial in trials:
             fixation_2.setAutoDraw(True)
         if fixation_2.status == STARTED:
             # is it time to stop? (based on global clock, using actual start)
-            if tThisFlipGlobal > fixation_2.tStartRefresh + .5-frameTolerance:
+            if tThisFlipGlobal > fixation_2.tStartRefresh + stim_dur-frameTolerance:
                 # keep track of stop time/frame for later
                 fixation_2.tStop = t  # not accounting for scr refresh
                 fixation_2.frameNStop = frameN  # exact frame index
@@ -352,14 +348,11 @@ for thisTrial in trials:
             thisComponent.setAutoDraw(False)
     # Run 'End Routine' code from code_2
     trigPort.write(str.encode('0'))
-    # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-    if routineForceEnded:
-        routineTimer.reset()
-    else:
-        routineTimer.addTime(-0.500000)
+    # the Routine "phase2" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
     thisExp.nextEntry()
     
-# completed 75.0 repeats of 'trials'
+# completed 100.0 repeats of 'trials'
 
 # Run 'End Experiment' code from code
 trigPort.close
