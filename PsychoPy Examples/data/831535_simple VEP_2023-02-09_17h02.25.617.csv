@@ -1,4 +1,0 @@
-﻿color,trigger,trials.thisRepN,trials.thisTrialN,trials.thisN,trials.thisIndex,stimulus.started,blank.started,blank.stopped,stimulus.stopped,participant,session,date,expName,psychopyVersion,frameRate,
-gray,2,0,0,0,5,10.510502374992939,10.753155291982694,12.24691229200107,,831535,001,2023-02-09_17h02.25.617,simple VEP,2022.2.4,None,
-white,1,0,1,1,0,12.24691229200107,12.487126374995569,13.980469041998731,12.487126374995569,831535,001,2023-02-09_17h02.25.617,simple VEP,2022.2.4,None,
-,,,,,,13.987299458007328,,,,,,,,,,
