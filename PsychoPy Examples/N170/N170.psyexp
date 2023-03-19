@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" ?>
+<PsychoPy2experiment encoding="utf-8" version="2022.2.4">
+  <Settings>
+    <Param val="use prefs" valType="str" updates="None" name="Audio latency priority"/>
+    <Param val="use prefs" valType="str" updates="None" name="Audio lib"/>
+    <Param val="" valType="str" updates="None" name="Completed URL"/>
+    <Param val="auto" valType="str" updates="None" name="Data file delimiter"/>
+    <Param val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code" updates="None" name="Data filename"/>
+    <Param val="True" valType="bool" updates="None" name="Enable Escape"/>
+    <Param val="{'participant':'f&quot;{randint(0, 999999):06.0f}&quot;', 'session':'001'}" valType="code" updates="None" name="Experiment info"/>
+    <Param val="True" valType="bool" updates="None" name="Force stereo"/>
+    <Param val="True" valType="bool" updates="None" name="Full-screen window"/>
+    <Param val="" valType="str" updates="None" name="HTML path"/>
+    <Param val="" valType="str" updates="None" name="Incomplete URL"/>
+    <Param val="testMonitor" valType="str" updates="None" name="Monitor"/>
+    <Param val="[]" valType="list" updates="None" name="Resources"/>
+    <Param val="False" valType="bool" updates="None" name="Save csv file"/>
+    <Param val="False" valType="bool" updates="None" name="Save excel file"/>
+    <Param val="False" valType="bool" updates="None" name="Save hdf5 file"/>
+    <Param val="True" valType="bool" updates="None" name="Save log file"/>
+    <Param val="True" valType="bool" updates="None" name="Save psydat file"/>
+    <Param val="True" valType="bool" updates="None" name="Save wide csv file"/>
+    <Param val="1" valType="num" updates="None" name="Screen"/>
+    <Param val="True" valType="bool" updates="None" name="Show info dlg"/>
+    <Param val="False" valType="bool" updates="None" name="Show mouse"/>
+    <Param val="height" valType="str" updates="None" name="Units"/>
+    <Param val="" valType="str" updates="None" name="Use version"/>
+    <Param val="(1024, 768)" valType="list" updates="None" name="Window size (pixels)"/>
+    <Param val="avg" valType="str" updates="None" name="blendMode"/>
+    <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+    <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+    <Param val="100.1.1.1" valType="str" updates="None" name="elAddress"/>
+    <Param val="FILTER_LEVEL_2" valType="str" updates="None" name="elDataFiltering"/>
+    <Param val="FILTER_LEVEL_OFF" valType="str" updates="None" name="elLiveFiltering"/>
+    <Param val="EYELINK 1000 DESKTOP" valType="str" updates="None" name="elModel"/>
+    <Param val="ELLIPSE_FIT" valType="str" updates="None" name="elPupilAlgorithm"/>
+    <Param val="PUPIL_AREA" valType="str" updates="None" name="elPupilMeasure"/>
+    <Param val="1000" valType="num" updates="None" name="elSampleRate"/>
+    <Param val="False" valType="bool" updates="None" name="elSimMode"/>
+    <Param val="RIGHT_EYE" valType="str" updates="None" name="elTrackEyes"/>
+    <Param val="PUPIL_CR_TRACKING" valType="str" updates="None" name="elTrackingMode"/>
+    <Param val="N170" valType="str" updates="None" name="expName"/>
+    <Param val="on Sync" valType="str" updates="None" name="exportHTML"/>
+    <Param val="None" valType="str" updates="None" name="eyetracker"/>
+    <Param val="127.0.0.1" valType="str" updates="None" name="gpAddress"/>
+    <Param val="4242" valType="num" updates="None" name="gpPort"/>
+    <Param val="ioHub" valType="str" updates="None" name="keyboardBackend"/>
+    <Param val="exp" valType="code" updates="None" name="logging level"/>
+    <Param val="MIDDLE_BUTTON" valType="list" updates="None" name="mgBlink"/>
+    <Param val="CONTINUOUS" valType="str" updates="None" name="mgMove"/>
+    <Param val="0.5" valType="num" updates="None" name="mgSaccade"/>
+    <Param val="0.6" valType="num" updates="None" name="plConfidenceThreshold"/>
+    <Param val="True" valType="bool" updates="None" name="plPupilCaptureRecordingEnabled"/>
+    <Param val="" valType="str" updates="None" name="plPupilCaptureRecordingLocation"/>
+    <Param val="127.0.0.1" valType="str" updates="None" name="plPupilRemoteAddress"/>
+    <Param val="50020" valType="num" updates="None" name="plPupilRemotePort"/>
+    <Param val="1000" valType="num" updates="None" name="plPupilRemoteTimeoutMs"/>
+    <Param val="False" valType="bool" updates="None" name="plPupillometryOnly"/>
+    <Param val="psychopy_iohub_surface" valType="str" updates="None" name="plSurfaceName"/>
+    <Param val="" valType="str" updates="None" name="tbLicenseFile"/>
+    <Param val="" valType="str" updates="None" name="tbModel"/>
+    <Param val="60" valType="num" updates="None" name="tbSampleRate"/>
+    <Param val="" valType="str" updates="None" name="tbSerialNo"/>
+  </Settings>
+  <Routines>
+    <Routine name="trial">
+      <ImageComponent name="Stimulus">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="$face" valType="file" updates="set every repeat" name="image"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="" valType="str" updates="constant" name="mask"/>
+        <Param val="Stimulus" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(1.0, 1.0)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val=".25" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="128" valType="num" updates="constant" name="texture resolution"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ImageComponent>
+      <CodeComponent name="code">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="import serial&amp;#10;trigPort = serial.Serial('/dev/cu.usbmodem11201');&amp;#10;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="import * as serial from 'serial';&amp;#10;var trigPort;&amp;#10;trigPort = new serial.Serial(&quot;/dev/cu.usbmodem11201&quot;);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="t = trigger.to_bytes(1, &quot;little&quot;);&amp;#10;trigPort.write(t);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="t = trigger.to_bytes(1, 'little')&amp;#10;trigPort.write(t)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Auto-&gt;JS" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="trigPort.close" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="trigPort.close;&amp;#10;" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="code" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+    </Routine>
+    <Routine name="isi">
+      <TextComponent name="fix_rand">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.1" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="fix_rand" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="random() + 1" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="+" valType="str" updates="set every repeat" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+    </Routine>
+  </Routines>
+  <Flow>
+    <LoopInitiator loopType="TrialHandler" name="trials">
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+      <Param name="conditions" updates="None" val="[{'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/41.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/42.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/43.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/44.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/45.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/46.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/47.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/48.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/49.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/50.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/51.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/52.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/53.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/54.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/55.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/56.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/57.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/58.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/59.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/60.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/61.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/62.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/63.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/64.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/65.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/66.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/67.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/68.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/69.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/70.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/71.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/72.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/73.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/74.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/75.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/76.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/77.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/78.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/79.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/shoes/mens/80.jpg', 'trigger': 1}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/1.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/2.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/3.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/4.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/5.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/6.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/7.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/8.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/9.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/10.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/11.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/12.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/13.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/14.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/15.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/16.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/17.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/18.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/19.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/20.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/21.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/22.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/23.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/24.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/25.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/26.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/27.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/28.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/29.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/30.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/31.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/32.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/33.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/34.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/35.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/36.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/37.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/38.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/39.jpg', 'trigger': 2}, {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/40.jpg', 'trigger': 2}]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="StimList.xlsx" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="loopType" updates="None" val="random" valType="str"/>
+      <Param name="nReps" updates="None" val="5" valType="num"/>
+      <Param name="name" updates="None" val="trials" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="isi"/>
+    <Routine name="trial"/>
+    <LoopTerminator name="trials"/>
+  </Flow>
+</PsychoPy2experiment>

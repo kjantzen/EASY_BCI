@@ -1,0 +1,105 @@
+1.3140 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+8.7579 	WARNING 	User requested fullscreen with size [1024  768], but screen is actually [1440, 900]. Using actual size
+10.1192 	WARNING 	Couldn't measure a consistent frame rate!
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+10.1218 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fc72bff5be0>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7fc6f359a670>, multiSample=False, name='window1', numSamples=2, pos=[360.0, 225.0], screen=0, size=array([2880, 1800]), stencilBits=0, stereo=False, units='height', useFBO=True, useRetina=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+10.1224 	EXP 	window1: mouseVisible = True
+10.1313 	EXP 	window1: mouseVisible = False
+10.1314 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+10.1314 	EXP 	window1: recordFrameIntervals = False
+10.2189 	EXP 	window1: recordFrameIntervals = True
+11.0523 	WARNING 	Couldn't measure a consistent frame rate!
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+13.0025 	EXP 	Created fix_rand = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.1, italic=False, languageStyle='LTR', name='fix_rand', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='height', win=Window(...), wrapWidth=1)
+13.0116 	EXP 	Created Stimulus = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, image='sin', interpolate=True, mask=None, maskParams=None, name='Stimulus', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), texRes=128.0, units='height', win=Window(...))
+13.0134 	DEPRECATION 	'ted' is not a valid rgb color
+13.0190 	EXP 	Created fixation = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-1.0, fillColor=array([ 1, -1, -1]), fillColorSpace='rgb', fillRGB=array([ 1, -1, -1]), interpolate=True, lineColor=array([0, 0, 0]), lineColorSpace='rgb', lineRGB=array([0, 0, 0]), lineWidth=1.0, name='fixation', opacity=0.5, ori=0.0, pos=array([0., 0.]), size=array([0.1, 0.1]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+13.0281 	EXP 	Imported StimList.xlsx as conditions, 80 conditions, 2 params
+13.0305 	EXP 	Created sequence: random, trialTypes=80, nReps=5, seed=None
+13.0307 	EXP 	New trial (rep=0, index=0): {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/23.jpg', 'trigger': 2}
+13.0623 	WARNING 	t of last frame was 2010.37ms (=1/0)
+13.0623 	EXP 	fix_rand: height = 0.1
+13.0623 	EXP 	fix_rand: height = 0.1
+13.0623 	EXP 	fix_rand: height = 0.1
+13.0623 	EXP 	fix_rand: text = '+'
+13.0623 	EXP 	fix_rand: autoDraw = True
+14.2753 	WARNING 	t of last frame was 149.87ms (=1/6)
+14.2753 	EXP 	fix_rand: autoDraw = False
+14.2753 	EXP 	fix_rand: autoDraw = False
+14.2753 	EXP 	Stimulus: image = '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/23.jpg'
+14.2753 	EXP 	Stimulus: autoDraw = True
+14.2753 	EXP 	fixation: autoDraw = True
+14.3851 	EXP 	New trial (rep=0, index=1): {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/cars/82.jpg', 'trigger': 1}
+14.3902 	EXP 	Stimulus: autoDraw = False
+14.3902 	EXP 	fixation: autoDraw = False
+14.3902 	EXP 	fix_rand: text = '+'
+14.3902 	EXP 	fix_rand: autoDraw = True
+15.5414 	WARNING 	t of last frame was 39.62ms (=1/25)
+15.5414 	EXP 	fix_rand: autoDraw = False
+15.5414 	EXP 	fix_rand: autoDraw = False
+15.5414 	EXP 	Stimulus: image = '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/cars/82.jpg'
+15.5414 	EXP 	Stimulus: autoDraw = True
+15.5414 	EXP 	fixation: autoDraw = True
+15.7586 	EXP 	New trial (rep=0, index=2): {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/4.jpg', 'trigger': 2}
+15.7679 	EXP 	Stimulus: autoDraw = False
+15.7679 	EXP 	fixation: autoDraw = False
+15.7679 	EXP 	fix_rand: text = '+'
+15.7679 	EXP 	fix_rand: autoDraw = True
+16.9477 	WARNING 	t of last frame was 88.84ms (=1/11)
+16.9477 	EXP 	fix_rand: autoDraw = False
+16.9477 	EXP 	fix_rand: autoDraw = False
+16.9477 	EXP 	Stimulus: image = '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/4.jpg'
+16.9477 	EXP 	Stimulus: autoDraw = True
+16.9477 	EXP 	fixation: autoDraw = True
+17.1185 	EXP 	New trial (rep=0, index=3): {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/cars/90.jpg', 'trigger': 1}
+17.1248 	EXP 	Stimulus: autoDraw = False
+17.1248 	EXP 	fixation: autoDraw = False
+17.1248 	EXP 	fix_rand: text = '+'
+17.1248 	EXP 	fix_rand: autoDraw = True
+18.2628 	WARNING 	Multiple dropped frames have occurred - I'll stop bothering you about them!
+18.2627 	EXP 	fix_rand: autoDraw = False
+18.2627 	EXP 	fix_rand: autoDraw = False
+18.2627 	EXP 	Stimulus: image = '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/cars/90.jpg'
+18.2627 	EXP 	Stimulus: autoDraw = True
+18.2627 	EXP 	fixation: autoDraw = True
+18.4920 	EXP 	New trial (rep=0, index=4): {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/cars/75.jpg', 'trigger': 1}
+18.5015 	EXP 	Stimulus: autoDraw = False
+18.5015 	EXP 	fixation: autoDraw = False
+18.5015 	EXP 	fix_rand: text = '+'
+18.5015 	EXP 	fix_rand: autoDraw = True
+19.6595 	EXP 	fix_rand: autoDraw = False
+19.6595 	EXP 	fix_rand: autoDraw = False
+19.6595 	EXP 	Stimulus: image = '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/cars/75.jpg'
+19.6595 	EXP 	Stimulus: autoDraw = True
+19.6595 	EXP 	fixation: autoDraw = True
+19.8927 	EXP 	New trial (rep=0, index=5): {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/cars/81.jpg', 'trigger': 1}
+19.9013 	EXP 	Stimulus: autoDraw = False
+19.9013 	EXP 	fixation: autoDraw = False
+19.9013 	EXP 	fix_rand: text = '+'
+19.9013 	EXP 	fix_rand: autoDraw = True
+20.9902 	EXP 	fix_rand: autoDraw = False
+20.9902 	EXP 	fix_rand: autoDraw = False
+20.9902 	EXP 	Stimulus: image = '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/cars/81.jpg'
+20.9902 	EXP 	Stimulus: autoDraw = True
+20.9902 	EXP 	fixation: autoDraw = True
+21.2253 	EXP 	New trial (rep=0, index=6): {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/18.jpg', 'trigger': 2}
+21.2349 	EXP 	Stimulus: autoDraw = False
+21.2349 	EXP 	fixation: autoDraw = False
+21.2349 	EXP 	fix_rand: text = '+'
+21.2349 	EXP 	fix_rand: autoDraw = True
+22.4475 	EXP 	fix_rand: autoDraw = False
+22.4475 	EXP 	fix_rand: autoDraw = False
+22.4475 	EXP 	Stimulus: image = '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/18.jpg'
+22.4475 	EXP 	Stimulus: autoDraw = True
+22.4475 	EXP 	fixation: autoDraw = True
+22.6245 	EXP 	New trial (rep=0, index=7): {'face': '/Users/jantzek/Documents/Easy_BCI/PsychoPy Examples/N170/Stim/White Men/8.jpg', 'trigger': 2}
+22.6349 	EXP 	Stimulus: autoDraw = False
+22.6349 	EXP 	fixation: autoDraw = False
+22.6349 	EXP 	fix_rand: text = '+'
+22.6349 	EXP 	fix_rand: autoDraw = True
+22.9203 	DATA 	Keypress: escape
+23.2904 	EXP 	window1: mouseVisible = True

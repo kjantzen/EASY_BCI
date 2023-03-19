@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2022.2.4),
-    on Fri Mar 17 12:32:57 2023
+    on Sat Mar 18 09:56:29 2023
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -98,14 +98,14 @@ defaultKeyboard = keyboard.Keyboard(backend='iohub')
 # --- Initialize components for Routine "phase1" ---
 # Run 'Begin Experiment' code from code
 import serial
-trigPort = serial.Serial('/dev/cu.usbmodem1123201');
+trigPort = serial.Serial('/dev/cu.usbmodem1201');
 trigger = 1;
-stim_dur = 0.166
+stim_dur = 0.06666
 image = visual.ImageStim(
     win=win,
     name='image', 
     image='/Users/jantzek/Desktop/Checkerboard_pattern1.png', mask=None, anchor='center',
-    ori=0.0, pos=(0, 0), size=(1.5, 1.5),
+    ori=0.0, pos=(0, 0), size=(0.5, 0.5),
     color=[1,1,1], colorSpace='rgb', opacity=None,
     flipHoriz=False, flipVert=False,
     texRes=128.0, interpolate=True, depth=-1.0)
@@ -121,7 +121,7 @@ image_2 = visual.ImageStim(
     win=win,
     name='image_2', 
     image='/Users/jantzek/Desktop/Checkerboard_pattern2.png', mask=None, anchor='center',
-    ori=0.0, pos=(0, 0), size=(1.5, 1.5),
+    ori=0.0, pos=(0, 0), size=(0.5, 0.5),
     color=[1,1,1], colorSpace='rgb', opacity=None,
     flipHoriz=False, flipVert=False,
     texRes=128.0, interpolate=True, depth=-1.0)
@@ -132,12 +132,28 @@ fixation_2 = visual.ShapeStim(
     lineWidth=1.0,     colorSpace='rgb',  lineColor='red', fillColor='red',
     opacity=None, depth=-2.0, interpolate=True)
 
+# --- Initialize components for Routine "delay" ---
+delay_fix = visual.ShapeStim(
+    win=win, name='delay_fix',
+    size=(0.01, 0.01), vertices='circle',
+    ori=0.0, pos=(0, 0), anchor='center',
+    lineWidth=1.0,     colorSpace='rgb',  lineColor='red', fillColor='red',
+    opacity=None, depth=0.0, interpolate=True)
+
+# --- Initialize components for Routine "blank" ---
+newfix = visual.ShapeStim(
+    win=win, name='newfix',
+    size=(0.01, 0.01), vertices='circle',
+    ori=0.0, pos=(0, 0), anchor='center',
+    lineWidth=1.0,     colorSpace='rgb',  lineColor='red', fillColor='red',
+    opacity=None, depth=0.0, interpolate=True)
+
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.Clock()  # to track time remaining of each (possibly non-slip) routine 
 
 # set up handler to look after randomisation of conditions etc
-trials = data.TrialHandler(nReps=100.0, method='random', 
+trials = data.TrialHandler(nReps=150.0, method='random', 
     extraInfo=expInfo, originPath=-1,
     trialList=[None],
     seed=None, name='trials')
@@ -352,11 +368,190 @@ for thisTrial in trials:
     routineTimer.reset()
     thisExp.nextEntry()
     
-# completed 100.0 repeats of 'trials'
+# completed 150.0 repeats of 'trials'
+
+
+# --- Prepare to start Routine "delay" ---
+continueRoutine = True
+routineForceEnded = False
+# update component parameters for each repeat
+# keep track of which components have finished
+delayComponents = [delay_fix]
+for thisComponent in delayComponents:
+    thisComponent.tStart = None
+    thisComponent.tStop = None
+    thisComponent.tStartRefresh = None
+    thisComponent.tStopRefresh = None
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+# reset timers
+t = 0
+_timeToFirstFrame = win.getFutureFlipTime(clock="now")
+frameN = -1
+
+# --- Run Routine "delay" ---
+while continueRoutine and routineTimer.getTime() < 3.0:
+    # get current time
+    t = routineTimer.getTime()
+    tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+    tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    
+    # *delay_fix* updates
+    if delay_fix.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+        # keep track of start time/frame for later
+        delay_fix.frameNStart = frameN  # exact frame index
+        delay_fix.tStart = t  # local t and not account for scr refresh
+        delay_fix.tStartRefresh = tThisFlipGlobal  # on global time
+        win.timeOnFlip(delay_fix, 'tStartRefresh')  # time at next scr refresh
+        # add timestamp to datafile
+        thisExp.timestampOnFlip(win, 'delay_fix.started')
+        delay_fix.setAutoDraw(True)
+    if delay_fix.status == STARTED:
+        # is it time to stop? (based on global clock, using actual start)
+        if tThisFlipGlobal > delay_fix.tStartRefresh + 3-frameTolerance:
+            # keep track of stop time/frame for later
+            delay_fix.tStop = t  # not accounting for scr refresh
+            delay_fix.frameNStop = frameN  # exact frame index
+            # add timestamp to datafile
+            thisExp.timestampOnFlip(win, 'delay_fix.stopped')
+            delay_fix.setAutoDraw(False)
+    
+    # check for quit (typically the Esc key)
+    if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        routineForceEnded = True
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in delayComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+# --- Ending Routine "delay" ---
+for thisComponent in delayComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
+# using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
+if routineForceEnded:
+    routineTimer.reset()
+else:
+    routineTimer.addTime(-3.000000)
+
+# set up handler to look after randomisation of conditions etc
+trials_2 = data.TrialHandler(nReps=300.0, method='random', 
+    extraInfo=expInfo, originPath=-1,
+    trialList=[None],
+    seed=None, name='trials_2')
+thisExp.addLoop(trials_2)  # add the loop to the experiment
+thisTrial_2 = trials_2.trialList[0]  # so we can initialise stimuli with some values
+# abbreviate parameter names if possible (e.g. rgb = thisTrial_2.rgb)
+if thisTrial_2 != None:
+    for paramName in thisTrial_2:
+        exec('{} = thisTrial_2[paramName]'.format(paramName))
+
+for thisTrial_2 in trials_2:
+    currentLoop = trials_2
+    # abbreviate parameter names if possible (e.g. rgb = thisTrial_2.rgb)
+    if thisTrial_2 != None:
+        for paramName in thisTrial_2:
+            exec('{} = thisTrial_2[paramName]'.format(paramName))
+    
+    # --- Prepare to start Routine "blank" ---
+    continueRoutine = True
+    routineForceEnded = False
+    # update component parameters for each repeat
+    # Run 'Begin Routine' code from code_3
+    trigger = 2;
+    t = trigger.to_bytes(1, 'little')
+    trigPort.write(t)
+    
+    # keep track of which components have finished
+    blankComponents = [newfix]
+    for thisComponent in blankComponents:
+        thisComponent.tStart = None
+        thisComponent.tStop = None
+        thisComponent.tStartRefresh = None
+        thisComponent.tStopRefresh = None
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    # reset timers
+    t = 0
+    _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+    frameN = -1
+    
+    # --- Run Routine "blank" ---
+    while continueRoutine:
+        # get current time
+        t = routineTimer.getTime()
+        tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        # *newfix* updates
+        if newfix.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            newfix.frameNStart = frameN  # exact frame index
+            newfix.tStart = t  # local t and not account for scr refresh
+            newfix.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(newfix, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.timestampOnFlip(win, 'newfix.started')
+            newfix.setAutoDraw(True)
+        if newfix.status == STARTED:
+            # is it time to stop? (based on global clock, using actual start)
+            if tThisFlipGlobal > newfix.tStartRefresh + stim_dur-frameTolerance:
+                # keep track of stop time/frame for later
+                newfix.tStop = t  # not accounting for scr refresh
+                newfix.frameNStop = frameN  # exact frame index
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'newfix.stopped')
+                newfix.setAutoDraw(False)
+        
+        # check for quit (typically the Esc key)
+        if endExpNow or defaultKeyboard.getKeys(keyList=["escape"]):
+            core.quit()
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            routineForceEnded = True
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in blankComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    # --- Ending Routine "blank" ---
+    for thisComponent in blankComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    # Run 'End Routine' code from code_3
+    trigPort.write(str.encode('0'))
+    # the Routine "blank" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
+    thisExp.nextEntry()
+    
+# completed 300.0 repeats of 'trials_2'
 
 # Run 'End Experiment' code from code
 trigPort.close
 # Run 'End Experiment' code from code_2
+trigPort.close
+# Run 'End Experiment' code from code_3
 trigPort.close
 
 # --- End experiment ---

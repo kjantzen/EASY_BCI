@@ -170,15 +170,23 @@ function callback_displayPorts(src,~)
 
 end
 %**************************************************************************
+function callback_toggleFiltering(src, ~)
+    fig = ancestor(src, 'figure', 'toplevel');
+    p = fig.UserData;
+
+end
+%**************************************************************************
 %% callback function for continuous collection
 function pStruct = packetReadyCallback(src, pStruct, packet)
 
-
-    packet.EEG = pStruct.Filter.filter(double(packet.EEG));
-    if hasActiveStream(pStruct)
-   
+    
+    
+    if hasActiveStream(pStruct)   
         pStruct.Stream.Save(packet);
         pStruct.bytesSavedTarget.Value = formatBytes(pStruct.Stream.BytesWritten);
+    end
+    if pStruct.filterFlag
+        packet.EEG = pStruct.Filter.filter(double(packet.EEG));
     end
     pStruct.Chart = pStruct.Chart.UpdateChart(packet.EEG, packet.Event, [-650, 650]);
 end
@@ -189,7 +197,10 @@ function pStruct = trialReadyCallback(src, pStruct, trial)
    if hasActiveStream(pStruct)
        pStruct.Stream.Save(trial);
    end
-    pStruct.ERPChart.UpdateERPPlot(trial);
+   if pStruct.filterFlag
+       trial.EEG = pStruct.Filter.filter(double(trial.EEG));
+   end
+   pStruct.ERPChart.UpdateERPPlot(trial);
 end
 %**************************************************************************
 % initalize the device
@@ -201,7 +212,7 @@ function p = initializeDevice(p)
     p.serialPortName = p.handles.dropdown_ports.Value;
     p.TrialPreSamples = p.handles.edit_prestim.Value * p.sampleRate /1000;
     p.TrialPstSamples = p.handles.edit_pststim.Value * p.sampleRate /1000;
-   
+    p.filterFlag = false;
     
     
     %create the spiker box object here
@@ -252,7 +263,71 @@ function s = hasActiveStream(p)
         s = false;
     end
 end
-%% function to create the  user interface
+%**************************************************************************
+%change the enabled function of the controls based on the current state
+function toggleEnabledStatus(h, runState)
+%if isRunning = 0 then everything is shutdown
+if runState == 0
+    isRunning = false;
+    isPaused = false;
+elseif runState == 1  %this is the paused state
+    isRunning = false;
+    isPaused = true;
+else
+    isRunning = true; %this is the running state
+    isPaused = false;
+end
+    
+    h.panel_cont.Enable = ~isRunning;
+    h.panel_trial.Enable = ~isRunning;
+   
+    h.dropdown_devices.Enable = ~bitor(isPaused, isRunning);
+    h.dropdown_ports.Enable = ~bitor(isPaused, isRunning);
+
+    h.panel_save.Enable = isRunning;
+     
+
+end
+%**************************************************************************
+function processObjects = initializeContinuousPlot(p, processObjects)
+    cla(p.handles.axis_plot)
+    deleteLegend(p.handles.fig);
+    processObjects.Chart = BCI_Chart(p.sampleRate, 5, p.handles.axis_plot);
+    processObjects.bytesSavedTarget = p.handles.edit_bytessaved;
+    processObjects.Filter = BCI_Filter(p.sampleRate, [0,50], 'low');
+    processObjects.filterFlag = p.handles.checkbox_filter.Value;
+
+end
+%**************************************************************************
+function deleteLegend(f)
+    hLegend = findobj(f, 'Type', 'Legend');
+    if ~isempty(hLegend)
+        delete(hLegend);
+    end
+end
+%**************************************************************************
+function processObjects = initializeERPPlot(p, processObjects)
+    processObjects.ERPChart = BCI_ERPplot(p.handles.axis_plot);
+    processObjects.Filter = BCI_Filter(p.sampleRate, [0,40], 'low');
+    processObjects.filterFlag = p.handles.checkbox_filter.Value;
+    
+end
+%**************************************************************************
+function addPaths()
+    f  = mfilename('fullpath');
+    [fpath, fname, ~] = fileparts(f);
+    newPaths{1} = sprintf('%s%sDevices', fpath, filesep);
+    newPaths{2} = sprintf('%s%sExtensions', fpath, filesep);
+    
+    s       = pathsep;
+    pathStr = [s, path, s];
+    for ii = 1:length(newPaths)
+        if ~contains(pathStr, [s, newPaths{ii}, s], 'IgnoreCase', ispc)
+            addpath(newPaths{ii});
+        end
+    end
+end
+%**************************************************************************%% function to create the  user interface
 %**************************************************************************
 function h = buildUI()
     
@@ -279,11 +354,11 @@ function h = buildUI()
     h.fig.Resize = true;
     h.fig.CloseRequestFcn = @callback_closeRequest;
     
-    h.grid = uigridlayout(h.fig,[4,2]);
-    h.grid.RowHeight = {115,240,200,'1x'};
+    h.grid = uigridlayout(h.fig,[5,2]);
+    h.grid.RowHeight = {115,220,50,200,'1x'};
     h.grid.ColumnWidth  = {200, '1x'};
-
     drawnow;
+
     progress = uiprogressdlg(h.fig, 'Title', 'BNS Plotter EEG Plotter', ...
         'Message', 'Creating the Interface',...
         'Indeterminate','on', ...
@@ -388,20 +463,21 @@ function h = buildUI()
         'ButtonPushedFcn',@callback_trial_start,...
         'FontSize', guiScheme.BtnFontSize);
    
-    btm = btm - 40;
-    h.button_trial_reset = uibutton('Parent', h.panel_trial,...
-        'Text', 'Reset ERP',...
-        'Position',[20, btm, 160, 30],...
-        'BackgroundColor',guiScheme.BtnColor,...
-        'ButtonPushedFcn',@callback_reset_erp,...
-        'FontSize',guiScheme.BtnFontSize);
 
+    %filter control
+    h.checkbox_filter = uicheckbox('Parent', h.grid,...
+        'Value', true,...
+        'Text', 'Apply filter', ...
+        'ValueChangedFcn',@callback_toggleFiltering);
+    h.checkbox_filter.Layout.Column = 1;
+    h.checkbox_filter.Layout.Row = 3;
+    
     %save button panel
     h.panel_save = uipanel('Parent', h.grid,... 
         'Units', 'pixels', 'BorderType','line', ...
         'Enable', 'off');
     h.panel_save.Layout.Column = 1;
-    h.panel_save.Layout.Row = 3;
+    h.panel_save.Layout.Row = 4;
     
     h.button_save = uibutton('Parent', h.panel_save,...
         'Text', 'Save',...
@@ -440,7 +516,7 @@ function h = buildUI()
     h.panel_stop = uipanel('Parent', h.grid,... 
         'Units', 'pixels', 'BorderType','none');
     h.panel_stop.Layout.Column = 1;
-    h.panel_stop.Layout.Row = 4;
+    h.panel_stop.Layout.Row = 5;
    
     btm = h.panel_stop.Position(4) - 50; 
     h.button_stop = uibutton('Parent', h.panel_stop,...
@@ -452,7 +528,7 @@ function h = buildUI()
 
     h.axis_plot = uiaxes('Parent', h.grid);
     h.axis_plot.Layout.Column = 2;
-    h.axis_plot.Layout.Row = [1 4];
+    h.axis_plot.Layout.Row = [1 5];
     h.axis_plot.XLabel.String = 'Time (seconds)';
     h.axis_plot.XLabel.FontSize = 16;
     h.axis_plot.YLabel.String = 'Amplitude (uV)';
@@ -468,67 +544,3 @@ function h = buildUI()
     delete(progress);
 
 end
-%**************************************************************************
-%change the enabled function of the controls based on the current state
-function toggleEnabledStatus(h, runState)
-%if isRunning = 0 then everything is shutdown
-if runState == 0
-    isRunning = false;
-    isPaused = false;
-elseif runState == 1  %this is the paused state
-    isRunning = false;
-    isPaused = true;
-else
-    isRunning = true; %this is the running state
-    isPaused = false;
-end
-    
-    h.panel_cont.Enable = ~isRunning;
-    h.panel_trial.Enable = ~isRunning;
-   
-    h.dropdown_devices.Enable = ~bitor(isPaused, isRunning);
-    h.dropdown_ports.Enable = ~bitor(isPaused, isRunning);
-
-    h.panel_save.Enable = isRunning;
-     
-
-end
-%**************************************************************************
-function processObjects = initializeContinuousPlot(p, processObjects)
-    cla(p.handles.axis_plot)
-    deleteLegend(p.handles.fig);
-    processObjects.Chart = BCI_Chart(p.sampleRate, 5, p.handles.axis_plot);
-    processObjects.bytesSavedTarget = p.handles.edit_bytessaved;
-    processObjects.Filter = BCI_Filter(500, [0,50], 'low');
-end
-%**************************************************************************
-function deleteLegend(f)
-    hLegend = findobj(f, 'Type', 'Legend');
-    if ~isempty(hLegend)
-        delete(hLegend);
-    end
-end
-%**************************************************************************
-function processObjects = initializeERPPlot(p, processObjects)
-%    if ~isfield(processObjects, "ERPChart")
-        processObjects.ERPChart = BCI_ERPplot(p.handles.axis_plot);
-%    end
-%    processObjects.ERPChart.refreshPlot;
-  % processObjects.Filter = BCI_Filter(500, [0,40], 'low');
-end
-%**************************************************************************
-function addPaths()
-    f  = mfilename('fullpath');
-    [fpath, fname, ~] = fileparts(f);
-    newPaths{1} = sprintf('%s%sDevices', fpath, filesep);
-    newPaths{2} = sprintf('%s%sExtensions', fpath, filesep);
-    
-    s       = pathsep;
-    pathStr = [s, path, s];
-    for ii = 1:length(newPaths)
-        if ~contains(pathStr, [s, newPaths{ii}, s], 'IgnoreCase', ispc)
-            addpath(newPaths{ii});
-        end
-    end
-end
-%**************************************************************************

@@ -1,0 +1,375 @@
+1.2464 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+6.1115 	WARNING 	User requested fullscreen with size [1024  768], but screen is actually [1440, 900]. Using actual size
+7.4971 	WARNING 	Couldn't measure a consistent frame rate!
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+7.4990 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7f7b39993c10>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7f7b0426b940>, multiSample=False, name='window1', numSamples=2, pos=[360.0, 225.0], screen=0, size=array([2880, 1800]), stencilBits=0, stereo=False, units='height', useFBO=True, useRetina=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+7.4996 	EXP 	window1: mouseVisible = True
+7.5017 	EXP 	window1: mouseVisible = False
+7.5018 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+7.5018 	EXP 	window1: recordFrameIntervals = False
+7.5802 	EXP 	window1: recordFrameIntervals = True
+8.4140 	WARNING 	Couldn't measure a consistent frame rate!
+  - Is your graphics card set to sync to vertical blank?
+  - Are you running other processes on your computer?
+
+10.4072 	EXP 	Created first_image = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=-1.0, flipHoriz=False, flipVert=False, image='checkerboard1.jpg', interpolate=True, mask=None, maskParams=None, name='first_image', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([1., 1.]), texRes=128.0, units='height', win=Window(...))
+10.4215 	EXP 	Created secondimage = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1, 1, 1]), colorSpace='rgb', contrast=1.0, depth=-1.0, flipHoriz=False, flipVert=False, image='checkerboard2.jpg', interpolate=True, mask=None, maskParams=None, name='secondimage', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([1., 1.]), texRes=128.0, units='height', win=Window(...))
+10.4235 	EXP 	Created sequence: random, trialTypes=1, nReps=50, seed=None
+10.4238 	EXP 	New trial (rep=0, index=0): None
+10.4337 	WARNING 	t of last frame was 2020.07ms (=1/0)
+10.4337 	EXP 	first_image: autoDraw = True
+10.9287 	EXP 	first_image: autoDraw = False
+10.9287 	EXP 	first_image: autoDraw = False
+10.9287 	EXP 	secondimage: autoDraw = True
+11.2464 	WARNING 	t of last frame was 22.01ms (=1/45)
+11.4134 	EXP 	New trial (rep=1, index=0): None
+11.4194 	EXP 	secondimage: autoDraw = False
+11.4194 	EXP 	secondimage: autoDraw = False
+11.4194 	EXP 	first_image: autoDraw = True
+11.9127 	EXP 	first_image: autoDraw = False
+11.9127 	EXP 	first_image: autoDraw = False
+11.9127 	EXP 	secondimage: autoDraw = True
+12.3980 	EXP 	New trial (rep=2, index=0): None
+12.4051 	EXP 	secondimage: autoDraw = False
+12.4051 	EXP 	secondimage: autoDraw = False
+12.4051 	EXP 	first_image: autoDraw = True
+12.9043 	EXP 	first_image: autoDraw = False
+12.9043 	EXP 	first_image: autoDraw = False
+12.9043 	EXP 	secondimage: autoDraw = True
+13.3882 	EXP 	New trial (rep=3, index=0): None
+13.3961 	EXP 	secondimage: autoDraw = False
+13.3961 	EXP 	secondimage: autoDraw = False
+13.3961 	EXP 	first_image: autoDraw = True
+13.8875 	EXP 	first_image: autoDraw = False
+13.8875 	EXP 	first_image: autoDraw = False
+13.8875 	EXP 	secondimage: autoDraw = True
+14.3710 	EXP 	New trial (rep=4, index=0): None
+14.3794 	EXP 	secondimage: autoDraw = False
+14.3794 	EXP 	secondimage: autoDraw = False
+14.3794 	EXP 	first_image: autoDraw = True
+14.8709 	EXP 	first_image: autoDraw = False
+14.8709 	EXP 	first_image: autoDraw = False
+14.8709 	EXP 	secondimage: autoDraw = True
+15.3648 	EXP 	New trial (rep=5, index=0): None
+15.3712 	EXP 	secondimage: autoDraw = False
+15.3712 	EXP 	secondimage: autoDraw = False
+15.3712 	EXP 	first_image: autoDraw = True
+15.4460 	WARNING 	t of last frame was 20.92ms (=1/47)
+15.8749 	EXP 	first_image: autoDraw = False
+15.8749 	EXP 	first_image: autoDraw = False
+15.8749 	EXP 	secondimage: autoDraw = True
+16.3638 	EXP 	New trial (rep=6, index=0): None
+16.3697 	EXP 	secondimage: autoDraw = False
+16.3697 	EXP 	secondimage: autoDraw = False
+16.3697 	EXP 	first_image: autoDraw = True
+16.8630 	EXP 	first_image: autoDraw = False
+16.8630 	EXP 	first_image: autoDraw = False
+16.8630 	EXP 	secondimage: autoDraw = True
+17.3478 	EXP 	New trial (rep=7, index=0): None
+17.3541 	EXP 	secondimage: autoDraw = False
+17.3541 	EXP 	secondimage: autoDraw = False
+17.3541 	EXP 	first_image: autoDraw = True
+17.8552 	EXP 	first_image: autoDraw = False
+17.8552 	EXP 	first_image: autoDraw = False
+17.8552 	EXP 	secondimage: autoDraw = True
+18.3479 	EXP 	New trial (rep=8, index=0): None
+18.3547 	EXP 	secondimage: autoDraw = False
+18.3547 	EXP 	secondimage: autoDraw = False
+18.3547 	EXP 	first_image: autoDraw = True
+18.4293 	WARNING 	t of last frame was 20.73ms (=1/48)
+18.8547 	EXP 	first_image: autoDraw = False
+18.8547 	EXP 	first_image: autoDraw = False
+18.8547 	EXP 	secondimage: autoDraw = True
+19.3480 	EXP 	New trial (rep=9, index=0): None
+19.3549 	EXP 	secondimage: autoDraw = False
+19.3549 	EXP 	secondimage: autoDraw = False
+19.3549 	EXP 	first_image: autoDraw = True
+19.8541 	EXP 	first_image: autoDraw = False
+19.8541 	EXP 	first_image: autoDraw = False
+19.8541 	EXP 	secondimage: autoDraw = True
+20.3378 	EXP 	New trial (rep=10, index=0): None
+20.3462 	EXP 	secondimage: autoDraw = False
+20.3462 	EXP 	secondimage: autoDraw = False
+20.3462 	EXP 	first_image: autoDraw = True
+20.8369 	EXP 	first_image: autoDraw = False
+20.8369 	EXP 	first_image: autoDraw = False
+20.8369 	EXP 	secondimage: autoDraw = True
+21.3225 	EXP 	New trial (rep=11, index=0): None
+21.3290 	EXP 	secondimage: autoDraw = False
+21.3290 	EXP 	secondimage: autoDraw = False
+21.3290 	EXP 	first_image: autoDraw = True
+21.8205 	EXP 	first_image: autoDraw = False
+21.8205 	EXP 	first_image: autoDraw = False
+21.8205 	EXP 	secondimage: autoDraw = True
+22.3046 	EXP 	New trial (rep=12, index=0): None
+22.3132 	EXP 	secondimage: autoDraw = False
+22.3132 	EXP 	secondimage: autoDraw = False
+22.3132 	EXP 	first_image: autoDraw = True
+22.8050 	EXP 	first_image: autoDraw = False
+22.8050 	EXP 	first_image: autoDraw = False
+22.8050 	EXP 	secondimage: autoDraw = True
+23.2980 	EXP 	New trial (rep=13, index=0): None
+23.3048 	EXP 	secondimage: autoDraw = False
+23.3048 	EXP 	secondimage: autoDraw = False
+23.3048 	EXP 	first_image: autoDraw = True
+23.8042 	EXP 	first_image: autoDraw = False
+23.8042 	EXP 	first_image: autoDraw = False
+23.8042 	EXP 	secondimage: autoDraw = True
+24.2877 	EXP 	New trial (rep=14, index=0): None
+24.2962 	EXP 	secondimage: autoDraw = False
+24.2962 	EXP 	secondimage: autoDraw = False
+24.2962 	EXP 	first_image: autoDraw = True
+24.7875 	EXP 	first_image: autoDraw = False
+24.7875 	EXP 	first_image: autoDraw = False
+24.7875 	EXP 	secondimage: autoDraw = True
+25.2815 	EXP 	New trial (rep=15, index=0): None
+25.2884 	EXP 	secondimage: autoDraw = False
+25.2884 	EXP 	secondimage: autoDraw = False
+25.2884 	EXP 	first_image: autoDraw = True
+25.7876 	EXP 	first_image: autoDraw = False
+25.7876 	EXP 	first_image: autoDraw = False
+25.7876 	EXP 	secondimage: autoDraw = True
+26.2713 	EXP 	New trial (rep=16, index=0): None
+26.2796 	EXP 	secondimage: autoDraw = False
+26.2796 	EXP 	secondimage: autoDraw = False
+26.2796 	EXP 	first_image: autoDraw = True
+26.7710 	EXP 	first_image: autoDraw = False
+26.7710 	EXP 	first_image: autoDraw = False
+26.7710 	EXP 	secondimage: autoDraw = True
+27.2649 	EXP 	New trial (rep=17, index=0): None
+27.2711 	EXP 	secondimage: autoDraw = False
+27.2711 	EXP 	secondimage: autoDraw = False
+27.2711 	EXP 	first_image: autoDraw = True
+27.7631 	EXP 	first_image: autoDraw = False
+27.7631 	EXP 	first_image: autoDraw = False
+27.7631 	EXP 	secondimage: autoDraw = True
+28.2470 	EXP 	New trial (rep=18, index=0): None
+28.2530 	EXP 	secondimage: autoDraw = False
+28.2530 	EXP 	secondimage: autoDraw = False
+28.2530 	EXP 	first_image: autoDraw = True
+28.7464 	EXP 	first_image: autoDraw = False
+28.7464 	EXP 	first_image: autoDraw = False
+28.7464 	EXP 	secondimage: autoDraw = True
+28.7963 	WARNING 	Multiple dropped frames have occurred - I'll stop bothering you about them!
+29.2313 	EXP 	New trial (rep=19, index=0): None
+29.2379 	EXP 	secondimage: autoDraw = False
+29.2379 	EXP 	secondimage: autoDraw = False
+29.2379 	EXP 	first_image: autoDraw = True
+29.7297 	EXP 	first_image: autoDraw = False
+29.7297 	EXP 	first_image: autoDraw = False
+29.7297 	EXP 	secondimage: autoDraw = True
+30.2147 	EXP 	New trial (rep=20, index=0): None
+30.2215 	EXP 	secondimage: autoDraw = False
+30.2215 	EXP 	secondimage: autoDraw = False
+30.2215 	EXP 	first_image: autoDraw = True
+30.7207 	EXP 	first_image: autoDraw = False
+30.7207 	EXP 	first_image: autoDraw = False
+30.7207 	EXP 	secondimage: autoDraw = True
+31.2148 	EXP 	New trial (rep=21, index=0): None
+31.2218 	EXP 	secondimage: autoDraw = False
+31.2218 	EXP 	secondimage: autoDraw = False
+31.2218 	EXP 	first_image: autoDraw = True
+31.7190 	EXP 	first_image: autoDraw = False
+31.7190 	EXP 	first_image: autoDraw = False
+31.7190 	EXP 	secondimage: autoDraw = True
+32.2046 	EXP 	New trial (rep=22, index=0): None
+32.2130 	EXP 	secondimage: autoDraw = False
+32.2130 	EXP 	secondimage: autoDraw = False
+32.2130 	EXP 	first_image: autoDraw = True
+32.7038 	EXP 	first_image: autoDraw = False
+32.7038 	EXP 	first_image: autoDraw = False
+32.7038 	EXP 	secondimage: autoDraw = True
+33.1967 	EXP 	New trial (rep=23, index=0): None
+33.2024 	EXP 	secondimage: autoDraw = False
+33.2024 	EXP 	secondimage: autoDraw = False
+33.2024 	EXP 	first_image: autoDraw = True
+33.6958 	EXP 	first_image: autoDraw = False
+33.6958 	EXP 	first_image: autoDraw = False
+33.6958 	EXP 	secondimage: autoDraw = True
+34.1803 	EXP 	New trial (rep=24, index=0): None
+34.1861 	EXP 	secondimage: autoDraw = False
+34.1861 	EXP 	secondimage: autoDraw = False
+34.1861 	EXP 	first_image: autoDraw = True
+34.6797 	EXP 	first_image: autoDraw = False
+34.6797 	EXP 	first_image: autoDraw = False
+34.6797 	EXP 	secondimage: autoDraw = True
+35.1629 	EXP 	New trial (rep=25, index=0): None
+35.1686 	EXP 	secondimage: autoDraw = False
+35.1686 	EXP 	secondimage: autoDraw = False
+35.1686 	EXP 	first_image: autoDraw = True
+35.6631 	EXP 	first_image: autoDraw = False
+35.6631 	EXP 	first_image: autoDraw = False
+35.6631 	EXP 	secondimage: autoDraw = True
+36.1467 	EXP 	New trial (rep=26, index=0): None
+36.1525 	EXP 	secondimage: autoDraw = False
+36.1525 	EXP 	secondimage: autoDraw = False
+36.1525 	EXP 	first_image: autoDraw = True
+36.6464 	EXP 	first_image: autoDraw = False
+36.6464 	EXP 	first_image: autoDraw = False
+36.6464 	EXP 	secondimage: autoDraw = True
+37.1314 	EXP 	New trial (rep=27, index=0): None
+37.1378 	EXP 	secondimage: autoDraw = False
+37.1378 	EXP 	secondimage: autoDraw = False
+37.1378 	EXP 	first_image: autoDraw = True
+37.6298 	EXP 	first_image: autoDraw = False
+37.6298 	EXP 	first_image: autoDraw = False
+37.6298 	EXP 	secondimage: autoDraw = True
+38.1137 	EXP 	New trial (rep=28, index=0): None
+38.1196 	EXP 	secondimage: autoDraw = False
+38.1196 	EXP 	secondimage: autoDraw = False
+38.1196 	EXP 	first_image: autoDraw = True
+38.6118 	EXP 	first_image: autoDraw = False
+38.6118 	EXP 	first_image: autoDraw = False
+38.6118 	EXP 	secondimage: autoDraw = True
+39.0981 	EXP 	New trial (rep=29, index=0): None
+39.1042 	EXP 	secondimage: autoDraw = False
+39.1042 	EXP 	secondimage: autoDraw = False
+39.1042 	EXP 	first_image: autoDraw = True
+39.5963 	EXP 	first_image: autoDraw = False
+39.5963 	EXP 	first_image: autoDraw = False
+39.5963 	EXP 	secondimage: autoDraw = True
+40.0816 	EXP 	New trial (rep=30, index=0): None
+40.0886 	EXP 	secondimage: autoDraw = False
+40.0886 	EXP 	secondimage: autoDraw = False
+40.0886 	EXP 	first_image: autoDraw = True
+40.5878 	EXP 	first_image: autoDraw = False
+40.5878 	EXP 	first_image: autoDraw = False
+40.5878 	EXP 	secondimage: autoDraw = True
+41.0713 	EXP 	New trial (rep=31, index=0): None
+41.0797 	EXP 	secondimage: autoDraw = False
+41.0797 	EXP 	secondimage: autoDraw = False
+41.0797 	EXP 	first_image: autoDraw = True
+41.5706 	EXP 	first_image: autoDraw = False
+41.5706 	EXP 	first_image: autoDraw = False
+41.5706 	EXP 	secondimage: autoDraw = True
+42.0546 	EXP 	New trial (rep=32, index=0): None
+42.0630 	EXP 	secondimage: autoDraw = False
+42.0630 	EXP 	secondimage: autoDraw = False
+42.0630 	EXP 	first_image: autoDraw = True
+42.5545 	EXP 	first_image: autoDraw = False
+42.5545 	EXP 	first_image: autoDraw = False
+42.5545 	EXP 	secondimage: autoDraw = True
+43.0379 	EXP 	New trial (rep=33, index=0): None
+43.0463 	EXP 	secondimage: autoDraw = False
+43.0463 	EXP 	secondimage: autoDraw = False
+43.0463 	EXP 	first_image: autoDraw = True
+43.5375 	EXP 	first_image: autoDraw = False
+43.5375 	EXP 	first_image: autoDraw = False
+43.5375 	EXP 	secondimage: autoDraw = True
+44.0214 	EXP 	New trial (rep=34, index=0): None
+44.0290 	EXP 	secondimage: autoDraw = False
+44.0290 	EXP 	secondimage: autoDraw = False
+44.0290 	EXP 	first_image: autoDraw = True
+44.5206 	EXP 	first_image: autoDraw = False
+44.5206 	EXP 	first_image: autoDraw = False
+44.5206 	EXP 	secondimage: autoDraw = True
+45.0069 	EXP 	New trial (rep=35, index=0): None
+45.0138 	EXP 	secondimage: autoDraw = False
+45.0138 	EXP 	secondimage: autoDraw = False
+45.0138 	EXP 	first_image: autoDraw = True
+45.5044 	EXP 	first_image: autoDraw = False
+45.5044 	EXP 	first_image: autoDraw = False
+45.5044 	EXP 	secondimage: autoDraw = True
+45.9880 	EXP 	New trial (rep=36, index=0): None
+45.9964 	EXP 	secondimage: autoDraw = False
+45.9964 	EXP 	secondimage: autoDraw = False
+45.9964 	EXP 	first_image: autoDraw = True
+46.4878 	EXP 	first_image: autoDraw = False
+46.4878 	EXP 	first_image: autoDraw = False
+46.4878 	EXP 	secondimage: autoDraw = True
+46.9712 	EXP 	New trial (rep=37, index=0): None
+46.9798 	EXP 	secondimage: autoDraw = False
+46.9798 	EXP 	secondimage: autoDraw = False
+46.9798 	EXP 	first_image: autoDraw = True
+47.4711 	EXP 	first_image: autoDraw = False
+47.4711 	EXP 	first_image: autoDraw = False
+47.4711 	EXP 	secondimage: autoDraw = True
+47.9548 	EXP 	New trial (rep=38, index=0): None
+47.9631 	EXP 	secondimage: autoDraw = False
+47.9631 	EXP 	secondimage: autoDraw = False
+47.9631 	EXP 	first_image: autoDraw = True
+48.4539 	EXP 	first_image: autoDraw = False
+48.4539 	EXP 	first_image: autoDraw = False
+48.4539 	EXP 	secondimage: autoDraw = True
+48.9379 	EXP 	New trial (rep=39, index=0): None
+48.9464 	EXP 	secondimage: autoDraw = False
+48.9464 	EXP 	secondimage: autoDraw = False
+48.9464 	EXP 	first_image: autoDraw = True
+49.4375 	EXP 	first_image: autoDraw = False
+49.4375 	EXP 	first_image: autoDraw = False
+49.4375 	EXP 	secondimage: autoDraw = True
+49.9314 	EXP 	New trial (rep=40, index=0): None
+49.9379 	EXP 	secondimage: autoDraw = False
+49.9379 	EXP 	secondimage: autoDraw = False
+49.9379 	EXP 	first_image: autoDraw = True
+50.4299 	EXP 	first_image: autoDraw = False
+50.4299 	EXP 	first_image: autoDraw = False
+50.4299 	EXP 	secondimage: autoDraw = True
+50.9197 	EXP 	New trial (rep=41, index=0): None
+50.9323 	EXP 	secondimage: autoDraw = False
+50.9323 	EXP 	secondimage: autoDraw = False
+50.9323 	EXP 	first_image: autoDraw = True
+51.4297 	EXP 	first_image: autoDraw = False
+51.4297 	EXP 	first_image: autoDraw = False
+51.4297 	EXP 	secondimage: autoDraw = True
+51.9151 	EXP 	New trial (rep=42, index=0): None
+51.9219 	EXP 	secondimage: autoDraw = False
+51.9219 	EXP 	secondimage: autoDraw = False
+51.9219 	EXP 	first_image: autoDraw = True
+52.4209 	EXP 	first_image: autoDraw = False
+52.4209 	EXP 	first_image: autoDraw = False
+52.4209 	EXP 	secondimage: autoDraw = True
+52.9050 	EXP 	New trial (rep=43, index=0): None
+52.9131 	EXP 	secondimage: autoDraw = False
+52.9131 	EXP 	secondimage: autoDraw = False
+52.9131 	EXP 	first_image: autoDraw = True
+53.4046 	EXP 	first_image: autoDraw = False
+53.4046 	EXP 	first_image: autoDraw = False
+53.4046 	EXP 	secondimage: autoDraw = True
+53.8893 	EXP 	New trial (rep=44, index=0): None
+53.8957 	EXP 	secondimage: autoDraw = False
+53.8957 	EXP 	secondimage: autoDraw = False
+53.8957 	EXP 	first_image: autoDraw = True
+54.3876 	EXP 	first_image: autoDraw = False
+54.3876 	EXP 	first_image: autoDraw = False
+54.3876 	EXP 	secondimage: autoDraw = True
+54.8717 	EXP 	New trial (rep=45, index=0): None
+54.8798 	EXP 	secondimage: autoDraw = False
+54.8798 	EXP 	secondimage: autoDraw = False
+54.8798 	EXP 	first_image: autoDraw = True
+55.3706 	EXP 	first_image: autoDraw = False
+55.3706 	EXP 	first_image: autoDraw = False
+55.3706 	EXP 	secondimage: autoDraw = True
+55.8547 	EXP 	New trial (rep=46, index=0): None
+55.8628 	EXP 	secondimage: autoDraw = False
+55.8628 	EXP 	secondimage: autoDraw = False
+55.8628 	EXP 	first_image: autoDraw = True
+56.3563 	EXP 	first_image: autoDraw = False
+56.3563 	EXP 	first_image: autoDraw = False
+56.3563 	EXP 	secondimage: autoDraw = True
+56.8483 	EXP 	New trial (rep=47, index=0): None
+56.8546 	EXP 	secondimage: autoDraw = False
+56.8546 	EXP 	secondimage: autoDraw = False
+56.8546 	EXP 	first_image: autoDraw = True
+57.3466 	EXP 	first_image: autoDraw = False
+57.3466 	EXP 	first_image: autoDraw = False
+57.3466 	EXP 	secondimage: autoDraw = True
+57.8320 	EXP 	New trial (rep=48, index=0): None
+57.8394 	EXP 	secondimage: autoDraw = False
+57.8394 	EXP 	secondimage: autoDraw = False
+57.8394 	EXP 	first_image: autoDraw = True
+58.3380 	EXP 	first_image: autoDraw = False
+58.3380 	EXP 	first_image: autoDraw = False
+58.3380 	EXP 	secondimage: autoDraw = True
+58.8215 	EXP 	New trial (rep=49, index=0): None
+58.8298 	EXP 	secondimage: autoDraw = False
+58.8298 	EXP 	secondimage: autoDraw = False
+58.8298 	EXP 	first_image: autoDraw = True
+59.3208 	EXP 	first_image: autoDraw = False
+59.3208 	EXP 	first_image: autoDraw = False
+59.3208 	EXP 	secondimage: autoDraw = True
+59.8124 	EXP 	secondimage: autoDraw = False
+59.8124 	EXP 	secondimage: autoDraw = False
+59.8492 	EXP 	window1: mouseVisible = True
