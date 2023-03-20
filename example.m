@@ -6,8 +6,9 @@ f = figure(1);
 clf
 objs.ax = axes(f);
 
-p = serialportlist('available');
-p = p{4};
+p = serialportlist("all");
+p = p{7};
+try
 d = BNS_HBSpiker(p, .2);
 d.SetTrialLimits(50,50);
 d.PacketReceivedCallback = @handleit;
@@ -16,7 +17,11 @@ d.ProcessObjects = objs;
 pause(1)
 d.SetMode("Trial");
 d.Start
-
+catch me
+    msgbox(me.message)
+    close(f)
+    return;
+end
 function pStruct = handleit(src, pStruct, packet)
     if ~isfield(pStruct, "packetCount")
         pStruct.packetCount = 1;

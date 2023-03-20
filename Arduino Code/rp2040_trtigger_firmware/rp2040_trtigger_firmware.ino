@@ -53,7 +53,6 @@ void loop() {
 
   if (haveTrigger && ((millis() - triggerOnsetTime) > triggerDuration)) {
     unsigned long d = millis() - triggerOnsetTime;
-    Serial.println(d);
     haveTrigger = false;
     digitalWrite(TRIG_PIN_1, 0);
     digitalWrite(TRIG_PIN_2, 0);

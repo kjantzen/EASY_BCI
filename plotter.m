@@ -10,7 +10,6 @@ function plotter()
     p.handles = buildUI;
     addPaths;
     p.handles.fig.UserData = p;
-    %set(p.handles.fig, 'UserData', p);
     
     end
 %**************************************************************************
@@ -277,13 +276,25 @@ else
     isPaused = false;
 end
     
-    h.panel_cont.Enable = ~isRunning;
-    h.panel_trial.Enable = ~isRunning;
+if isRunning
+    h.panel_cont.Enable = 'off';
+    h.panel_trial.Enable = 'off';
+    h.panel_save.Enable = 'on';
+else
+    h.panel_cont.Enable = 'on';
+    h.panel_trial.Enable = 'on';
+    h.panel_save.Enable = 'off';
+end
    
-    h.dropdown_devices.Enable = ~bitor(isPaused, isRunning);
-    h.dropdown_ports.Enable = ~bitor(isPaused, isRunning);
+if bitor(isPaused, isRunning)
+    h.dropdown_devices.Enable = 'off';
+    h.dropdown_ports.Enable = 'off';
+else
+    h.dropdown_devices.Enable = 'on';
+    h.dropdown_ports.Enable = 'on';
+end
 
-    h.panel_save.Enable = isRunning;
+ 
      
 
 end
@@ -380,7 +391,7 @@ function h = buildUI()
         'Tooltip','Select a compatible EEG device',...
         'BackgroundColor',guiScheme.ddownbackcolor);
     h.dropdown_devices.ItemsData = {'BNS_HBSpiker', 'ERPminiCont'};
-    h.dropdown_devices.ClickedFcn = @testing;
+    h.dropdown_devices.DropDownOpeningFcn = @testing;
     
     uilabel('Parent', h.panel_controls,...
         'Position', [10, 35, 180, 25], ...
