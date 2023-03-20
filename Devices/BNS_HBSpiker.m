@@ -276,6 +276,7 @@ classdef BNS_HBSpiker < handle
          %
          %  obj.Delete - deletes the BNS_HBSpiker device
          %
+            obj.Stop;
             delete(obj);
         end
 

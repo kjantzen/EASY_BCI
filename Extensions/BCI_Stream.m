@@ -27,9 +27,9 @@ classdef BCI_Stream < handle
             end
             obj.FileName = FileName;
             obj.FileHandle = fopen(FileName,'w');
-            if (obj.FileHandle == 0)
+            if (obj.FileHandle == -1)
                 obj = [];
-                error("The file %i could not be opened", options.FileName);
+                error("The file %i could not be opened", FileName);
             end
             obj.IsStreaming = true;
 

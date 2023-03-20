@@ -196,7 +196,7 @@ function pStruct = trialReadyCallback(src, pStruct, trial)
    if hasActiveStream(pStruct)
        pStruct.Stream.Save(trial);
    end
-   if pStruct.filterCheck.Value
+   if pStruct.filterFlag
        trial.EEG = pStruct.Filter.filter(double(trial.EEG));
    end
    pStruct.ERPChart.UpdateERPPlot(trial);

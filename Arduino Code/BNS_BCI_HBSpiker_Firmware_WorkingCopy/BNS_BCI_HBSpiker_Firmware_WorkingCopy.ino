@@ -298,9 +298,9 @@ void signalMode() {
   digitalWrite(MODE_LED[1], LOW);
   for (int i = 0; i < 3; i++) {
     digitalWrite(MODE_LED[collectionMode], LOW);
-    delay(100);
+    delay(50);
     digitalWrite(MODE_LED[collectionMode], HIGH);
-    delay(100);
+    delay(50);
   }
 }
 
