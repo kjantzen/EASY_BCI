@@ -87,6 +87,7 @@ function callback_stop(src, ~)
     fig = ancestor(src, 'figure', 'toplevel');
     stopRecording(fig)
 end
+%**************************************************************************
 function callback_closeRequest(fig, varargin)
     stopRecording(fig);
     closereq;
@@ -194,7 +195,7 @@ function pStruct = trialReadyCallback(src, pStruct, trial)
     
    if hasActiveStream(pStruct)
        pStruct.Stream.Save(trial);
-       pStruct.bytesSavedTarget.Value = sprintf('p.Struct.Stream.PacketsWritten;
+       pStruct.bytesSavedTarget.Value = sprintf('%i trials', p.Struct.Stream.PacketsWritten);
    end
    if pStruct.filterCheck.Value
        trial.EEG = pStruct.Filter.filter(double(trial.EEG));
@@ -281,10 +282,12 @@ if isRunning
     h.panel_cont.Enable = 'off';
     h.panel_trial.Enable = 'off';
     h.panel_save.Enable = 'on';
+    h.panel_stop.Enable = 'on';
 else
     h.panel_cont.Enable = 'on';
     h.panel_trial.Enable = 'on';
     h.panel_save.Enable = 'off';
+    h.panel_stop.Enable = 'off';
 end
    
 if bitor(isPaused, isRunning)
@@ -338,8 +341,42 @@ function addPaths()
         end
     end
 end
-%**************************************************************************%% function to create the  user interface
 %**************************************************************************
+function callback_convertToEeglab(src, ~)
+
+    fig = ancestor(src, 'figure', 'toplevel');
+    %get the file to convert
+
+    fig.Visible = false;
+    inFile = uigetfile('*.dat', 'Select file to convert');
+    fi
+    figure(fig);    %make sure the figure is back on top after the dialog box is closed 
+
+    if inFile==0
+        return;
+    end
+    
+    EEG = ReadStreamFile(inFile);
+    [p, f, ~] = fileparts(inFile);
+    
+    outFile = fullfile(p, [f, '.set']);
+    if isfile(outFile)
+        msg = 'Continuing will overwrite an existing file.';
+        selection = uiconfirm(fig, msg,'Confirm save',...
+            'Options', {'Overwrite', 'Cancel'},...
+            'DefaultOption', 1, 'CancelOption',2);
+        if contains(selection, 'Cancel')
+            fprintf('you pushed cancel')
+            return
+        end
+    end
+    
+    save(outFile, 'EEG', '-mat');
+
+    
+end
+%**************************************************************************
+%% function to create the  user interface
 function h = buildUI()
     
     %load the color scheme values
@@ -353,10 +390,11 @@ function h = buildUI()
     existingFigureHandle = findall(0,'Tag', 'BNSPlotter');
     
     if ~isempty(existingFigureHandle) && isvalid(existingFigureHandle)
-        close(existingFigureHandle);
+        clf(existingFigureHandle);
+        h.fig = existingFigureHandle;
+    else
+        h.fig = uifigure;
     end
-    
-    h.fig = uifigure;
     
     h.fig.Color = guiScheme.BackColor;
     h.fig.Position = [0,0,sz(3),sz(4)];
@@ -365,17 +403,18 @@ function h = buildUI()
     h.fig.Resize = true;
     h.fig.CloseRequestFcn = @callback_closeRequest;
     
-    h.grid = uigridlayout(h.fig,[5,2]);
-    h.grid.RowHeight = {115,220,30,200,'1x'};
-    h.grid.ColumnWidth  = {200, '1x'};
-    drawnow;
-
-    progress = uiprogressdlg(h.fig, 'Title', 'BNS Plotter EEG Plotter', ...
+    progress = uiprogressdlg(h.fig, 'Title', 'BNS EEG Plotter', ...
         'Message', 'Creating the Interface',...
         'Indeterminate','on', ...
         'Cancelable','off');
     drawnow;
 
+    h.grid = uigridlayout(h.fig,[5,2]);
+    h.grid.RowHeight = {115,220,30,200,'1x'};
+    h.grid.ColumnWidth  = {200, '1x'};
+    drawnow;
+
+   
     %panel for the current acquisition status
     h.panel_controls = uipanel('Parent', h.grid);
     h.panel_controls.Layout.Row = 1;
@@ -392,7 +431,6 @@ function h = buildUI()
         'Tooltip','Select a compatible EEG device',...
         'BackgroundColor',guiScheme.ddownbackcolor);
     h.dropdown_devices.ItemsData = {'BNS_HBSpiker', 'ERPminiCont'};
-    h.dropdown_devices.DropDownOpeningFcn = @testing;
     
     uilabel('Parent', h.panel_controls,...
         'Position', [10, 35, 180, 25], ...
@@ -416,7 +454,7 @@ function h = buildUI()
     h.tab_trial = uitab('Parent', h.tab_mode,...
         'Title', 'ERP');
     drawnow;
-    pause(2);
+    pause(1);
 
     h.panel_cont = uipanel('Parent', h.tab_cont,...
         'Position', h.tab_cont.InnerPosition,...
@@ -525,7 +563,8 @@ function h = buildUI()
     
     %stop button panel
     h.panel_stop = uipanel('Parent', h.grid,... 
-        'Units', 'pixels', 'BorderType','none');
+        'Units', 'pixels', 'BorderType','none',...
+        'Enable', 'off');
     h.panel_stop.Layout.Column = 1;
     h.panel_stop.Layout.Row = 5;
    
@@ -549,8 +588,13 @@ function h = buildUI()
     h.axis_plot.Interactions = [];
     h.axis_plot.PickableParts = 'none';
     h.axis_plot.HitTest = 'off';
-        
+    h.axis_plot.PositionConstraint = 'innerposition';        
 
+    h.menu_file = uimenu('Parent', h.fig,...
+        'Text', 'File');
+    h.menu_convert = uimenu('Parent', h.menu_file,...
+        'Text', 'Convert to eeglab',...
+        'MenuSelectedFcn',@callback_convertToEeglab);
     drawnow;
     delete(progress);
 

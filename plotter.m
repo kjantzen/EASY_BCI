@@ -341,8 +341,41 @@ function addPaths()
         end
     end
 end
-%**************************************************************************%% function to create the  user interface
 %**************************************************************************
+function callback_convertToEeglab(src, ~)
+
+    fig = ancestor(src, 'figure', 'toplevel');
+    %get the file to convert
+
+    fig.Visible = false;
+    inFile = uigetfile('*.dat', 'Select file to convert');
+    fig.Visible = true;
+    figure(fig);    %make sure the figure is back on top after the dialog box is closed 
+
+    if inFile==0
+        return;
+    end
+    
+    EEG = ReadStreamFile(inFile);
+    [p, f, ~] = fileparts(inFile);
+    
+    outFile = fullfile(p, [f, '.set']);
+    if isfile(outFile)
+        msg = 'Continuing will overwrite an existing file.';
+        selection = uiconfirm(fig, msg,'Confirm save',...
+            'Options', {'Overwrite', 'Cancel'},...
+            'DefaultOption', 1, 'CancelOption',2);
+        if contains(selection, 'Cancel')
+            return
+        end
+    end
+    
+    save(outFile, 'EEG', '-mat');
+
+    
+end
+%**************************************************************************
+%% function to create the  user interface
 function h = buildUI()
     
     %load the color scheme values
@@ -556,8 +589,11 @@ function h = buildUI()
     h.axis_plot.HitTest = 'off';
     h.axis_plot.PositionConstraint = 'innerposition';        
 
-    h.menu = uimenu('Parent', h.fig,...
+    h.menu_file = uimenu('Parent', h.fig,...
         'Text', 'File');
+    h.menu_convert = uimenu('Parent', h.menu_file,...
+        'Text', 'Convert to eeglab',...
+        'MenuSelectedFcn',@callback_convertToEeglab);
     drawnow;
     delete(progress);
 
