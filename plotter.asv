@@ -194,7 +194,7 @@ function pStruct = trialReadyCallback(src, pStruct, trial)
     
    if hasActiveStream(pStruct)
        pStruct.Stream.Save(trial);
-       pStruct.bytesSavedTarget.Value = sprintf('%i trials', p.Struct.Stream.PacketsWritten);
+       pStruct.bytesSavedTarget.Value = sprintf('p.Struct.Stream.PacketsWritten;
    end
    if pStruct.filterCheck.Value
        trial.EEG = pStruct.Filter.filter(double(trial.EEG));
@@ -353,11 +353,10 @@ function h = buildUI()
     existingFigureHandle = findall(0,'Tag', 'BNSPlotter');
     
     if ~isempty(existingFigureHandle) && isvalid(existingFigureHandle)
-        clf(existingFigureHandle);
-        h.fig = existingFigureHandle;
-    else
-        h.fig = uifigure;
+        close(existingFigureHandle);
     end
+    
+    h.fig = uifigure;
     
     h.fig.Color = guiScheme.BackColor;
     h.fig.Position = [0,0,sz(3),sz(4)];
@@ -366,18 +365,17 @@ function h = buildUI()
     h.fig.Resize = true;
     h.fig.CloseRequestFcn = @callback_closeRequest;
     
-    progress = uiprogressdlg(h.fig, 'Title', 'BNS EEG Plotter', ...
-        'Message', 'Creating the Interface',...
-        'Indeterminate','on', ...
-        'Cancelable','off');
-    drawnow;
-
     h.grid = uigridlayout(h.fig,[5,2]);
     h.grid.RowHeight = {115,220,30,200,'1x'};
     h.grid.ColumnWidth  = {200, '1x'};
     drawnow;
 
-   
+    progress = uiprogressdlg(h.fig, 'Title', 'BNS Plotter EEG Plotter', ...
+        'Message', 'Creating the Interface',...
+        'Indeterminate','on', ...
+        'Cancelable','off');
+    drawnow;
+
     %panel for the current acquisition status
     h.panel_controls = uipanel('Parent', h.grid);
     h.panel_controls.Layout.Row = 1;
@@ -394,6 +392,7 @@ function h = buildUI()
         'Tooltip','Select a compatible EEG device',...
         'BackgroundColor',guiScheme.ddownbackcolor);
     h.dropdown_devices.ItemsData = {'BNS_HBSpiker', 'ERPminiCont'};
+    h.dropdown_devices.DropDownOpeningFcn = @testing;
     
     uilabel('Parent', h.panel_controls,...
         'Position', [10, 35, 180, 25], ...
@@ -417,7 +416,7 @@ function h = buildUI()
     h.tab_trial = uitab('Parent', h.tab_mode,...
         'Title', 'ERP');
     drawnow;
-    pause(1);
+    pause(2);
 
     h.panel_cont = uipanel('Parent', h.tab_cont,...
         'Position', h.tab_cont.InnerPosition,...
@@ -550,7 +549,7 @@ function h = buildUI()
     h.axis_plot.Interactions = [];
     h.axis_plot.PickableParts = 'none';
     h.axis_plot.HitTest = 'off';
-    h.axis_plot.PositionContraint = 'innerposition';        
+        
 
     drawnow;
     delete(progress);
