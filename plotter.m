@@ -173,19 +173,7 @@ function ports = parsePorts(portlist)
 end
  
 %**************************************************************************
-function callback_toggleFiltering(src, ~)
-    
-%     flag = src.Value;
-%     fig = ancestor(src, 'figure', 'toplevel');
-%     p = fig.UserData;
-% 
-%     while p.Device.ProcessObjects.filterFlag ~= flag
-%         p.Device.ProcessObjects.filterFlag = flag;
-%         fig.UserData = p;
-%         p = fig.UserData;
-%     end
-%    
-end
+
 %**************************************************************************
 %% callback function for continuous collection
 function pStruct = packetReadyCallback(src, pStruct, packet)
@@ -525,8 +513,7 @@ function h = buildUI()
     %filter control
     h.checkbox_filter = uicheckbox('Parent', h.grid,...
         'Value', true,...
-        'Text', 'Apply filter', ...
-        'ValueChangedFcn',@callback_toggleFiltering);
+        'Text', 'Apply filter');
     h.checkbox_filter.Layout.Column = 1;
     h.checkbox_filter.Layout.Row = 3;
     

@@ -91,8 +91,7 @@ classdef BCI_ERPplot < handle
              end
    
              %draw a baseline 
-             obj.baseLine = line(obj.Axis, trial.TimePnts, zeros(1, length(timePnts)), 'Color', 'k');
-             obj.zeroLine = line(obj.Axis, [0,0], [-1,1], 'Color', 'k');
+             obj.baseLine = line(obj.Axis, trial.TimePnts, zeros(1, length(timePnts)));
 
             end                
           
@@ -114,7 +113,6 @@ classdef BCI_ERPplot < handle
           
             end
             drawnow();
-            obj.zeroLine.YLim = obj.Axis.Ylim;
           
         end
     end

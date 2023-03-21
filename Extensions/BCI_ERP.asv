@@ -27,16 +27,14 @@
 %   the data between min and max.  
 %
             %
-classdef BCI_ERP < handle
+classdef BCI_ERP
     properties 
         ERP         %the actual erp
         TimePnts    %the x axis time values
         TrialCount  %how many trial in each bin
         Trials
-        PreSamples
         SRate
         Samples
-        
     end
     properties (Access=private)
         erpSum
@@ -47,8 +45,8 @@ classdef BCI_ERP < handle
             obj.ERP = [];
             obj.Trials = [];
             obj.TrialCount = 0;
-            obj.Samples = 0;
-            obj.PreSamples = 0;
+            obj.Samples = 0
+%            obj.lpfilt = BCI_Filter(512,[0,50],"low");
         end
         function obj = UpdateERP(obj, trial, plotRange)
             
@@ -60,13 +58,12 @@ classdef BCI_ERP < handle
                 obj.TimePnts = trial.timePnts;
                 obj.SRate = trial.sampleRate;
                 obj.Samples = trial.samples;
-                obj.PreSamples = trial.preSamp;
+                
+
             end
 
-            if trial.samples ~= obj.Samples || trial.preSamp ~= obj.PreSamples
-                error('BCI_ERP:BadTrialProperty', 'The trial properties do not match the ERP properties');
-            end
-
+            if trial.samples ~= 
+            %d = obj.lpfilt.filter(trial.EEG);
             bline = mean(trial.EEG(1:trial.preSamp));
             trial.EEG  = trial.EEG - bline;
             obj.TrialCount(trial.evt) = obj.TrialCount(trial.evt) + 1;
