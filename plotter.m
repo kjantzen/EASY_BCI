@@ -159,9 +159,19 @@ function callback_save(src, ~)
 end
 %**************************************************************************
 function callback_displayPorts(src,~)
-    src.Items = serialportlist("all");
+    src.Items = parsePorts(serialportlist("all"));
 
 end
+%**************************************************************************
+function ports = parsePorts(portlist)
+    %separates out the cu and tty ports on a mac. does nothing if on pc
+    if ismac || isunix
+        ports = portlist(contains(portlist, 'cu.'));
+    else
+        ports = porlist;
+    end
+end
+ 
 %**************************************************************************
 function callback_toggleFiltering(src, ~)
     
@@ -382,7 +392,7 @@ function h = buildUI()
     load 'Scheme.mat' guiScheme;
     
     sz = get(0, 'ScreenSize');
-    ports = serialportlist;
+    ports = parsePorts(serialportlist('all'));
     
     %see if the figure already exists
     %if it does not create it and if it does clear it and start over
