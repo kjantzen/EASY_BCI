@@ -87,6 +87,7 @@ function callback_stop(src, ~)
     fig = ancestor(src, 'figure', 'toplevel');
     stopRecording(fig)
 end
+%**************************************************************************
 function callback_closeRequest(fig, varargin)
     stopRecording(fig);
     closereq;
@@ -281,10 +282,12 @@ if isRunning
     h.panel_cont.Enable = 'off';
     h.panel_trial.Enable = 'off';
     h.panel_save.Enable = 'on';
+    h.panel_stop.Enable = 'on';
 else
     h.panel_cont.Enable = 'on';
     h.panel_trial.Enable = 'on';
     h.panel_save.Enable = 'off';
+    h.panel_stop.Enable = 'off';
 end
    
 if bitor(isPaused, isRunning)
@@ -526,7 +529,8 @@ function h = buildUI()
     
     %stop button panel
     h.panel_stop = uipanel('Parent', h.grid,... 
-        'Units', 'pixels', 'BorderType','none');
+        'Units', 'pixels', 'BorderType','none',...
+        'Enable', 'off');
     h.panel_stop.Layout.Column = 1;
     h.panel_stop.Layout.Row = 5;
    
@@ -550,8 +554,10 @@ function h = buildUI()
     h.axis_plot.Interactions = [];
     h.axis_plot.PickableParts = 'none';
     h.axis_plot.HitTest = 'off';
-    h.axis_plot.PositionContraint = 'innerposition';        
+    h.axis_plot.PositionConstraint = 'innerposition';        
 
+    h.menu = uimenu('Parent', h.fig,...
+        'Text', 'File');
     drawnow;
     delete(progress);
 
