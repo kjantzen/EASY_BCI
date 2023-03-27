@@ -8,18 +8,18 @@ function outStruct = eyeBlink(inStruct, varargin)
 end
 %%
 %this function gets called when data is passed to the handler
-function p = analyze(p,data, event)
+function p = analyze(obj, p, data)
     
     %erase any digital triggers that may be in the event vector
-    event = double(event) * 0;
+    event = double(data.Event) * 0;
     
     %smooth the data and remove the baseline
-    data = smoothdata(data, 2, 'movmean', 10);
-    data = data - .65;
+    eeg = smoothdata(data.EEG, 2, 'movmean', 10);
+    eeg = eeg - 100;
     
     p.BCI_State = 'Center';
     %detect the peaks 
-    p.PeakDetect = p.PeakDetect.Detect(data, 0);
+    p.PeakDetect = p.PeakDetect.Detect(eeg, 0);
     
     if ~isempty(p.PeakDetect.Peaks)
     
@@ -63,10 +63,8 @@ function p = analyze(p,data, event)
         end
     
     end
-    p.Chart =  p.Chart.UpdateChart(data, event, [-1, 1]);
+    p.Chart =  p.Chart.UpdateChart(eeg, event, [-1, 1]);
     p.Snake = p.Snake.Move(p.BCI_State);
-
-
 
 end
 %% THIS FUNCTION IS CALLED WHEN INITIALIZING THE BCI

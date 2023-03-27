@@ -2,7 +2,7 @@
 %
 % KJ Jantzen
 %January 2023
-
+%**************************************************************************
 function easy_bci()
 %main function that loads the parameters
 %and builds the UI
@@ -12,7 +12,7 @@ function easy_bci()
     set(p.handles.fig, 'UserData', p);
 
 end
-%
+%**************************************************************************
 function p = initializeParameters(p)
     %call this function whenever some key parameters list below changes
 
@@ -238,7 +238,7 @@ function ports = parsePorts(portlist)
     if ismac || isunix
         ports = portlist(contains(portlist, 'cu.'));
     else
-        ports = porlist;
+        ports = portlist;
     end
 end
 %************************************************************************

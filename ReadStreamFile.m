@@ -1,9 +1,24 @@
 function dStruct = ReadStreamFile(fileName)
 % READSTREAMFILE - reads the contents of a BCI_STREAM data file
-%   struct = ReadStreamFile(filename) - reads the contents of the
-%   BCI_Stream file given by FILENAME and returns a structure that holds
-%   file information and the EEG data
 %
+%   EEG = ReadStreamFile(filename) - reads the contents of the
+%   BCI_Stream file given by FILENAME and returns a an eeglab EEG structure 
+%   that holds file information and the EEG data.
+%
+%   READSTREAMFILE uses the eeglab function checkset() which must be 
+%   installed and on the MATLAB path
+%
+%   the resulting EEG structure will load as an "existing" file in eeglab
+%   
+%   EXAMPLE:  
+%   to load and save the BCI_STREAM file test.dat for use in eeglab
+%   
+%   EEG = ReadStreamFile('test.dat');
+%   save('test.set', 'EEG', '-mat');
+%
+%   see the help on the SAVE function for more information about how to
+%   save data.
+
     arguments
         fileName {mustBeTextScalar(fileName), mustBeFile(fileName)}
     end
@@ -13,6 +28,7 @@ function dStruct = ReadStreamFile(fileName)
         error("Could not open file: %s", fileName);
     end
     
+    %read the header information from the BCI_Stream file
     try
         dStruct = readHeader(fh);
     catch ME
@@ -20,16 +36,15 @@ function dStruct = ReadStreamFile(fileName)
         throwAsCaller(ME);
     end
     
+    %fill in some basic header information and initialize the channel and
+    %event data
     dStruct.filename = fileName;
     dStruct.setname = "BNS Spiker Data";
     dStruct.nbchan = 1;
-
-    
     dStruct.data = [];
     dStruct.eventchan = [];
     
     packetCount = 0;
-    
     if dStruct.mode == CollectionMode.Continuous
         while ~feof(fh)
             packetCount = packetCount + 1;
@@ -55,9 +70,8 @@ function dStruct = ReadStreamFile(fileName)
         end
         dStruct.trial = packetCount;
         
-        
     end
-    
+    %this is where data from single trial will be loaded.
     fclose(fh);
 
     %make compatible with EEGlab

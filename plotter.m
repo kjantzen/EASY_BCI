@@ -168,7 +168,7 @@ function ports = parsePorts(portlist)
     if ismac || isunix
         ports = portlist(contains(portlist, 'cu.'));
     else
-        ports = porlist;
+        ports = portlist;
     end
 end
  
@@ -393,8 +393,11 @@ function h = buildUI()
         h.fig = uifigure;
     end
     
+    h.fig.WindowState = 'maximized';
+    drawnow;
+    
     h.fig.Color = guiScheme.BackColor;
-    h.fig.Position = [0,0,sz(3),sz(4)];
+    %h.fig.Position = [0,0,sz(3),sz(4)];
     h.fig.Name = 'BNS EEG Plotter';
     h.fig.Tag = 'BNSPlotter';
     h.fig.Resize = true;
@@ -559,15 +562,17 @@ function h = buildUI()
     
     %stop button panel
     h.panel_stop = uipanel('Parent', h.grid,... 
-        'Units', 'pixels', 'BorderType','none',...
+        'Units', 'pixels', 'BorderType','line',...
         'Enable', 'off');
     h.panel_stop.Layout.Column = 1;
     h.panel_stop.Layout.Row = 5;
    
-    btm = h.panel_stop.InnerPosition(4) - 40; 
+    drawnow;
+
+    %btm = h.panel_stop.InnerPosition(4) - 40; 
     h.button_stop = uibutton('Parent', h.panel_stop,...
         'Text', 'Stop',...
-        'Position',[10, btm, 180, 30],...
+        'Position',[10, 10, 180, 30],...
         'BackgroundColor',guiScheme.BtnColor,...
         'ButtonPushedFcn',@callback_stop,...
         'FontSize', guiScheme.BtnFontSize); 
@@ -593,5 +598,12 @@ function h = buildUI()
         'MenuSelectedFcn',@callback_convertToEeglab);
     drawnow;
     delete(progress);
+
+    pos = h.fig.Position
+    pause(1)
+   % h.fig.WindowState = 'normal';
+    h.fig.Position = pos;
+    drawnow
+
 
 end
