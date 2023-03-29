@@ -213,7 +213,7 @@ function h = buildUI()
 end
 function hlist = getHandlerNames()
 
-    [fpath, ~,~] = fileparts(mfilename);
+    [fpath, ~,~] = fileparts(mfilename('fullpath'));
     handlerPath = fullfile(fpath, 'Handlers','*.m');
     handlers = dir(handlerPath);
     if isempty(handlers)
