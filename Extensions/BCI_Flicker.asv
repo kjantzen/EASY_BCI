@@ -20,14 +20,7 @@ classdef BCI_Flicker < handle
 %   obj.Play(duration) - plays the flicker stimulus for duration seconds
 %
 %   obj.PlayFeedback(ntarget, duration) - shows a single target on screen for
-%   duration seconds.  The target number shown is given by ntarget where:
-%       1 = top
-%       2 = right
-%       3 = bottom
-%       4 = left
-%
-%   f.Close - closes the window and deletes the object
-%
+%   duration seconds.  The
 
     properties
         Frequencies = [8.57, 10, 12, 15];
