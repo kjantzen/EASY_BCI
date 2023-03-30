@@ -485,7 +485,6 @@ classdef BNS_HBSpiker < handle
                         i=i+1;
                      end
 
-
                  end
     
                  EEG = single(EEG(1:count)) .* obj.ADC2UV;
