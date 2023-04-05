@@ -18,7 +18,7 @@ classdef BCI_TrialBuffer < handle
     %      adding data to the buffer if an event trigger is deteced.
     %   'TriggerValue'=value. If WaitForTrigger is true, data will only
     %       start being added to teh buffer when the specific trigger given in
-    %       value is detected where value can be
+    %       value is detected where value can be:
     %       0 any trigger
     %       1 
     %       2

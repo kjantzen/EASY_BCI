@@ -25,6 +25,7 @@
 #define RAW_BUFFER_SIZE 100
 #define SIZE_OF_COMMAND_BUFFER 30  //command buffer max size
 #define TRIAL_BUFFER_MAX_SAMPLES 600
+#define SAMPLE_RATE 500
 
 // defines for setting and clearing register bits
 #ifndef cbi
@@ -48,7 +49,6 @@
 //KJ - I am not sure why the actual value used by BYB is 198 instead of 199
 // Output Compare Registers  value = (16*10^6) / (Fs*8) - 1  set to 1999 for 1000 Hz sampling, set to 3999 for 500 Hz sampling, set to 7999 for 250Hz sampling, 199 for 10000 Hz Sampling
 #define INTERRUPT_NUMBER 3999
-#define SAMPLE_RATE 500
 
 const byte MODE_LED[2] = {5, 7};
 

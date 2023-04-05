@@ -29,17 +29,21 @@ classdef BCI_Flicker < handle
 %   f.Close - closes the window and deletes the object
 %
 
-    properties
+    properties (SetAccess = private)
         Frequencies = [8.57, 10, 12, 15];
-        ActualFreqs;
+        Phases = [0,0,0,0];
+        ActualFreqs
         WindowPosition
         TargetSize
         ScreenNumber
         TriggerPort
         TriggerValue
     end
+    properties (Constant = true)
+        RefreshRate = 60;
+    end
     properties (Access = private)
-        Frames = [7, 6, 5, 4];
+        Frames;
         FramePattern
         FlickerTimeSeries
         ScreenTextures
@@ -58,11 +62,14 @@ classdef BCI_Flicker < handle
                 options.ScreenNumber (1,1) {mustBeNumeric, mustBeInteger} = 0;
                 options.TriggerPort (1,:) {mustBeText}  = 'none';
                 options.TriggerValue  (1,1) {mustBeInteger, mustBeInRange(options.TriggerValue, 1, 3)} = 1;
-
             end
 
-
             obj.WindowPosition = options.WindowPosition;
+            %input coordinates are in left, top, width and height - but
+            %psychtoolbox wants then in absolute relative coordinates
+            obj.WindowPosition(3) = obj.WindowPosition(1) + obj.WindowPosition(3);
+            obj.WindowPosition(4) = obj.WindowPosition(2) + obj.WindowPosition(4);
+            
             obj.TargetSize = options.TargetSize;
             obj.ScreenNumber = options.ScreenNumber;
             obj.TriggerValue = uint8(options.TriggerValue);
@@ -73,10 +80,23 @@ classdef BCI_Flicker < handle
             obj.FramePattern{3} = [1,1,0,0,0];
             obj.FramePattern{4} = [1,1,0,0];
 
+            %calculate how many frames for a single cycle at each frequency
+            %may make frequency and refresh rate variables in future
+            obj.Frames = round(obj.Frequencies./obj.RefreshRate);
+
+            %get the lowest common multiple so that long display periods
+            %are no discontinuous.
             obj.MaxFrames = obj.myLCM;
+
+
             obj.FlickerTimeSeries = zeros(4,obj.MaxFrames );
+            t = 1:obj.MaxFrames;
+            t = t./obj.RefreshRate;
+
+            %create a square wave of 1s (on) or 0s (off) at each frequency
             for ii = 1:4
-                obj.FlickerTimeSeries(ii,:) = repmat(obj.FramePattern{ii},1,obj.MaxFrames /obj.Frames(ii));
+                obj.FlickerTimeSeries(ii,:) = ((square(2*pi*obj.Frequencies(ii)*t+obj.Phases(ii))+1)./2);
+           %     obj.FlickerTimeSeries(ii,:) = repmat(obj.FramePattern{ii},1,obj.MaxFrames /obj.Frames(ii));
             end
 
             %initialize a serial port object for triggering
@@ -91,20 +111,20 @@ classdef BCI_Flicker < handle
 
             %create the window and initialize the textures
             try         
-                obj.WinHandle = Screen(obj.ScreenNumber, 'OpenWindow', [], obj.WindowPosition);
-
+                obj.WinHandle = Screen('OpenWindow', obj.ScreenNumber, [100,100,100], obj.WindowPosition);
+                rect = Screen('rect', obj.WinHandle);
                 %define the textures
                 for ii = 1:16
                     obj.ScreenTextures(ii) = Screen('MakeTexture', obj.WinHandle, ...
-                        obj.buildTextureLayout(ii-1, obj.WindowPosition(3), ...
-                        obj.WindowPosition(4), obj.TargetSize(1), obj.TargetSize(2)));
+                        obj.buildTextureLayout(ii-1, rect(3), ...
+                        rect(4), obj.TargetSize(1), obj.TargetSize(2)));
                 end
                 
                 %create screens with just he buttons on them for feedback
                 for ii = 1:4
                     obj.FeedbackTextures(ii) = Screen('MakeTexture', obj.WinHandle, ...
-                        obj.buildTextureLayout(2^(ii-1), obj.WindowPosition(3), ...
-                        obj.WindowPosition(4), obj.TargetSize(1), obj.TargetSize(2)));
+                        obj.buildTextureLayout(2^(ii-1), rect(3), ...
+                        rect(4), obj.TargetSize(1), obj.TargetSize(2)));
                 end
 
                 
@@ -158,6 +178,7 @@ classdef BCI_Flicker < handle
                 Screen('DrawTexture', obj.WinHandle, obj.ScreenTextures(1));
                 Screen('DrawingFinished', obj.WinHandle);
                 Screen('Flip', obj.WinHandle);
+                drawnow
             catch
                 Screen('Close');
                 Screen('CloseAll');
