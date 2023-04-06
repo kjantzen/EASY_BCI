@@ -151,7 +151,7 @@ classdef BCI_Flicker < handle
 
             try
                 flipIndex = 1;
-                Priority(1)
+                Priority(1);
                 offTime = GetSecs + duration;
     
                 if obj.HasSerial
@@ -177,7 +177,7 @@ classdef BCI_Flicker < handle
                 Screen('DrawTexture', obj.WinHandle, obj.ScreenTextures(1));
                 Screen('DrawingFinished', obj.WinHandle);
                 Screen('Flip', obj.WinHandle);
-                drawnow
+                drawnow;
             catch
                 Screen('Close');
                 Screen('CloseAll');
@@ -198,8 +198,7 @@ classdef BCI_Flicker < handle
             Screen('Flip', obj.WinHandle);
             startTime = GetSecs;
             
-            while (GetSecs - startTime) < Duration
-            end
+            WaitSecs(Duration);
             
             Screen('DrawTexture', obj.WinHandle, obj.ScreenTextures(1))
             Screen('DrawingFinished', obj.WinHandle);

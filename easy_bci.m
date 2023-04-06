@@ -31,6 +31,8 @@ function p = initializeParameters(p)
         delete(p.Device);
     end
     
+    %assume it all goes OK
+    p.ErrorInit = false;
     %select a device based on user input
     try
         p.Device = BNS_HBSpiker(p.serialPortName, p.bufferDuration);
@@ -39,7 +41,8 @@ function p = initializeParameters(p)
         %call the initialization version of the data handler, i.e. call it
         %without passing any data.
         p.Device.ProcessObjects = p.DataHandler(p);
-        p.ErrorInit = false;
+        p.ErrorInit = p.Device.ProcessObjects.ErrorInit;
+        %p.ErrorInit = false;
     catch ME
         errorMsg(ME)
         p.ErrorInit = true;
@@ -252,7 +255,6 @@ function callback_initButton(src, ~)
     
     if ~p.ErrorInit
 
-        
         p.handles.button_start.Enable = 'on';
     
         %enable the stop button
@@ -269,6 +271,7 @@ function callback_initButton(src, ~)
 
 
 end
+% *************************************************************************
 function callback_startButton(src,~)
  
     %get the handle to the figure
@@ -281,7 +284,6 @@ function callback_startButton(src,~)
     src.Enable = 'off';
     p.handles.button_init.Enable = 'off';
 
-
     %turn on acquisition in the Device object
     try
         p.Device.Start();
@@ -289,7 +291,6 @@ function callback_startButton(src,~)
         errorMsg(ME)
         src.Enable = 'on';
         p.handles.button_init.Enable = 'on';
-
     end
 
     %enable the stop button
@@ -300,7 +301,6 @@ function callback_startButton(src,~)
     %update the display
     drawnow;
 
-    
     %save the data back to the figures user data
     fig.UserData = p;
 
