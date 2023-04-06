@@ -42,8 +42,7 @@ switch state
         end
     case 2
         %provide feedback about which frequency the CCA thinks teh
-        %participant viewed.  This may require a mapping between stimulus
-        %position and frequency number.
+        %participant viewed.  This may require a 
         state = 3;
         p.flicker.PlayFeedback(p.acc.FrequencyCondition, .5);      
     case 3
@@ -61,14 +60,12 @@ global state;
 
 state = 0;
 p.TrialDuration = 2;
-port = '/dev/tty.blahblah';
 % create a flicker object
 %will need to specify the trigger port in future
 p.flicker = BCI_Flicker(WindowPosition=[200,0,500,500], TargetSize=[50,50],ScreenNumber=0);
-%p.flicker = BCI_Flicker(WindowPosition=[200,0,500,500], TargetSize=[50,50],ScreenNumber=0,TriggerPort=port);
 
 %create the trial buffer object
-p.buffer = BCI_TrialBuffer(Duration=p.TrialDuration, WaitForTrigger=false,TriggerValue=1);
+p.buffer = BCI_TrialBuffer(Duration=p.TrialDuration, WaitForTrigger=false,TriggerValue= 1);
 
 %create the canonical correlation analysis object with most of the defaults
 %except the trial duration
