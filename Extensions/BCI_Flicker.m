@@ -19,8 +19,8 @@ classdef BCI_Flicker < handle
 % METHODS
 %   obj.Play(duration) - plays the flicker stimulus for duration seconds
 %
-%   obj.PlayFeedback(ntarget, duration) - shows a single target on screen for
-%   duration seconds.  The target number shown is given by ntarget where:
+%   obj.PlayFeedback(Target, Duration) - shows a single target on screen for
+%   duration seconds.  The target number shown is given by Target where:
 %       1 = top
 %       2 = right
 %       3 = bottom
@@ -28,7 +28,6 @@ classdef BCI_Flicker < handle
 %
 %   f.Close - closes the window and deletes the object
 %
-
     properties (SetAccess = private)
         Frequencies = [8.57, 10, 12, 15];
         Phases = [0,0,0,0];
@@ -82,7 +81,7 @@ classdef BCI_Flicker < handle
 
             %calculate how many frames for a single cycle at each frequency
             %may make frequency and refresh rate variables in future
-            obj.Frames = round(obj.Frequencies./obj.RefreshRate);
+            obj.Frames = round(obj.RefreshRate./obj.Frequencies);
 
             %get the lowest common multiple so that long display periods
             %are no discontinuous.
@@ -186,15 +185,15 @@ classdef BCI_Flicker < handle
             end
         end
         % *****************************************************************
-        function PlayFeedback(obj, Button, Duration)
+        function PlayFeedback(obj, Target, Duration)
            
             arguments
                 obj
-                Button (1,1) {mustBeInteger, mustBeInRange(Button, 1,4)}
+                Target (1,1) {mustBeInteger, mustBeInRange(Target, 1,4)}
                 Duration (1,1) {mustBeNumeric, mustBePositive}
             end
             
-            Screen('DrawTexture', obj.WinHandle, obj.FeedbackTextures(Button))
+            Screen('DrawTexture', obj.WinHandle, obj.FeedbackTextures(Target))
             Screen('DrawingFinished', obj.WinHandle);
             Screen('Flip', obj.WinHandle);
             startTime = GetSecs;

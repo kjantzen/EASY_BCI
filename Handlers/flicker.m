@@ -17,13 +17,14 @@ function p = analyze(obj, p, data)
 
 %global variables are bad, but this is the only way I have found to save
 %changes in state and have them take effect immediately
-global state
+global stim_state
 
-switch state
+switch stim_state
     case 0
         % play the stimulus
         % note that execution is blocked for p.TrialDuration seconds
-        state = 1;
+        stim_state = 1;
+        fprintf('playing stimulus\n');
         p.flicker.Play(p.TrialDuration);
     case 1
         %add data to the buffer
@@ -35,40 +36,43 @@ switch state
         if p.buffer.HasCompleteTrial
             p.lastTrial = p.buffer.ReadTrial;
             fprintf('Got a trial\n');
-            state = 2;
-            p.acc.XData = p.lastTrial;
-            fprintf(p.acc.FrequencyCondition);
+            p.cca.XData = p.lastTrial(1,:);
             p.timerStart = tic;           
+            stim_state = 2;
         end
     case 2
         %provide feedback about which frequency the CCA thinks teh
         %participant viewed.  This may require a mapping between stimulus
         %position and frequency number.
-        state = 3;
-        p.flicker.PlayFeedback(p.acc.FrequencyCondition, .5);      
+        stim_state = 3;
+        p.flicker.PlayFeedback(p.cca.FrequencyCategory, .5);      
     case 3
         %once the data has been analyzed, wait for 2 seconds before the
         %next stimulus
         if toc(p.timerStart) > 2
-            state = 0;
+            stim_state = 0;
         end
 end
 end
 % **************************************************************************
 % this function gets called when the analyse process is initialized
 function p = initialize(p)
-global state;
+global stim_state;
 
-state = 0;
-p.TrialDuration = 2;
+stim_state = 0;
+
+%2 seconds of data can produced categorization accruacy of around 80%
+p.TrialDuration = 1;
 port = '/dev/tty.blahblah';
+waitfortrigger = false;
+
 % create a flicker object
 %will need to specify the trigger port in future
 p.flicker = BCI_Flicker(WindowPosition=[200,0,500,500], TargetSize=[50,50],ScreenNumber=0);
 %p.flicker = BCI_Flicker(WindowPosition=[200,0,500,500], TargetSize=[50,50],ScreenNumber=0,TriggerPort=port);
 
 %create the trial buffer object
-p.buffer = BCI_TrialBuffer(Duration=p.TrialDuration, WaitForTrigger=false,TriggerValue=1);
+p.buffer = BCI_TrialBuffer(Duration=p.TrialDuration, WaitForTrigger=waitfortrigger,TriggerValue=1);
 
 %create the canonical correlation analysis object with most of the defaults
 %except the trial duration
