@@ -72,11 +72,13 @@ p.TrialDuration = 2;
 port = '/dev/tty.blahblah';
 waitfortrigger = false;
 
-% create a flicker object
-%will need to specify the trigger port in future
-sz = get(groot, 'ScreenSize');
-p.flicker = BCI_Flicker(WindowPosition=sz, TargetSize=[150,150],ScreenNumber=0);
-%p.flicker = BCI_Flicker(WindowPosition=[200,0,500,500], TargetSize=[50,50],ScreenNumber=0);
+%use Pyschotoolbox to get the window size
+%because builtin MATLAB funcitons can be wildly innacurate
+[w,h] = Screen('WindowSize');
+sz = [1,1,w,h];
+
+% create a flicker object the entire size of the screen
+p.flicker = BCI_Flicker(WindowPosition=sz, TargetSize=[350,350],ScreenNumber=0);
 %p.flicker = BCI_Flicker(WindowPosition=[200,0,500,500], TargetSize=[50,50],ScreenNumber=0,TriggerPort=port);
 
 %create the trial buffer object
@@ -87,11 +89,14 @@ p.buffer = BCI_TrialBuffer(Duration=p.TrialDuration, WaitForTrigger=waitfortrigg
 p.cca = BCI_CCA("SampleDuration",p.TrialDuration);
 
 %get the number of the escape key
+KbName('UnifyKeyNames');
 p.EscapeKey = KbName('ESCAPE');
 
 %some flags to keep track of stuff
 p.timerStart = uint64(0);
 
+%start the device ourselves because the user will not be able to access the
+%easy_bci interface
 p = start_it_up(p);
 
 end
