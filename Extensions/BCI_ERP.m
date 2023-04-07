@@ -71,7 +71,7 @@ classdef BCI_ERP < handle
             trial.EEG  = trial.EEG - bline;
             obj.TrialCount(trial.evt) = obj.TrialCount(trial.evt) + 1;
             obj.erpSum(trial.evt,:) = obj.erpSum(trial.evt,:) + trial.EEG;
-            obj.Trials(trial.evt,:,obj.TrialCount(trial.evt),) = trial.EEG;
+            obj.Trials(trial.evt,:,obj.TrialCount(trial.evt)) = trial.EEG;
             obj.ERP(trial.evt,:) = obj.erpSum(trial.evt,:)./obj.TrialCount(trial.evt);
                
         end

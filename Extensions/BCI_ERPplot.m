@@ -114,7 +114,7 @@ classdef BCI_ERPplot < handle
           
             end
             drawnow();
-            obj.zeroLine.YLim = obj.Axis.Ylim;
+            obj.zeroLine.YLim = obj.Axis.YLim;
           
         end
     end

@@ -1,4 +1,4 @@
-% Example of a basic easy bci data handler 
+% Example of an SSVEP easy_bci data handler
 function outStruct = flicker(inStruct, varargin)
 	if nargin == 1
 		outStruct = initialize(inStruct);
@@ -9,14 +9,20 @@ end
 % **************************************************************************
 % this function gets called when data is passed to the handler
 function p = analyze(obj, p, data)
-% obj is the calling object which shuld be the device driver
-% p is a structure containing all the objects and variables created in the
-%   initialize funciton
-% data is a data packet
+% obj   -> the calling object which shuld be the device driver
+% p     -> a structure containing all the objects and variables created in the
+%           initialize function.  Also includes all the data handles and
+%           information from the eay_bci interface
+% data  ->  is a data packet, teh format of which depends on the collection
+%           mode.
 %
+% this example requires that easy_bci be used in continuous mode
 
-%global variables are bad, but this is the only way I have found to save
-%changes in state and have them take effect immediately
+% global variables are bad, but this is the only way I have found to
+% effectively communicate the state variable to overlapping calls to the
+% callback function.  Returning state as a variable does not work because
+% subsequent calls will already be made before the state variable is
+% returned.
 global stim_state
 
 %close the psychtoolbox window if a key is pressed.
@@ -24,7 +30,7 @@ global stim_state
 keyCode = find(keyCode, 1);
 
 if keyIsDown && keyCode==p.EscapeKey
-    shut_it_down(p)
+    stop_ssvep(p)
 end
 
 switch stim_state
@@ -69,17 +75,20 @@ stim_state = 0;
 
 %2 seconds of data can produced categorization accruacy of around 80%
 p.TrialDuration = 2;
-port = '/dev/tty.blahblah';
-waitfortrigger = false;
+port = "/dev/tty.usbmodem1123401";
+waitfortrigger = true;
 
 %use Pyschotoolbox to get the window size
 %because builtin MATLAB funcitons can be wildly innacurate
-[w,h] = Screen('WindowSize');
+[w,h] = Screen('WindowSize', 0);
 sz = [1,1,w,h];
 
+%clear any existing Screen buffers
+Screen('closeall');
+
 % create a flicker object the entire size of the screen
-p.flicker = BCI_Flicker(WindowPosition=sz, TargetSize=[350,350],ScreenNumber=0);
-%p.flicker = BCI_Flicker(WindowPosition=[200,0,500,500], TargetSize=[50,50],ScreenNumber=0,TriggerPort=port);
+%p.flicker = BCI_Flicker(WindowPosition=sz, TargetSize=[350,350],ScreenNumber=0);
+p.flicker = BCI_Flicker('WindowPosition', [200,0,500,500], 'TargetSize', [50,50],'ScreenNumber',0,'TriggerPort',port, 'TriggerValue', 1);
 
 %create the trial buffer object
 p.buffer = BCI_TrialBuffer(Duration=p.TrialDuration, WaitForTrigger=waitfortrigger,TriggerValue=1);
@@ -92,22 +101,21 @@ p.cca = BCI_CCA("SampleDuration",p.TrialDuration);
 KbName('UnifyKeyNames');
 p.EscapeKey = KbName('ESCAPE');
 
-%some flags to keep track of stuff
+%initialize the variable for timing the interval between trials
 p.timerStart = uint64(0);
 
 %start the device ourselves because the user will not be able to access the
-%easy_bci interface
-p = start_it_up(p);
+%easy_bci interface when the Psychtoolbox screen takes over
+p = start_ssvep(p);
 
 end
 % *************************************************************************
-function p = start_it_up(p)
+function p = start_ssvep(p)
  %get the handle to the figure
     
+    %change the state of the buttons on the interface
     p.handles.button_init.Enable = 'off';
     p.handles.button_start.Enable = 'off';
-   
-    %enable the stop button
     p.handles.button_stop.Enable = 'on';
     p.handles.collect_status.Text = 'Collecting...';
     p.handles.collect_status.FontColor = [0,.5,0];
@@ -119,16 +127,18 @@ function p = start_it_up(p)
         p.Device.Start();
     catch ME
         p.handles.button_init.Enable = 'on';
-        p = shut_it_down(p);
+        p = stop_ssvep(p);
         error('Something went wrong');
     end
 
+   %this is a clunky way of overriding the easy_bci updating of the button
+   %state.  A more elegent solution will be forthcoming when I have time
    p.ErrorInit = true;
    
-
 end
 % *************************************************************************
-function p = shut_it_down(p)
+function p = stop_ssvep(p)
+
     p.handles.button_init.Enable = 'on';
     p.handles.button_start.Enable = 'on';
       p.handles.button_stop.Enable = 'off';

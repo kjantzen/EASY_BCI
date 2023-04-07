@@ -26,7 +26,7 @@ classdef BCI_Flicker < handle
 %       3 = bottom
 %       4 = left
 %
-%   f.Close - closes the window and deletes the object
+%   f.Close - closes the window and deletes the objecta
 %
     properties (SetAccess = private)
         Frequencies = [8.57, 10, 12, 15];
@@ -53,8 +53,9 @@ classdef BCI_Flicker < handle
         HasSerial = false;
     end
     methods
-        function obj = BCI_Flicker(options)
 
+        function obj = BCI_Flicker(options)
+        %constructor function for the class object
             arguments
                 options.WindowPosition (1,4) {mustBeNumeric} = get(0, 'ScreenSize');
                 options.TargetSize (1,2) {mustBeNumeric} = [100,100];

@@ -14,12 +14,13 @@ classdef BCI_TrialBuffer < handle
     %   'TrialSamples'=samples sets the number of samples to collect in the
     %       trial buffer.  When both TrialDuration and TrialSamples is
     %       provided, TrialSamples will take precedence.
-    %   'WaitForTrigger'=(true/false) if true the buffer will only start
-    %      adding data to the buffer if an event trigger is deteced.
+    %   'WaitForTrigger'=(true/false) if true, the buffer will only start
+    %      adding data to the buffer if TriggerValue is detected on the event
+    %       channel.
     %   'TriggerValue'=value. If WaitForTrigger is true, data will only
-    %       start being added to teh buffer when the specific trigger given in
-    %       value is detected where value can be:
-    %       0 any trigger
+    %       start being added to the buffer when the the sprcified value is detected
+    %       in the event channel.  TriggerValue can be:
+    %       0 any trigger will start recording
     %       1 
     %       2
     %       3
@@ -38,7 +39,7 @@ classdef BCI_TrialBuffer < handle
     end
     methods
         function obj = BCI_TrialBuffer(options)
-        % constructor
+        % constructor for the class object
             arguments
                 options.Duration (1,1) {mustBeNumeric, mustBePositive} = 1;
                 options.Samples (1,1) {mustBeInteger} = 0;
@@ -109,8 +110,8 @@ classdef BCI_TrialBuffer < handle
                 end
             end
 
-            obj.TrialBuffer(1,obj.CurrentSamples+1:obj.CurrentSamples+pnts) = d;
-            obj.TrialBuffer(2,obj.CurrentSamples+1:obj.CurrentSamples+pnts) = e;
+            obj.TrialBuffer(1,obj.CurrentSamples+1:obj.CurrentSamples+pnts) = d(1:pnts);
+            obj.TrialBuffer(2,obj.CurrentSamples+1:obj.CurrentSamples+pnts) = e(1:pnts);
        
             obj.CurrentSamples = obj.CurrentSamples + pnts;
             if obj.CurrentSamples >= obj.TrialSamples

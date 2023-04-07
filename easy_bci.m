@@ -42,7 +42,6 @@ function p = initializeParameters(p)
         %without passing any data.
         p.Device.ProcessObjects = p.DataHandler(p);
         p.ErrorInit = p.Device.ProcessObjects.ErrorInit;
-        %p.ErrorInit = false;
     catch ME
         errorMsg(ME)
         p.ErrorInit = true;
@@ -54,8 +53,8 @@ function h = buildUI()
     load Scheme.mat guiScheme;
 
     sz = get(0, 'ScreenSize');
-    buff_durations = [.05, .1, .25, .5, 1, 1.5, 2,4];
-    buff_dur_labels = {'50 ms', '100 ms', '250 ms', '500 ms', '1 sec', '1.5 sec', '2 sec', '4 sec'};
+    buff_durations = [.05, .1, .25, .5, 1, 1.2];
+    buff_dur_labels = {'50 ms', '100 ms', '250 ms', '500 ms', '1 sec', '1.2 sec'};
 
     %see if the figure already exists
     %if it does not create it and if it does clear it and start over
