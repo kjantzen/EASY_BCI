@@ -306,7 +306,7 @@ function processObjects = initializeContinuousPlot(p, processObjects)
     deleteLegend(p.handles.fig);
     processObjects.Chart = BCI_Chart(p.sampleRate, 5, p.handles.axis_plot);
     processObjects.bytesSavedTarget = p.handles.edit_bytessaved;
-    processObjects.Filter = BCI_Filter(p.sampleRate, [0,50], 'low');
+    processObjects.Filter = BCI_Filter(p.sampleRate, [0,50], 'low','Window',false,'Continuous', true);
     processObjects.filterCheck = p.handles.checkbox_filter;
 
 end
@@ -320,7 +320,7 @@ end
 %**************************************************************************
 function processObjects = initializeERPPlot(p, processObjects)
     processObjects.ERPChart = BCI_ERPplot(p.handles.axis_plot);
-    processObjects.Filter = BCI_Filter(p.sampleRate, [0,40], 'low');
+    processObjects.Filter = BCI_Filter(p.sampleRate, [0,40], 'low','Window',true,'Continuous',false);
     processObjects.filterCheck = p.handles.checkbox_filter;
     
 end

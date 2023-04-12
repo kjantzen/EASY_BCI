@@ -81,25 +81,26 @@ classdef BCI_ERPplot < handle
           
             %initialize the plot if it does not exist
             if isempty(obj.PlotHandle)
-             
-             l = line(obj.Axis, trial.timePnts, zeros(size(trial.timePnts)), 'Color', 'k');
-             l.Annotation.LegendInformation.IconDisplayStyle = "off";
-             h = line(obj.Axis, trial.timePnts, obj.ERP.ERP);
-             obj.PlotHandle = h;
-             for ii = 1:3
-                obj.PlotHandle(ii).LineWidth = 1.5;
-             end
-   
-             %draw a baseline 
-             obj.baseLine = line(obj.Axis, trial.TimePnts, zeros(1, length(timePnts)), 'Color', 'k');
-             obj.zeroLine = line(obj.Axis, [0,0], [-1,1], 'Color', 'k');
-
+                 %draw a baseline 
+                 obj.baseLine = line(obj.Axis, trial.timePnts, zeros(1, length(trial.timePnts)), 'Color', 'k');
+                 obj.zeroLine = line(obj.Axis, [0,0], [-1,1], 'Color', 'k');
+                 obj.baseLine.Annotation.LegendInformation.IconDisplayStyle = "off";
+                 obj.zeroLine.Annotation.LegendInformation.IconDisplayStyle = "off";
+                 
+                 
+                 h = line(obj.Axis, trial.timePnts, obj.ERP.ERP);
+                 obj.PlotHandle = h;
+                 for ii = 1:3
+                    obj.PlotHandle(ii).LineWidth = 1.5;
+                 end
             end                
-          
             obj.PlotHandle(trial.evt).YData = obj.ERP.ERP(trial.evt,:);
-                    
+            obj.zeroLine.YData = [-1,1]; %temporarily scale down to allow for rescaling of data
+ 
             if ~autoScale
                 obj.Axis.YLim = plotRange;
+            else 
+                obj.Axis.YLimMode = 'auto';
             end
             for ii = 1:3
                 obj.legendText{ii} = sprintf('Event %i, (%i trials)',ii, trialCount(ii));
@@ -114,7 +115,7 @@ classdef BCI_ERPplot < handle
           
             end
             drawnow();
-            obj.zeroLine.YLim = obj.Axis.YLim;
+            obj.zeroLine.YData = obj.Axis.YLim;
           
         end
     end
