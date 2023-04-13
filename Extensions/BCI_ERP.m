@@ -50,7 +50,7 @@ classdef BCI_ERP < handle
             obj.Samples = 0;
             obj.PreSamples = 0;
         end
-        function obj = UpdateERP(obj, trial, plotRange)
+        function obj = UpdateERP(obj, trial)
             
             if obj.TrialCount == 0
                 obj.TrialCount = zeros(1,3);
