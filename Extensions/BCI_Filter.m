@@ -101,7 +101,7 @@ classdef BCI_Filter < handle
             end
 
             if obj.Window && ~obj.Continuous
-                win = tukeywin(length(dataIn), .2);
+                win = hamming(length(dataIn));
                 dataIn = dataIn.*win';
                 obj.z = zeros(obj.FiltOrder, 1); %set to zero so they have no impact
             end

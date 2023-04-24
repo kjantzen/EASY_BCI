@@ -11,6 +11,8 @@
 classdef BCI_FFTPlot < handle
     properties 
         FAxis           %the current time axis to display
+        PlotHandle      %the handle to the actual plot
+        FFTPoints
         SampleRate
         BufferSeconds
         BufferPoints
@@ -19,10 +21,6 @@ classdef BCI_FFTPlot < handle
         Nyquist
         Axis
         PlotPower = true;
-    end
-    properties (Hidden)
-        PlotHandle      %the handle to the actual plot
-        FFTPoints
     end
     methods
         function obj = BCI_FFTPlot(SampleRate, BufferSeconds, plotAxis)
@@ -51,9 +49,6 @@ classdef BCI_FFTPlot < handle
             obj.PlotHandle.LineWidth = 1.5;
             obj.Axis = plotAxis;
  
-%            obj.Axis.YLabel.String = 'amplitude (uV^2)';
-%            obj.Axis.XLabel.String = 'frequency (Hz)';
-                
         end
         function obj = computeFFT(obj)
             twoSided = abs(fft(obj.DataBuffer)/obj.BufferPoints);
@@ -64,17 +59,25 @@ classdef BCI_FFTPlot < handle
             end
              
         end
-        function obj = updateChart(obj, dataChunk, fRange)
+        function obj = UpdateChart(obj, dataChunk, options)
+            arguments
+                obj
+                dataChunk (1,:) {mustBeNumeric}
+                options.FreqRange  = 'auto';
+                options.PlotLog (1,1) {mustBeNumericOrLogical} = false;
+            end
             
             ln = length(dataChunk);
             obj.DataBuffer(1:obj.BufferPoints-ln) = obj.DataBuffer(ln + 1: obj.BufferPoints);
             obj.DataBuffer(obj.BufferPoints-ln+1:obj.BufferPoints) = dataChunk;
             obj = computeFFT(obj);
             obj.PlotHandle.YData = obj.FFTData;
-            
-            
-      
-            obj.Axis.XLim = fRange; %fRange/obj.Nyquist * length(obj.FFTData);
+            if options.PlotLog
+                obj.Axis.YScale = 'log';
+            else 
+                obj.Axis.YScale = 'linear';
+            end
+            obj.Axis.XLim = options.FreqRange; 
             drawnow();
           
         end

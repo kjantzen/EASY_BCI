@@ -23,13 +23,11 @@
 %   data.  Only the display is impacted.
 %
 
-classdef BCI_ERPplot < handle
+classdef BCI_FFTERPplot < handle
     properties 
         PlotHandle       %the handle to the actual plot
-        
         StdErrHandle = gobjects(3,1);
-        PlotAxis             %the axis to plot in
-        FFTAxis         
+        Axis             %the axis to plot in
         ERP              %handle to an BCI_ERP object
         Legend           %legend handle
     end
@@ -41,23 +39,19 @@ classdef BCI_ERPplot < handle
     methods
         function obj = BCI_ERPplot(options)
             arguments
+                options.SampleRate (1,1) {mustBeNumeric, mustBePositive} = 500;
                 options.AxisHandle (1,1) {mustBeA(options.AxisHandle,'matlab.graphics.axis.Axes')} = newAxes();
-                options.FFTAxisHandle (1,1) {mustBeA(options.FFTAxisHandle,'matlab.graphics.axis.Axes')} = gobjects;
             end
             
             obj.ERP = BCI_ERP();
-            obj.PlotAxis = options.AxisHandle;
-            obj.FFTAxis = options.FFTAxisHandle;
-            obj.PlotAxis.XLimitMethod = 'tight';
+            obj.Axis = options.AxisHandle;
+            obj.Axis.XLimitMethod = 'tight';
         end
         %*****************************************************************
         function RefreshPlot(obj)
             %refreshes the plot without changing the underlying ERP
             obj.PlotHandle = [];
-            cla(obj.PlotAxis);
-            if isgraphics(obj.FFTAxis)
-                cla(obj.FFTAxis)
-            end
+            cla(obj.Axis);
         end
         %*****************************************************************
         function ClearERP(obj)
@@ -67,30 +61,27 @@ classdef BCI_ERPplot < handle
             obj.RefreshPlot;
         end
         %*****************************************************************
-        function UpdateERPPlot(obj, trial, options)
-            %Adds data the the existing plot for this chart object
-            arguments
-                obj
-                trial
-                options.ERPScale = 'auto';
-                options.ShowStdErr (1,1) {mustBeNumericOrLogical} = false;
-                options.FFTRange (1,2) {mustBeNumeric} = [0, trial.SampleRate/2];
-                options.PlotFFTLog (1,1) {mustBeNumericOrLogical} = false;
+        function AddTrial(obj, trial, plotRange, showStdErr)
+            %Adds data the the existing plot for this chart object      
+               
+            if nargin < 4
+                showStdErr = false;
             end
-                
-            if strcmp('auto', options.ERPScale)
+
+            if nargin < 3
                 autoScale = true;
             else
                 autoScale = false;
             end
+            obj.FFT = performFFT(trial);
             obj.ERP.UpdateERP(trial);
             trialCount = obj.ERP.TrialCount;
           
             %initialize the plot if it does not exist
             if isempty(obj.PlotHandle)
                  %draw a baseline 
-                 obj.baseLine = line(obj.PlotAxis, trial.timePnts, zeros(1, length(trial.timePnts)), 'Color', 'k');
-                 obj.zeroLine = line(obj.PlotAxis, [0,0], [-1,1], 'Color', 'k');
+                 obj.baseLine = line(obj.Axis, trial.timePnts, zeros(1, length(trial.timePnts)), 'Color', 'k');
+                 obj.zeroLine = line(obj.Axis, [0,0], [-1,1], 'Color', 'k');
                  obj.baseLine.Annotation.LegendInformation.IconDisplayStyle = "off";
                  obj.zeroLine.Annotation.LegendInformation.IconDisplayStyle = "off";
                          
@@ -100,15 +91,15 @@ classdef BCI_ERPplot < handle
                 for ii = 1:3
                     %add the standard error
                     yv = [obj.ERP.ERP(ii,:)+obj.ERP.StdErr(ii,:), fliplr(obj.ERP.ERP(ii,:) - obj.ERP.StdErr(ii,:))];
-                    obj.StdErrHandle(ii) = patch(obj.PlotAxis, tv, yv,obj.PlotAxis.ColorOrder(ii, :), 'FaceAlpha', .35, 'EdgeColor', 'none');
+                    obj.StdErrHandle(ii) = patch(obj.Axis, tv, yv,obj.Axis.ColorOrder(ii, :), 'FaceAlpha', .35, 'EdgeColor', 'none');
                     obj.StdErrHandle(ii).Annotation.LegendInformation.IconDisplayStyle = "off";
                 end
-                obj.PlotHandle = line(obj.PlotAxis, trial.timePnts, obj.ERP.ERP, 'LineWidth', 2);
+                obj.PlotHandle = line(obj.Axis, trial.timePnts, obj.ERP.ERP, 'LineWidth', 2);
 
             end                
 
             for ii = 1:3
-                obj.StdErrHandle(ii).Visible = options.ShowStdErr;
+                obj.StdErrHandle(ii).Visible = showStdErr;
             end
 
             yv = [obj.ERP.ERP(trial.evt,:)+obj.ERP.StdErr(trial.evt,:), fliplr(obj.ERP.ERP(trial.evt,:) - obj.ERP.StdErr(trial.evt,:))];
@@ -117,39 +108,34 @@ classdef BCI_ERPplot < handle
             obj.zeroLine.YData = [-1,1]; %temporarily scale down to allow for rescaling of data
  
             if ~autoScale
-                obj.PlotAxis.YLim = plotRange;
+                obj.Axis.YLim = plotRange;
             else 
-                obj.PlotAxis.YLimMode = 'auto';
+                obj.Axis.YLimMode = 'auto';
             end
             for ii = 1:3
                 obj.legendText{ii} = sprintf('Event %i, (%i trials)',ii, trialCount(ii));
             end
             if isempty(obj.Legend)
-                obj.Legend = legend(obj.PlotAxis,obj.legendText);
+                obj.Legend = legend(obj.Axis,obj.legendText);
                 obj.Legend.AutoUpdate = true;
                 obj.Legend.Box = false;
                 obj.Legend.FontSize = 16;
             else
                 obj.Legend.String = obj.legendText;          
             end
-
-            %quick and dirty add of fft drawing
-            if isgraphics(obj.FFTAxis)
-                plot(obj.FFTAxis, obj.ERP.FreqPnts, obj.ERP.FFT, 'LineWidth',2)
-                obj.FFTAxis.XLim = options.FFTRange;
-                if options.PlotFFTLog
-                    obj.FFTAxis.YScale = 'log';
-                else
-                    obj.FFTAxis.YScale = 'linear';
-                end
-            end
-
             drawnow();
-            obj.zeroLine.YData = obj.PlotAxis.YLim;
+            obj.zeroLine.YData = obj.Axis.YLim;
           
         end
     end
     methods (Access = private)
+        function fftData = performFFT(obj, trial)
+
+            twoSided = abs(fft(Trial.EEG)/trial.Samples);
+            fftData  = twoSided(1:trial.Samples/2+1);
+            fftData(2:end-1) = 2 .* obj.fftData(2:end-1);
+            fftData = fftData .^2;
+        end
         function a = newAxes(obj)
              if nargin < 1
                 f = figure;
