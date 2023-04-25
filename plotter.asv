@@ -319,7 +319,7 @@ function processObjects = initializeERPPlot(p, processObjects)
     processObjects.bytesSavedTarget = p.handles.edit_bytessaved;
     processObjects.FFTLog =  p.handles.checkbox_trialfftscale;
     processObjects.ShowStdErr = p.handles.checkbox_stderr;
-    saveFile = createTempSaveFileName(p);
+    saveFile = createTempSaveFileName(p.tempDataFileName);
     try
         processObjects.Stream = BCI_Stream(saveFile, Overwrite = false);
         if ~hasActiveStream(processObjects)
@@ -338,14 +338,14 @@ end
 function [fn, status] = hasTempDataFile(p)
 
     fn = createTempSaveFileName(p.tempDataFileName);
-    status = isfile(fn);
+    status = isfile(d);
    
 end
 %**************************************************************************
 function status = checkForExistingTempDataFile(p)
 
     status = true;
-    [fn, exists] = hasTempDataFile(p);
+    [fn, exists] = hsTempDataFile(p.tempDataFileName);
 
     if exists
         selection = uiconfirm(p.handles.fig, ...
@@ -370,11 +370,7 @@ end
 function callback_save(src, ~)
     fig = ancestor(src, 'figure', 'toplevel');
     p = fig.UserData;
-    [fn, exists] = hasTempDataFile(p); 
-    if ~exists
-        uialert(fig, 'No temp data file was found', 'No data to save')
-        src.Enable = 'off';
-    end
+    fn = createTempSaveFileName(p.tempDataFileName);
     status = saveToEeglab(fn, fig);
     %turn off the button if the save was successful
     if status
@@ -414,9 +410,15 @@ function status = saveToEeglab(fn, fig)
 
     status = false;
     
-    
+    d = dir(fn);
+    if isempty(d)
+        warning('No valid temp data file was found!')
+        return;
+    end
+    inFile = fullfile(d(1).folder, d(1).name);
+
     %load the EEG data
-    EEG = ReadStreamFile(fn);
+    EEG = ReadStreamFile(inFile);
     if isempty(EEG)
         return
     end

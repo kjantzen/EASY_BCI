@@ -1,6 +1,6 @@
 classdef BNS_HBSpikerModes 
     enumeration
         Continuous
-        Trial
+        SingleTrial
     end
 end

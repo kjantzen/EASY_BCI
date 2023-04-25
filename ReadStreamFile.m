@@ -45,7 +45,7 @@ function dStruct = ReadStreamFile(fileName)
     dStruct.eventchan = [];
     
     packetCount = 0;
-    if dStruct.mode == CollectionMode.Continuous
+    if dStruct.mode == BNS_HBSpikerModes.Continuous
         while ~feof(fh)
             packetCount = packetCount + 1;
             dStruct.data = [dStruct.data;fread(fh, dStruct.packet_length, 'single')];
@@ -69,7 +69,10 @@ function dStruct = ReadStreamFile(fileName)
             dStruct.trialMarker(packetCount) = dStruct.event(packetCount,dStruct.pre_sample_pnts);
         end
         dStruct.trial = packetCount;
-        
+    else
+        dStruct = [];
+        warning('ReadStreamFile current only works with continuous data!');
+        return
     end
     %this is where data from single trial will be loaded.
     fclose(fh);

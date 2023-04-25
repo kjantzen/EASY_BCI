@@ -38,9 +38,9 @@ classdef BCI_Stream < handle
         function Save(obj, Packet)
         %SAVE - saves a data packet to the data stream
             if isfield(Packet, 'evt') 
-                packetType = CollectionMode.SingleTrial;
+                packetType = BNS_HBSpikerModes.SingleTrial;
             else
-                packetType = CollectionMode.Continuous;
+                packetType = BNS_HBSpikerModes.Continuous;
             end
             if isempty(obj.DataType)
                 obj.DataType = packetType;
@@ -71,7 +71,7 @@ classdef BCI_Stream < handle
     end
     methods (Access = private, Hidden)
         function writeFileHeader(obj, packet) 
-            if obj.DataType == CollectionMode.Continuous
+            if obj.DataType == BNS_HBSpikerModes.Continuous
                 HeaderLength = 6;
             else
                 HeaderLength = 8;
@@ -83,7 +83,7 @@ classdef BCI_Stream < handle
             fprintf(obj.FileHandle, "channels: 2\n");
             fprintf(obj.FileHandle, "packet_length: %i\n", packet.samples);
             
-            if obj.DataType == CollectionMode.SingleTrial
+            if obj.DataType == BNS_HBSpikerModes.SingleTrial
                 fprintf(obj.FileHandle,'pre_sample_pnts: %i\n', packet.preSamp);
                 fprintf(obj.FileHandle,'pst_sample_pnts: %i\n', packet.postSamp);
             end      

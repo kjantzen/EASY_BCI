@@ -360,14 +360,14 @@ classdef BNS_HBSpiker < handle
         %           "Contiuous"  - indicates continuous mode
         %           "Trial"      - indicates single trial mode
         %
-            if (mode ~= BNS_HBSpikerModes.Trial && mode ~= BNS_HBSpikerModes.Continuous)
+            if (mode ~= BNS_HBSpikerModes.SingleTrial && mode ~= BNS_HBSpikerModes.Continuous)
                 error("the mode passed to the SetMode method is not a valid mode\n" + ...
-                    "Mode must one of either continuous mode (%i) or trial mode (%i)", BNS_HBSpikerModes.Continuous, BNS_HBSpikerModes.Trial);
+                    "Mode must one of either continuous mode (%i) or trial mode (%i)", BNS_HBSpikerModes.Continuous, BNS_HBSpikerModes.SingleTrial);
             end
             if (mode==obj.CollectionMode)
                 return
             end
-            if (mode == BNS_HBSpikerModes.Trial)
+            if (mode == BNS_HBSpikerModes.SingleTrial)
                 if obj.Streaming
                     obj = obj.StopStreaming;
                 end
