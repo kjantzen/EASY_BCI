@@ -90,7 +90,7 @@ function p = initialize(p)
         %create a new figure to hold all the plots etc
        f = figure('Position',[400,400,1000,600]);
         %name it so we can recognize it later if the software is rerun
-        f.Name  = 'Snake Game';
+        f.Name  = 'Example of an Eye Movement BCI';
     end
     
     
@@ -111,7 +111,7 @@ function p = initialize(p)
     ax.XGrid = "on";
     ax.YGrid = "on";
     ax.XAxis.Visible = "off";
-    ax.YAxis.Visible = "off"
+    ax.YAxis.Visible = "off";
     p.Snake = BYB_Snake(ax);
 
 

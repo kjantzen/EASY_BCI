@@ -319,7 +319,7 @@ function processObjects = initializeERPPlot(p, processObjects)
     processObjects.bytesSavedTarget = p.handles.edit_bytessaved;
     processObjects.FFTLog =  p.handles.checkbox_trialfftscale;
     processObjects.ShowStdErr = p.handles.checkbox_stderr;
-    saveFile = createTempSaveFileName(p);
+    saveFile = createTempSaveFileName(p.tempDataFileName);
     try
         processObjects.Stream = BCI_Stream(saveFile, Overwrite = false);
         if ~hasActiveStream(processObjects)
@@ -329,7 +329,7 @@ function processObjects = initializeERPPlot(p, processObjects)
         p.handles.lamp_saving.Color = 'g';
 
     catch ME
-        errMsg(fig, ME.message, ME.identifier);
+        errMsg(p.handles.fig, ME.message, ME.identifier);
         return
     end
     
