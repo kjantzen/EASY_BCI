@@ -916,7 +916,7 @@ h.panel_topo.UserData = my_h;
 drawnow nocallbacks
 %***************************************************************************
 %main erp drawing function
-function callback_ploterp(~, ~, h)
+function callback_ploterp(hObject, event, h)
 
 stacked = h.menu_stack.Checked;
 userScale = ~h.menu_autoscale.Checked;
@@ -988,6 +988,7 @@ for ii = 1:size(d,3)
     ph = plot(h.axis_erp, XValues, dd', 'Color', p.ts_colors(ii, :), 'LineWidth', 2);
     hold(h.axis_erp, 'on');
 
+    
     for phi = 2:length(ph)
         ph(phi).Annotation.LegendInformation.IconDisplayStyle = 'off';
     end
@@ -1012,9 +1013,6 @@ if stacked
     if ~userScale
         mnAmp = min(min(min(d))) * 1.1;
         mxAmp = max(max(max(d))) * 1.1;
-        if plotFFT && mnAmp > 0
-            mnAmp = 0;
-        end
     end
     h.axis_erp.YLim = [mnAmp, mxAmp];
     h.spinner_minamp.Value = mnAmp;
@@ -1061,19 +1059,11 @@ rebuild_cursors(h)
 plot_topos(h)
 
 % *************************************************************************
-function callback_resetxaxis(~,~,h)
+functionb callback_resetxaxis(~,~,h)
 
-p = h.figure.UserData;
-isfft = h.menu_fft.Checked;
+isfft = h.menu_showfft.Checked
 if isfft
-    h.spinner_mintime.Value = p.EEG.freqs(1);
-    h.spinner_maxtime.Value = p.EEG.freqs(end);
-else
-    h.spinner_mintime.Value = p.EEG.times(1);
-    h.spinner_maxtime.Value = p.EEG.times(end);
-end
-callback_ploterp([],[],h);
-
+    h.
 
 % *************************************************************************
 function handles = buildGUI(p)
