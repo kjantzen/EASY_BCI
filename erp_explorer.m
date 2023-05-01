@@ -1,7 +1,7 @@
 function erp_explorer(eegFile)
 
 fprintf('Opening EEG plotting and analysis tool...\n');
-
+addPaths;
 if nargin == 0
     [fn,fp] = uigetfile('*.set');
     if fn == 0
@@ -82,8 +82,16 @@ EEG = [];
 if ~isfile(fileName)
     error('The files %s could not be found.', fileName)
 end
-EEG = load(fileName, '-mat');
-
+try
+    [p, f, e] = fileparts(fileName);
+    EEG = pop_loadset('filename', [f, e], 'filepath', p);
+catch me
+   msg = sprintf('An error ocurred when loading your file.\nMake sure that the eeglab toolbox is installed and on your Matlab path.');
+   msg = sprinft('$s\n\nMatlab says: %s', msg, me.message);
+   me.message  = msg;
+   throwAsCaller(me);
+end
+    
 %check to see if this is a structure or just its fields
 if isfield(EEG, 'EEG')
     EEG = EEG.EEG;
@@ -659,7 +667,7 @@ if o.doStats
     end
     
     if o.doFDR
-        [~, pm] = fdr(p,.05);
+        [~, pm] = BCI_fdr(p,.05);
         s = pm;
     else
         s = zeros(size(p));
@@ -1139,7 +1147,7 @@ handles.panel_plotopts = uipanel(...
     'Parent', handles.gl,...
     'BorderType', 'none',...
     'AutoResizeChildren', 'off',...
-    'HighlightColor', g.Panel.BackgroundColor.Value,...
+    'HighlightColor', g.Panel.BorderColor.Value,...
     'FontName', g.Panel.Font.Value,...
     'ForegroundColor', g.Panel.FontColor.Value,...
     'FontSize', g.Panel.FontSize.Value,...
@@ -1399,5 +1407,21 @@ handles.menu_dofdr.MenuSelectedFcn = {@callback_toggleplotoption, handles};
 function c = lineColors()
 
 c = flipud(prism);
+% ************************************************************************
+function addPaths()
+    f  = mfilename('fullpath');
+    [fpath, fname, ~] = fileparts(f);
+    newPaths{1} = sprintf('%s%sDevices', fpath, filesep);
+    newPaths{2} = sprintf('%s%sExtensions', fpath, filesep);
+    newPaths{2} = sprintf('%s%sTools', fpath, filesep);
+    
+    
+    s       = pathsep;
+    pathStr = [s, path, s];
+    for ii = 1:length(newPaths)
+        if ~contains(pathStr, [s, newPaths{ii}, s], 'IgnoreCase', ispc)
+            addpath(newPaths{ii});
+        end
+    end
 
 
