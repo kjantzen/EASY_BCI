@@ -4,7 +4,7 @@
 %the appropriate sub function is then called
 %this allows for the creation of any number of single file handlers that
 %can be selected as a single file from a user menu or other interface
-function outStruct = singleChartAndFFT(inStruct, varargin)
+function outStruct = SingleChartAndFFT_Example(inStruct, varargin)
 
 %the initializer is called with only one input variable
     if nargin == 1
@@ -17,12 +17,8 @@ end
 
 %this function gets called when data is passed to the handler
 function p = analyze(obj,p, dStruct)
-
-    data = dStruct.EEG;
-    data = data - mean(data);
-    p.chartPlot1.UpdateChart(data, dStruct.Event);  
-    p.fftPlot1.updateChart(data, [0, 100]);
-
+    p.chartPlot.UpdateChart(dStruct.EEG, dStruct.Event);  
+    p.fftPlot.UpdateChart(dStruct.EEG, 'FreqRange', [0, 100]);
 end
 
 %% this is the funciton that initializes the display and the analysis stream
@@ -35,7 +31,6 @@ end
     %parameters and returns an updated and saved version of the parameters.
     %Use this function to initialize any analysis functions you want to add to
     %your BCI
-    %
 
     %THIS SECTION INITIALIZES THE DISPLAY
     %check to see if the figure already exists
@@ -52,9 +47,7 @@ end
         p.handles.outputFigure.Name  = 'easy bci chart and fft example';
         p.handles.outputFigure.Tag = 'chart and fft';
     end
-    
-    %THIS IS LIKELY WHERE YOU WILL WANT TO START EDITING
-    
+        
     p.handles.outputFigure.Position = [200,200,800,800];
 
     %create a plotting object to plot the raw time signal
@@ -79,7 +72,7 @@ end
 
     %create a new chart object and pass in the data sample rate, the length
     %of the chart and the axis to plot to.
-    p.chartPlot1 = BCI_Chart(p.sampleRate, 5, sp);
+    p.chartPlot = BCI_Chart(p.sampleRate, 5, sp);
   
     %create an fft plotting object to plot the power spectrum of the
     %unfitlered data
@@ -100,7 +93,5 @@ end
     %collection, the length of the window to transform (in seconds), and
     %the axis to plot the data in.
     FFT_length = 5;
-    p.fftPlot1 = BCI_FFTPlot(p.sampleRate, FFT_length, sp);
-   
-
+    p.fftPlot = BCI_FFTPlot(p.sampleRate, FFT_length, sp);   
 end

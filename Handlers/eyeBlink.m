@@ -98,8 +98,8 @@ function p = initialize(p)
     ax.XLabel.String = 'Time (s)';
     ax.YLabel.String = 'Amplitude (mV)';
     ax.Title.String = 'Electrooculogram';
-    p.Chart = BYB_Chart(p.sampleRate,5, ax);
-    p.PeakDetect = BYB_Peaks(0.15, 10, 10, false, true);
+    p.Chart = BCI_Chart(p.sampleRate,5, ax);
+    p.PeakDetect = BCI_Peaks(0.15, 10, 10, false, true);
     p.handles.knob = uiknob(p.handles.outputFigure, 'discrete','Position', [780, 50, 150, 200]);
     p.handles.knob.Items = {'Left','Center','Right'};
     p.BCI_State = 'Center';
@@ -112,7 +112,7 @@ function p = initialize(p)
     ax.YGrid = "on";
     ax.XAxis.Visible = "off";
     ax.YAxis.Visible = "off";
-    p.Snake = BYB_Snake(ax);
+    p.Snake = BCI_Snake(ax);
 
 
 end

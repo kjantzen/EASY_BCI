@@ -10,7 +10,7 @@
 %
 %mySnake = mySnake.Move(dir) - moves the snake on step in direction dir
 %where dir can be one of 'Left', 'Right' or 'Center'. 
-classdef BYB_Snake
+classdef BCI_Snake
     properties
         Limits = [0,0,100,100]
         Currentposition = [50,50]
@@ -27,15 +27,14 @@ classdef BYB_Snake
         SnakeLength = 10;
         MaxDotSize = 200
         MinDotSize = 200;
-        SnakeSizes;
-        
+        SnakeSizes;       
     end
     properties (Constant)
        StartLength = 10;
         Directions = {'N', "E", "S", "W"};
     end
     methods
-        function obj = BYB_Snake(Axis)
+        function obj = BCI_Snake(Axis)
             obj.Axis = Axis;
             obj.SnakeDataX = ones(1,obj.SnakeLength) * 50;
             obj.SnakeDataY = ones(1,obj.SnakeLength) * 50;

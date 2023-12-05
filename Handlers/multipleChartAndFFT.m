@@ -22,11 +22,11 @@ function p = analyze(obj, p, data)
 
     eegdata = eegdata - mean(eegdata);
     p.chartPlot1 = p.chartPlot1.UpdateChart(eegdata, data.Event);  
-    p.fftPlot1 = p.fftPlot1.updateChart(eegdata, [0,100]);
+    p.fftPlot1 = p.fftPlot1.UpdateChart(eegdata, 'FreqRange', [0,100]);
 
     eegdata = p.filter.filter(eegdata);
     p.chartPlot2 = p.chartPlot2.UpdateChart(eegdata, data.Event);
-    p.fftPlot2 = p.fftPlot2.updateChart(eegdata, [0,100]);
+    p.fftPlot2 = p.fftPlot2.UpdateChart(eegdata, 'FreqRange', [0,100]);
     
     eegdata = abs(eegdata);
     %eegdata = p.lpfilt.filter(eegdata);

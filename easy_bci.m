@@ -13,7 +13,7 @@ function easy_bci()
 
 end
 %**************************************************************************
-function p = initializeParameters(p)
+function p = initializeParameters(p, fig)
     %call this function whenever some key parameters list below changes
 
     %hard code these for now, but give the option to select them from a
@@ -43,10 +43,11 @@ function p = initializeParameters(p)
         p.Device.ProcessObjects = p.DataHandler(p);
         p.ErrorInit = p.Device.ProcessObjects.ErrorInit;
     catch ME
-        errorMsg(ME)
+        BCI_Error(ME.message, ME.identifier);
         p.ErrorInit = true;
     end
 end
+% *************************************************************************
 function hlist = getHandlerNames()
 
     [fpath, ~,~] = fileparts(mfilename('fullpath'));
@@ -64,11 +65,12 @@ function hlist = getHandlerNames()
 end
 %rebuild the serial port menu each time to make sure it has a 
 %current list of the available ports
-function callback_fillPortMenu(src,~)
+function callback_fillPortMenu(src,~, h)
 
     src.Items = parsePorts(serialportlist('all'));
 
 end
+% *************************************************************************
 function ports = parsePorts(portlist)
     %separates out the cu and tty ports on a mac. does nothing if on pc
     if ismac || isunix
@@ -78,13 +80,11 @@ function ports = parsePorts(portlist)
     end
 end
 %************************************************************************
-function callback_initButton(src, ~)
-    %get the handle to the figure
-    fig = ancestor(src, 'figure', 'toplevel');
+function callback_initButton(src, ~, fig)
 
     %get the data structure from the figures user data
     p = fig.UserData;
-    p = initializeParameters(p); 
+    p = initializeParameters(p, fig); 
     
     if ~p.ErrorInit
 
@@ -105,10 +105,10 @@ function callback_initButton(src, ~)
 
 end
 % *************************************************************************
-function callback_startButton(src,~)
+function callback_startButton(src,~, fig)
  
     %get the handle to the figure
-    fig = ancestor(src, 'figure', 'toplevel');
+  %  fig = ancestor(src, 'figure', 'toplevel');
 
     %get the data structure from the figures user data
     p = fig.UserData;
@@ -121,7 +121,7 @@ function callback_startButton(src,~)
     try
         p.Device.Start();
     catch ME
-        errorMsg(ME)
+        BCI_Error(Me.message, ME.identifier);
         src.Enable = 'on';
         p.handles.button_init.Enable = 'on';
     end
@@ -139,10 +139,11 @@ function callback_startButton(src,~)
 
     
 end
-function callback_stopButton(src,~)
+% *************************************************************************
+function callback_stopButton(src,~, fig)
  
     %get a handle to the figure
-    fig = ancestor(src, 'figure', 'toplevel');
+  %  fig = ancestor(src, 'figure', 'toplevel');
 
     %get all the stored data from the figures user data storage
     p = fig.UserData;
@@ -166,17 +167,7 @@ function callback_stopButton(src,~)
     fig.UserData = p;
     
 end
-%**************************************************************************
-function errorMsg(ME)
-  
-    opts.WindowStyle = 'modal';
-    opts.Interpreter = 'tex';
-    msg = ['\fontsize{14} ', ME.message];
-    msg = strrep(msg, '_', "\_");
-    errordlg(msg, ME.identifier, opts);
-
-end
-%%
+% *************************************************************************
 function addPaths()
 
  thisPath = mfilename('fullpath');
@@ -186,6 +177,8 @@ function addPaths()
  newFolder{1}  = fullfile(thisPath, 'Extensions');
  newFolder{2}  = fullfile(thisPath, 'Handlers');
  newFolder{3}  = fullfile(thisPath, "Devices");
+ newFolder{4}  = fullfile(thisPath, "Tools");
+ 
  
  
  pathCell = strsplit(path, pathsep);
@@ -202,7 +195,7 @@ function addPaths()
  
 
 end
-%%
+% *************************************************************************
 function makeNewDataHandlerFromTemplate(scriptName)
 
 scriptFileName = sprintf('%s.m', scriptName);
@@ -231,9 +224,9 @@ fclose(fid);
 edit(newFile);
 
 end
-%%
-function  callback_port_menu(src, evt)
-    fig = ancestor(src, 'figure', 'toplevel');
+% *************************************************************************
+function  callback_port_menu(src, evt, fig)
+%    fig = ancestor(src, 'figure', 'toplevel');
 
     %get all the stored data from the figures user data storage
     p = fig.UserData;
@@ -244,13 +237,11 @@ function  callback_port_menu(src, evt)
     src.Checked = 'on';
 
     if isfield(p, 'Device') && p.Device.Collecting
-        callback_stopButton(src, evt);
+        callback_stopButton(src, evt, fig);
         p.handles.button_start.Enable = 'off';
     end
-
-
 end
-%%
+% *************************************************************************
 function  callback_buffer_menu(src, evt)
     fig = ancestor(src, 'figure', 'toplevel');
 
@@ -266,17 +257,15 @@ function  callback_buffer_menu(src, evt)
         callback_stopButton(src, evt);
         p.handles.button_start.Enable = 'off';
     end
-
-
 end
-%%
+% *************************************************************************
 function callback_newHandlerFile(~, ~)
     scriptName  = inputdlg('Provde a unique name for the new data handler', 'New Handler');
     if ~isempty(scriptName{1})
         makeNewDataHandlerFromTemplate(scriptName{1});
     end    
 end
-%%
+% *************************************************************************
 function callback_loadHandler(src,~)
 
     fig = ancestor(src, 'figure', 'toplevel');
@@ -286,11 +275,8 @@ function callback_loadHandler(src,~)
         p.handlerName = hname;
     end
     fig.UserData = p;
-
 end
-
-%*********************************************************************
-%used to keep keep the main window always on top
+% *************************************************************************
 function setaot(figHandle)
 
     drawnow nocallbacks
@@ -305,14 +291,14 @@ function setaot(figHandle)
     controllerProps = struct(controller);
     container = struct(controllerProps.PlatformHost);  % Container is a private hidden property of FigureController
     win = container.CEF;   % CEF is a regular (public) hidden property of FigureContainer
-    win.setAlwaysOnTop(true);
-    
+    win.setAlwaysOnTop(true);   
 end
 %*************************************************************************
 %% function to create the simple user interface
 function h = buildUI()
-    
-    guiScheme = load('Scheme.mat');
+      
+    [schemePath, ~, ~] = fileparts(mfilename("fullpath"));
+    guiScheme = load(fullfile(schemePath,'Tools','Scheme.mat'));
 
     sz = get(0, 'ScreenSize');
     buff_durations = [.05, .1, .25, .5, 1, 1.2];
@@ -366,8 +352,8 @@ function h = buildUI()
         'FontSize', guiScheme.Dropdown.FontSize.Value,...
         'Placeholder','serial port',...
         'Items',parsePorts(serialportlist("all")),...
-         'DropDownOpeningFcn',@callback_fillPortMenu);
-     
+        'DropDownOpeningFcn',{@callback_fillPortMenu,h.fig});
+
     btm_pos = btm_pos - 25;
     uilabel('Parent', h.panel_config,...
         'Position', [10, btm_pos, wdth-20, 20],...
@@ -451,7 +437,7 @@ function h = buildUI()
         'FontSize', guiScheme.Button.FontSize.Value,...
         'Fontname', guiScheme.Button.Font.Value,...
         'Text','Initialize',...
-        'ButtonPushedFcn',@callback_initButton);
+        'ButtonPushedFcn',{@callback_initButton, h.fig});
 
     h.button_start = uibutton('Parent', h.panel_control,...
         'Position', [10,45,wdth-25,guiScheme.Button.Height.Value],...
@@ -461,7 +447,7 @@ function h = buildUI()
         'Fontname', guiScheme.Button.Font.Value,...
         'Text','Start',...
         'Enable', 'off',...
-        'ButtonPushedFcn',@callback_startButton);
+        'ButtonPushedFcn',{@callback_startButton, h.fig});
     
      h.button_stop = uibutton('Parent', h.panel_control,...
         'Position', [10,5,wdth-25,guiScheme.Button.Height.Value],...
@@ -471,7 +457,7 @@ function h = buildUI()
         'FontName', guiScheme.Button.Font.Value,...
         'Text','Stop',...
         'Enable', 'off',...
-        'ButtonPushedFcn',@callback_stopButton);
+        'ButtonPushedFcn',{@callback_stopButton, h.fig});
 
       %the status panel
     panelHeight = 60;

@@ -168,7 +168,7 @@ ePanel = uipanel('Parent', grid,'Title','Edit Properites');
 ePanel.Scrollable = 'on';
 
 drawnow;
-pause(1)
+pause(2)
 
 %% draw the controls for changing parameters
 controls = fieldnames(p);
@@ -217,7 +217,7 @@ end
     h.dispWindow.Layout.Column = [2,5];
     h.dispWindow.Layout.Row = 1;
     drawnow;
-    pause(1);
+    pause(2);
     pos = h.dispWindow.InnerPosition;
     h.dispAxis = uiaxes('Parent', h.dispWindow,'Position', [0, pos(4)-230, pos(3), 220]);
     h.dispPanel = uipanel('Parent',h.dispWindow,'Title','PANEL',...

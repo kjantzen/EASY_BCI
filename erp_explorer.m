@@ -24,7 +24,7 @@ try
     
     %build the figure
     waitbar(.25, w, 'Creating the user interface.');
-    p.ts_colors = lineColors;
+    p.ts_colors = prism;
     handles = buildGUI(p);
     
     waitbar(.75, w, 'Populating controls.');
@@ -142,6 +142,24 @@ EEG.fftAmp = fftAmp;
 EEG.fftMean = fftMean;
 EEG.fftStderr = fftStdErr;
 EEG.freqs = freqs;
+
+%***************************************************************************    
+function struct = getTrialData(EEG, chanlist, condlist, c1, c2)
+   
+
+[~,p1] = min(abs(c1-EEG.times));
+[~,p2] = min(abs(c2-EEG.times));
+
+%calculate the mean of each condition
+binVect = [EEG.EVENTLIST.eventinfo.bini];
+for cc = 1:length(condlist)
+    trialVect = find(binVect==condlist(cc));
+    epochList = [EEG.EVENTLIST.eventinfo(trialVect).bepoch];
+    struct(cc).trials(:,:) = squeeze(mean(EEG.data(chanlist,p1:p2,epochList),2));
+    struct(cc).bin = condlist(cc);
+    struct(cc).ntrials = length(struct(cc).trials);
+end
+
 
 %***************************************************************************    
 function initializeDisplay(h)
@@ -1082,6 +1100,66 @@ else
 end
 callback_ploterp([],[],h);
 
+% *************************************************************************
+function callback_export(~,~, h)
+
+c = getActiveCursor(h);
+p = h.figure.UserData;
+nc = length(c.cursor);
+doFFT = h.menu_fft.Checked;
+
+if nc == 0
+    uialert(h.figure, 'You must have a least one cursor to export data.', 'No so fast.');
+    return;
+elseif nc == 1
+    cn = c.cursor(1).time;
+    msg = sprintf('Exported the mean amplitude for the selectec conditions and channels at time point %f ms\n', cn);
+    averageBetweenCursors = false;
+elseif nc > 1
+    cn(1) = c.cursor(1).time;
+    cn(2) = c.cursor(2).time;
+    cn = sort(cn);
+    if nc > 2
+        fprintf('More than 2 cursors found.  Using the first two...\n');
+    end
+    msg = sprintf('Exporting the mean amplitude for the selected conditions and channels between %f and %f ms\n', cn(1), cn(2));
+    averageBetweenCursors = true;
+end
+
+msg = sprintf('%s\n\nData appear in the base workspace as the structure "export"', msg);
+
+[d, se,s, pv,map_time, ch_out, cond_num] = getdatatoplot(p.EEG, h, ...
+   'MapMode', true', 'GetFFT', doFFT, 'Cursor', c.cursor, ...
+   'aveBetween', averageBetweenCursors, 'doStats', false, 'doFDR', false);
+
+displayed_channums = cell2mat(h.list_channels.Value');
+displayed_channums = displayed_channums(:,1)';
+d = squeeze(d); se = squeeze(se);
+
+if ~h.check_allchans.Value
+   ch_out = displayed_channums;
+end
+displayed_channames = h.list_channels.Items(ch_out);
+
+export.amplitude = d(ch_out,:);
+export.stderr = se(ch_out,:);
+export.channum = ch_out;
+export.channame = displayed_channames;
+
+export.conditions = h.list_condition.Items(cond_num);
+export.starttime = cn(1);
+if nc > 1
+   export.endtime = cn(2);
+else
+    export.endtime = cn(1);
+end
+
+
+%now get the single trial data
+export.singletrials = getTrialData(p.EEG, ch_out, cond_num,  export.starttime,  export.endtime);
+
+assignin("base", "export", export);
+uialert(h.figure, msg, 'All done', 'Icon', 'success');
 
 % *************************************************************************
 function handles = buildGUI(p)
@@ -1342,6 +1420,7 @@ drawnow;
 %*************************************************************************
 handles.menu_file = uimenu('Parent', handles.figure, 'Label', 'File');
 handles.menu_loadfile = uimenu('Parent', handles.menu_file, 'Label', 'Load EEG file');
+handles.menu_export = uimenu('Parent',handles.menu_file, 'Label', 'Export Data to MATLAB', 'Separator', 'on');
 
 handles.menu_plot = uimenu('Parent', handles.figure, 'Label', 'EEG View');
 handles.menu_resetxaxis = uimenu('Parent', handles.menu_plot, 'Label', 'Restore default X axis limits');
@@ -1384,6 +1463,7 @@ handles.check_allchans.ValueChangedFcn = {@callback_toggleallchannel, handles};
 handles.list_channels.ValueChangedFcn = {@callback_ploterp, handles};
 
 handles.menu_loadfile.MenuSelectedFcn  = {@callback_loadNewData, handles};
+handles.menu_export.MenuSelectedFcn = {@callback_export, handles};
 
 handles.menu_stderr.MenuSelectedFcn = {@callback_toggleplotoption, handles};
 handles.menu_stack.MenuSelectedFcn = {@callback_toggleplotoption, handles};
