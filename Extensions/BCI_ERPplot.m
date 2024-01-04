@@ -68,7 +68,7 @@ classdef BCI_ERPplot < handle
         function obj = BCI_ERPplot(options)
             arguments
                 options.AxisHandle (1,1) {mustBeA(options.AxisHandle,'matlab.graphics.axis.Axes')} = gobjects;
-                options.FFTAxisHandle (1,1) {mustBeA(options.FFTAxisHandle,'matlab.graphics.axis.Axes')} = gobjects;
+                options.FFTAxisHandle (1,1) = "";
             end
             
             if ~isgraphics(options.AxisHandle)
@@ -76,9 +76,12 @@ classdef BCI_ERPplot < handle
             else
                 obj.PlotAxis = options.AxisHandle;
             end
-
+            if isgraphics(options.FFTAxisHandle)
+                obj.FFTAxis = options.FFTAxisHandle;
+            else
+                obj.FFTAxis = [];
+            end
             obj.ERP = BCI_ERP();
-            obj.FFTAxis = options.FFTAxisHandle;
             obj.PlotAxis.XLimitMethod = 'tight';
             obj.StdErrHandles = gobjects(3,1);
         end
@@ -106,7 +109,7 @@ classdef BCI_ERPplot < handle
                 trial
                 options.ERPScale = 'auto';
                 options.ShowStdErr (1,1) {mustBeNumericOrLogical} = false;
-                options.FFTRange (1,2) {mustBeNumeric} = [0, trial.SampleRate/2];
+                options.FFTRange (1,2) {mustBeNumeric} = [0, trial.sampleRate/2];
                 options.PlotFFTLog (1,1) {mustBeNumericOrLogical} = false;
             end
                 

@@ -191,7 +191,8 @@ ISR(TIMER1_COMPA_vect) {
   digitalWrite(2, digPin0);
   digitalWrite(3, digPin1);
 
-  //shift the upper byte to the right, set the MSB to high and add in the event marker
+  //shift the upper byte to the right, set the MSB to high (Ox80) and add in the event marker
+  //into the second and third bit
   rawBuffer[0][head] = (tempSample >> 7) | 0x80 | (digEvent << 5);
   rawBuffer[1][head] = tempSample & 0x7F;  //create a byte with the lower 7 bits
   //advance the pointer

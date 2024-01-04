@@ -24,6 +24,7 @@ function p = initializeParameters(p, fig)
     p.sampleRate = 500;
     p.handlerName = p.handles.dropdown_handler.Value;
     p.DataHandler = str2func(p.handlerName);
+    p.collectionMode = p.handles.dropdown_mode.Value;
 
     %create the spiker box object here
     %first delete any existing one that may exist
@@ -36,7 +37,15 @@ function p = initializeParameters(p, fig)
     %select a device based on user input
     try
         p.Device = BNS_HBSpiker(p.serialPortName, p.bufferDuration);
-        p.Device.PacketReceivedCallback = p.DataHandler;
+        if (p.collectionMode == 0)
+            p.Device.SetMode(BNS_HBSpikerModes.Continuous);
+            p.Device.PacketReceivedCallback = p.DataHandler;
+
+        else
+            p.Device.SetMode(BNS_HBSpikerModes.SingleTrial);
+            p.Device.TrialReceivedCallback = p.DataHandler;
+
+        end
     
         %call the initialization version of the data handler, i.e. call it
         %without passing any data.

@@ -123,7 +123,7 @@ classdef BNS_HBSpiker < handle
         %Self explanatory
         Version = "BNS_HBSpiker_V0.1";
 
-        % ADC2UV - the converstion from raw adc units to microvolts basedon
+        % ADC2UV - the converstion from raw adc units to microvolts based on
         % the reference votage of 5 volts, the sample range of 1024 (10 bit)
         % and a gain of 3840
         ADC2UV =  (5/1024)/3840 * 1000000; %refVoltage/maxsample/gain * 1 million
@@ -417,7 +417,7 @@ classdef BNS_HBSpiker < handle
 
          function switchCallbacks(obj)
           % SWITCHCALLBACKS - switches between the continuous and single
-          % trial mode callbacks depending on teh current collection mode.
+          % trial mode callbacks depending on the current collection mode.
           %
             if obj.CollectionMode  == BNS_HBSpikerModes.Continuous
                 obj.InputBufferFilledCallback = obj.PacketReceivedCallback;

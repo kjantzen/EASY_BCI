@@ -87,8 +87,8 @@ try
     EEG = pop_loadset('filename', [f, e], 'filepath', p);
 catch me
    msg = sprintf('An error ocurred when loading your file.\nMake sure that the eeglab toolbox is installed and on your Matlab path.');
-   msg = sprinft('$s\n\nMatlab says: %s', msg, me.message);
-   me.message  = msg;
+   msg = sprintf('$s\n\nMatlab says: %s', msg, me.message);
+ %  me.message  = msg;
    throwAsCaller(me);
 end
     

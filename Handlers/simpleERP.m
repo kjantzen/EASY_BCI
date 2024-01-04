@@ -8,7 +8,7 @@ function outStruct = simpleERP(inStruct, varargin)
 end
 %this function gets called when data is passed to the handler
 function p = analyze(p,data)
-   p.ERP.UpdateERPPlot(data);
+   p.ProcessObjects.ERP.UpdateERPPlot(data);
 end
 %this function gets called when the analyse process is initialized
 function p = initialize(p)
@@ -37,6 +37,6 @@ function p = initialize(p)
     
     %initialize the plotting object by calling it and passing the axis in
     %which to plot
-    p.ERP = BCI_ERPplot(p.ax);
+    p.ERP = BCI_ERPplot('AxisHandle', p.ax);
 
 end
